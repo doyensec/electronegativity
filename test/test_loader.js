@@ -14,7 +14,7 @@ logger.add(logger.transports.Console, {colorize : true, level : 'silly'});
 let chai = require('chai');
 chai.should();
 
-import { LoaderAsar } from '../src/loader';
+import { LoaderAsar, LoaderFile } from '../src/loader';
 
 let test_files = new Map()
                       .set('asar', 'test/file_formats/electron.asar')
@@ -40,9 +40,29 @@ describe('Loader classes', () => {
     });
 
     it('extracts file from ASAR', () => {
-      loader.load_file(test_files.get('asar')).size.should.be.(60);
+      loader.load_file(test_files.get('asar')).size.should.equal(60);
+    });
+  }),
+
+  describe('LoaderFile', () => {
+    let loader = null;
+
+    beforeEach(() => {
+      loader = new LoaderFile();
     });
 
+    it('fails if archive does not exist', () => {
+      (() => {
+        loader.load_file('FOO');
+      }).should.throw();
+    });
 
+    it('returns a Map', () => {
+      loader.load_file(test_files.get('js')).should.be.a('Map');
+    });
+
+    it('extracts file from ASAR', () => {
+      loader.load_file(test_files.get('js')).size.should.equal(1);
     });
   });
+});

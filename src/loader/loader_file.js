@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { file_exists, read_file } from '../util'
 import { Loader } from './loader_interface';
 
@@ -14,7 +16,10 @@ export class LoaderFile extends Loader {
   // returns map filename -> content
   load_file(file) {
     let filename = path.resolve(file);
-    assert(file_exists(filename), 'File does not exist: ' + filename);
+    if (!file_exists(filename)) {
+      logger.error('File does not exist: ' + filename);
+      throw new Error('FILE_DOESNT_EXIST');
+    }
     let buffer = read_file(filename);
     return this.load_buffer(filename, buffer);
   }
