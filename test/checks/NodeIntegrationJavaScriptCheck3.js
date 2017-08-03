@@ -1,5 +1,3 @@
-/*
 mainWindow = new BrowserWindow({ "webPreferences": {
-  “nodeIntegrationInWorker": 1 }
+  "nodeIntegrationInWorker": 1 }
 });
-*/

@@ -21,16 +21,16 @@ export class NodeIntegrationJavascriptCheck extends JavascriptCheck {
     /*
     mainWindow = new BrowserWindow({ "webPreferences": {
       "nodeIntegration": true,
-      “nodeIntegrationInWorker": 1 }
+      "nodeIntegrationInWorker": 1 }
     });
 
     mainWindow = new BrowserWindow({ "webPreferences": {
       "nodeIntegration": 1,
-      “nodeIntegrationInWorker": 1 }
+      "nodeIntegrationInWorker": 1 }
     });
 
     mainWindow = new BrowserWindow({ "webPreferences": {
-      “nodeIntegrationInWorker": 1 }
+      "nodeIntegrationInWorker": 1 }
     });
     */
 
