@@ -1,5 +1,7 @@
 import logger from 'winston';
 
+import { sourceTypes } from '../parser/types';
+
 export class Check {
   constructor (id, short, description, type) {
     this._id = "";
@@ -13,20 +15,31 @@ export class Check {
   get description() { return this._description; }
   get type() { return this._type; }
 
-  match (data) {}
+  match (data) {
+    logger.debug("Matching using check: " + this.id);
+  }
 
 }
 
 export class JavaScriptCheck extends Check {
   constructor (id, short, description) {
-    const type = "JAVASCRIPT";
-    super (id, short, description, type);
+    const type = sourceTypes.JAVASCRIPT;
+    super(id, short, description, type);
   }
+
+  match (data) {
+    super.match(data);
+  }
+
 }
 
 export class HTMLCheck extends Check {
   constructor (id, short, description) {
-    const type = "HTML";
-    super (id, short, description, type);
+    const type = sourceTypes.HTML;
+    super(id, short, description, type);
+  }
+
+  match (data) {
+    super.match(data);
   }
 }
