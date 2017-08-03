@@ -1,3 +1,4 @@
+import logger from 'winston';
 import path from 'path';
 
 import { file_exists, read_file } from '../util'
@@ -21,7 +22,7 @@ export class LoaderFile extends Loader {
       throw new Error('FILE_DOESNT_EXIST');
     }
     let buffer = read_file(filename);
-    return this.load_buffer(filename, buffer);
+    return this.load_buffer(buffer, filename);
   }
 
   // returns map filename -> content
