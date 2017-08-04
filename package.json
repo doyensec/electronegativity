@@ -25,6 +25,7 @@
     "cheerio": "^1.0.0-rc.2",
     "del": "^3.0.0",
     "esprima": "^4.0.0",
+    "estraverse": "^4.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-plumber": "^1.1.0",

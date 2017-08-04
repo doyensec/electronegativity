@@ -1,8 +1,9 @@
 import logger from 'winston';
+import estraverse from 'estraverse';
 
-import JavaScriptCheck from '../check';
+import { JavaScriptCheck } from '../check';
 
-export class NodeIntegrationJavascriptCheck extends JavascriptCheck {
+export class NodeIntegrationJavascriptCheck extends JavaScriptCheck {
   constructor () {
     const ident = "NODE_INTEGRATION_JS_CHECK";
     const short = "Disable nodeIntegration for untrusted origins";
@@ -15,26 +16,53 @@ export class NodeIntegrationJavascriptCheck extends JavascriptCheck {
     super (ident, short, description);
   }
 
+  /*
+  mainWindow = new BrowserWindow({ "webPreferences": {
+    "nodeIntegration": true,
+    "nodeIntegrationInWorker": 1 }
+  });
+
+  mainWindow = new BrowserWindow({ "webPreferences": {
+    "nodeIntegration": 1,
+    "nodeIntegrationInWorker": 1 }
+  });
+
+  mainWindow = new BrowserWindow({ "webPreferences": {
+    "nodeIntegrationInWorker": 1 }
+  });
+  */
+
   match (data) {
     super.match(data);
 
-    // TODO AST node match
+    if (data.type !== "NewExpression") return false;
+    if (data.callee.name !== "BrowserWindow") return false;
 
-    /*
-    mainWindow = new BrowserWindow({ "webPreferences": {
-      "nodeIntegration": true,
-      "nodeIntegrationInWorker": 1 }
-    });
+    const parent_loc = {line : data.loc.start.line, column : data.loc.start.column };
 
-    mainWindow = new BrowserWindow({ "webPreferences": {
-      "nodeIntegration": 1,
-      "nodeIntegrationInWorker": 1 }
-    });
+    let set = false;
+    let main_loc = null;
+    // TODO: move this to a find_node function taking a callback containing the if conditions
+    for (let arg of data.arguments) {
+      estraverse.traverse(arg, {
+        enter : (node, parent) => {
+          if ((node.type === "Property") && (node.key.value === "nodeIntegration")) {
+            set = true;
+            if ((node.value.value === true) || (node.value.value === 1)) {
+              main_loc = { line : node.key.loc.start.line, column : node.key.loc.start.column };
+            }
+            return estraverse.VisitorOption.Skip;
+          }
+        }
+      });
+    }
 
-    mainWindow = new BrowserWindow({ "webPreferences": {
-      "nodeIntegrationInWorker": 1 }
-    });
-    */
-
+    if (!set) {
+      return parent_loc;
+    } else if (main_loc) {
+      return main_loc;
+    } else {
+      return null;
+    }
   }
 }

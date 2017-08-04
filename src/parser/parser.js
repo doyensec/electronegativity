@@ -23,7 +23,7 @@ export class Parser {
     switch(sourceType) {
       case sourceTypes.JAVASCRIPT:
         logger.debug("... parsing JavaScript");
-        data = esprima_parse(content);
+        data = esprima_parse(content, { loc: true });
         break;
       case sourceTypes.HTML:
         logger.debug("... parsing HTML");

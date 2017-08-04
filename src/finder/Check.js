@@ -7,7 +7,7 @@ export class Check {
     this._id = "";
     this._short = "";
     this._description = "";
-    this._type = null;
+    this._type = type;
   }
 
   get id() { return this._id; }
@@ -15,9 +15,7 @@ export class Check {
   get description() { return this._description; }
   get type() { return this._type; }
 
-  match (data) {
-    logger.debug("Matching using check: " + this.id);
-  }
+  match (data) { }
 
 }
 
@@ -29,6 +27,7 @@ export class JavaScriptCheck extends Check {
 
   match (data) {
     super.match(data);
+    // logger.debug("  -> node type : " + data.type);
   }
 
 }
