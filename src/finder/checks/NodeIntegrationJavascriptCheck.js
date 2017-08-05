@@ -2,10 +2,11 @@ import logger from 'winston';
 import estraverse from 'estraverse';
 
 import { JavaScriptCheck } from '../check';
+import { Ast } from '../ast';
 
 export class NodeIntegrationJavascriptCheck extends JavaScriptCheck {
   constructor () {
-    const ident = "NODE_INTEGRATION_JS_CHECK";
+    const id = "NODE_INTEGRATION_JS_CHECK";
     const short = "Disable nodeIntegration for untrusted origins";
     const description = "By default, Electron renderers can use Node.js primitives. \
       For instance, a remote untrusted domain rendered in a browser window could \
@@ -13,7 +14,7 @@ export class NodeIntegrationJavascriptCheck extends JavaScriptCheck {
       a Cross-Site Scripting (XSS) vulnerability on a website can lead to remote \
       code execution. To display remote content, nodeIntegration should be \
       disabled in the webPreferences of BrowserWindow and webview tag.";
-    super (ident, short, description);
+    super (id, short, description);
   }
 
   /*
@@ -42,19 +43,17 @@ export class NodeIntegrationJavascriptCheck extends JavaScriptCheck {
 
     let set = false;
     let main_loc = null;
-    // TODO: move this to a find_node function taking a callback containing the if conditions
     for (let arg of data.arguments) {
-      estraverse.traverse(arg, {
-        enter : (node, parent) => {
-          if ((node.type === "Property") && (node.key.value === "nodeIntegration")) {
-            set = true;
-            if ((node.value.value === true) || (node.value.value === 1)) {
-              main_loc = { line : node.key.loc.start.line, column : node.key.loc.start.column };
-            }
-            return estraverse.VisitorOption.Skip;
-          }
-        }
-      });
+      const found_nodes = Ast.findNodeByType(arg, "Property", 2, true,
+        (node) => {
+          return (node.key.value === "nodeIntegration");
+        });
+      logger.debug("[NodeIntegrationJavascriptCheck] found " + found_nodes.length + " node(s)");
+      if (found_nodes.length > 0) {
+        set = true;
+        if ((found_nodes[0].value.value === true) || (found_nodes[0].value.value === 1))
+          main_loc = { line : found_nodes[0].key.loc.start.line, column : found_nodes[0].key.loc.start.column };
+      }
     }
 
     if (!set) {

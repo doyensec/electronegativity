@@ -4,9 +4,9 @@ import { sourceTypes } from '../parser/types';
 
 export class Check {
   constructor (id, short, description, type) {
-    this._id = "";
-    this._short = "";
-    this._description = "";
+    this._id = id;
+    this._short = short;
+    this._description = description;
     this._type = type;
   }
 
@@ -27,7 +27,6 @@ export class JavaScriptCheck extends Check {
 
   match (data) {
     super.match(data);
-    // logger.debug("  -> node type : " + data.type);
   }
 
 }

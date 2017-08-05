@@ -27,8 +27,14 @@ export class Finder {
     }
   }
 
-  find(file, data, type) {
-    const checks = this._checks_by_type.get(type);
+  find(file, data, type, use_only_checks = null) {
+    const checks = this._checks_by_type.get(type).filter((check) => {
+      if (use_only_checks && !use_only_checks.includes(check.id)) {
+        return false;
+      } else {
+        return true;
+      }
+    });
     const issues = [];
     switch(type) {
       case sourceTypes.JAVASCRIPT:
@@ -51,11 +57,19 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         logger.debug("Finding HTML issues");
-        // TODO: Apply queries to DOM
-        // ...
+        for (let check of checks) {
+          const loc = check.match(data);
+          if (loc.length > 0) {
+            for (let l of loc) {
+              logger.debug("    found issue at " + l.line + ":" + l.column);
+              const issue = new Issue(type, file, l.line, l.column)
+              issues.push(issue);
+            }
+          }
+        }
         break;
       default:
-      logger.error("Cannot find issues for source type : " + type);
+      logger.error("Unknown source type : " + type);
       break;
     }
 

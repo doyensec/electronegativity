@@ -41,23 +41,22 @@ describe('Finder', () => {
     const [type, data] = parser.parse(file, loader.loaded.get(file));
     // TODO : get check id and positive/negative
     let split = path.basename(file.substr(0, file.lastIndexOf('.'))).split('_');
-    logger.debug("=== "+split);
-    let positive = ((split.pop() === "Positive") ? 1 : 0); // 1/0
+    let num_issues = +split.pop();
     split.pop()
-    let check = split.join("_"); // NODE_INTEGRATION_JS_CHECK
+    let check = split.join("_").toUpperCase();
 
     if (!testcases.has(check)) {
       testcases.set(check, []);
     }
-    testcases.get(check).push([file, type, data, positive]);
+    testcases.get(check).push([file, type, data, num_issues]);
   }
 
   // For each ...
   for (let check of [...testcases.keys()]) {
-    for (let [file, type, data, positive] of testcases.get(check)) {
-      let result = finder.find(file, data, type);
-      it('Finds ' + positive + ' issue(s) in ' + path.basename(file), () => {
-        result.length.should.equal(positive); // 1 or 0
+    for (let [file, type, data, num_issues] of testcases.get(check)) {
+      let result = finder.find(file, data, type, [ check ]);
+      it('Finds ' + num_issues + ' issue(s) in ' + path.basename(file), () => {
+        result.length.should.equal(num_issues);
       });
     }
   }
