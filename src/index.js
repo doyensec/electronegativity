@@ -4,7 +4,8 @@ import path from 'path';
 import util from 'util';
 import logger from 'winston';
 
-import { file_exists } from './util'
+import { file_exists, extension } from './util'
+import { sourceExtensions } from './parser/types';
 
 logger.addColors({
   debug : 'green',
@@ -36,12 +37,14 @@ function main() {
   args.options.debug = program.debug || false;
 
   let input = path.resolve(program.input)
-  if (file_exists(input)) {
-    args.input.file = input;
-  } else {
-    console.error('The --input parameter must be a valid file');
-    program.outputHelp(error_text);
+  if (!file_exists(input)) {
+    console.error('Input file does not exist!');
     return;
+  } else if (!['asar', ...Object.keys(sourceExtensions)].includes(extension(input))) {
+    console.error('Unknown input file format!');
+    return;
+  } else {
+    args.input = path.resolve(input);
   }
 
   if (args.options.debug) {

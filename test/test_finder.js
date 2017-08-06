@@ -39,7 +39,6 @@ describe('Finder', () => {
   let parser = new Parser();
   for (let file of filenames) {
     const [type, data] = parser.parse(file, loader.loaded.get(file));
-    // TODO : get check id and positive/negative
     let split = path.basename(file.substr(0, file.lastIndexOf('.'))).split('_');
     let num_issues = +split.pop();
     split.pop()

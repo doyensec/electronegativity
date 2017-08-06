@@ -43,12 +43,11 @@ export class Finder {
         estraverse.traverse(data, {
           enter : (node, parent) => {
             for (let check of checks) {
-              // logger.debug("  -> using check " + check.type);
               const loc = check.match(node);
               if (loc) {
                 logger.debug("    found issue at " + loc.line + ":" + loc.column);
                 const issue = new Issue(type, file, loc.line, loc.column)
-                issues.push(issue);
+                issues.push(new Map().set('loc', issue).set('check', check));
               }
             }
           }
@@ -63,7 +62,7 @@ export class Finder {
             for (let l of loc) {
               logger.debug("    found issue at " + l.line + ":" + l.column);
               const issue = new Issue(type, file, l.line, l.column)
-              issues.push(issue);
+              issues.push(new Map().set('loc', issue).set('check', check));
             }
           }
         }
