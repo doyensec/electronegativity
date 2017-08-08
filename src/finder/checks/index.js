@@ -1,8 +1,10 @@
 import { NodeIntegrationJavascriptCheck } from './NodeIntegrationJavascriptCheck';
+import { NodeIntegrationJavascriptAttachEventCheck } from './NodeIntegrationJavascriptAttachEventCheck';
 import { NodeIntegrationHTMLCheck } from './NodeIntegrationHTMLCheck';
 
 let ENABLED_CHECKS = [
   NodeIntegrationJavascriptCheck,
+  NodeIntegrationJavascriptAttachEventCheck,
   NodeIntegrationHTMLCheck
 ]
 

@@ -25,6 +25,7 @@ export class Finder {
       logger.debug("Enabled checks : " + checkInstance.type);
       this._checks_by_type.get(checkInstance.type).push(checkInstance);
     }
+    logger.debug(`Initialized ${this.enabled_checks.length} check(s).`);
   }
 
   find(file, data, type, use_only_checks = null) {

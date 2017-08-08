@@ -31,13 +31,15 @@ export class NodeIntegrationJavascriptCheck extends JavaScriptCheck {
   mainWindow = new BrowserWindow({ "webPreferences": {
     "nodeIntegrationInWorker": 1 }
   });
+
+  mainWindow = new BrowserWindow();
   */
 
   match (data) {
     super.match(data);
 
-    if (data.type !== "NewExpression") return false;
-    if (data.callee.name !== "BrowserWindow") return false;
+    if (data.type !== "NewExpression") return null;
+    if (data.callee.name !== "BrowserWindow") return null;
 
     const parent_loc = {line : data.loc.start.line, column : data.loc.start.column };
 
