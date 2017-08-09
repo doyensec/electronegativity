@@ -43,7 +43,7 @@ For instance the ```NODE_INTEGRATION_JS_CHECK_1_0.js ``` will be analyzed using 
 
 Electronegativity currently implements the following checks:
 
-#### nodeIntegration, nodeIntegrationInWorker
+#### 1 - nodeIntegration, nodeIntegrationInWorker
 
 Check whether *nodeIntegration* and *nodeIntegrationInWorker* are NOT present in BrowerWindow's webPreferences (default is on).
 
@@ -111,7 +111,7 @@ app.on('web-contents-created', (event, contents) => { contents.on('will-attach-w
 })})
 ```
 
-#### sandbox
+#### 2 - sandbox
 
 Check whether *sandbox* is NOT used or set to *(false|0|no)* in [BrowerWindow](https://electron.atom.io/docs/api/browser-window/)'s webPreferences.
 
@@ -135,7 +135,7 @@ mainWindow = new BrowserWindow({ "webPreferences": {
 });
 ```
 
-#### custom command line arguments
+#### 3 - custom command line arguments
 
 Check whether *appendArgument* or *appendSwitch* are used. Manual review required.
 
@@ -147,7 +147,7 @@ app.commandLine.appendSwitch()
 
 Additionally, specifically check for ```--debug``` and ```--debug-brk``` inside *package.json*.
 
-#### preload, contextIsolation
+#### 4 - preload, contextIsolation
 
 Check whether *preload* is used in [BrowerWindow](https://electron.atom.io/docs/api/browser-window/)'s webPreferences or [webview](https://electron.atom.io/docs/api/webview-tag/) tag. Manual review required.
 
@@ -167,7 +167,7 @@ mainWindow = new BrowserWindow({ "webPreferences": {
 
 Additionally, if *preload* is used, verify whether *contextIsolation* is NOT used or set to *(false|0|no)*.
 
-#### disablewebsecurity
+#### 5 - disablewebsecurity
 
 Check whether *websecurity* is disabled *(false|0|no)* in [BrowerWindow](https://electron.atom.io/docs/api/browser-window/)'s webPreferences.
 
@@ -212,7 +212,7 @@ Check whether *websecurity* is disabled *(false|0|no)* or *disablewebsecurity* i
 Additionally, check for the ```—disable-web-security``` inside *package.json*. 
 
 
-#### loadURL, src with HTTP resources
+#### 6 - loadURL, src with HTTP resources
 
 Check whether [BrowerWindow](https://electron.atom.io/docs/api/browser-window/) *loadURL()* or [webview](https://electron.atom.io/docs/api/webview-tag/) *src* attribute is used to fetch content using plain-text HTTP.
 
@@ -223,7 +223,7 @@ win.loadURL('http://doyensec.com/');
 <webview src="http://doyensec.com"></webview> 
 ```
 
-#### allowRunningInsecureContent
+#### 7 - allowRunningInsecureContent
 
 Check whether *allowRunningInsecureContent* is set to *(true|1|yes)* in [BrowerWindow](https://electron.atom.io/docs/api/browser-window/)'s webPreferences or in the [webview](https://electron.atom.io/docs/api/webview-tag/) tag.
 
@@ -246,7 +246,7 @@ mainWindow = new BrowserWindow({
 <webview src="https://doyensec.com/" webpreferences="allowRunningInsecureContent=true"></webview>
 ```
 
-### setCertificateVerifyProc, certificate-error, importCertificate
+#### 8 - setCertificateVerifyProc, certificate-error, importCertificate
 
 Check whether [Session](https://electron.atom.io/docs/all/#class-session)'s *setCertificateVerifyProc* function is used to opt-out from TLS validation. Manual review required.
 
@@ -279,7 +279,7 @@ Additionally, verify custom TLS certificates imported into the platform certific
 app.importCertificate(options, callback);
 ```
 
-### experimentalFeatures, experimentalCanvasFeatures, blinkFeatures
+#### 9 - experimentalFeatures, experimentalCanvasFeatures, blinkFeatures
 
 Check whether *experimentalFeatures* or *experimentalCanvasFeatures* is set to *(true|1|yes)* in [BrowerWindow](https://electron.atom.io/docs/api/browser-window/)'s webPreferences or in the [webview](https://electron.atom.io/docs/api/webview-tag/) tag.
 
@@ -333,7 +333,7 @@ mainWindow = new BrowserWindow({
 <webview src="https://doyensec.com/" blinkfeatures="PreciseMemoryInfo, CSSVariables"></webview>
 ```
 
-### auxclick
+#### 10 - auxclick
 
 Check whether *disableBlinkFeatures: "Auxclick"* is not present in [BrowerWindow](https://electron.atom.io/docs/api/browser-window/)'s webPreferences or in the [webview](https://electron.atom.io/docs/api/webview-tag/) tag.
 
@@ -363,7 +363,7 @@ mainWindow = new BrowserWindow({
 <webview src="https://doyensec.com/" disableBlinkFeatures="Auxclick"></webview>
 ```
 
-### setPermissionRequestHandler
+#### 11 - setPermissionRequestHandler
 
 Check whether *setPermissionRequestHandler* is not used, thus allowing unlimited permission requests. If present, manual review required.
 
@@ -377,11 +377,11 @@ ses.setPermissionRequestHandler((webContents, permission, callback) => {
 });
 ```
 
-### insertCSS, executeJavaScript or eval 
+#### 12 - insertCSS, executeJavaScript or eval 
 
 Check whether *insertCSS*, *executeJavaScript* or *eval* functions are used. Manual review required to ensure that no user-supplied arguments are passed to these functions.
 
-### allowpopups
+#### 13 - allowpopups
 
 Check whether *allowpopups* is present in the [webview](https://electron.atom.io/docs/api/webview-tag/) tag.
 
@@ -389,7 +389,7 @@ Check whether *allowpopups* is present in the [webview](https://electron.atom.io
 <webview src=“https://doyensec.com/" allowpopups></webview>
 ```
 
-### setAsDefaultProtocolClient, registerStandardSchemes, registerServiceWorkerSchemes, registerFileProtocol, registerHttpProtocol, registerStringProtocol, registerBufferProtocol
+#### 14 - setAsDefaultProtocolClient, registerStandardSchemes, registerServiceWorkerSchemes, registerFileProtocol, registerHttpProtocol, registerStringProtocol, registerBufferProtocol
 
 Check whether custom protocol handlers are defined by the application using one of the following functions. Manual review required.
 
@@ -401,7 +401,7 @@ Check whether custom protocol handlers are defined by the application using one 
 * registerStringProtocol(scheme, handler[, completion])
 * registerBufferProtocol(scheme, handler[, completion])
 
-### openExternal 
+#### 15 - openExternal 
 
 Check whether the *openExternal* function is used. Manual review required.
 
@@ -410,9 +410,8 @@ const {shell} = require('electron')
 shell.openExternal('file:///Applications/Calculator.app')
 ```
 
-
 ## Credits
 
 Electronegativity was made possible thanks to the gracious contribution of [Claudio Merloni](https://github.com/p4p3r). Thanks P4p3r!
 
-This tool is based on a [Doyensec](https://www.doyensec.com) research published at [Black Hat USA 2017](https://www.blackhat.com/us-17/briefings.html#electronegativity-a-study-of-electron-security).
+This tool is based on a [Doyensec](https://www.doyensec.com) sponsored research published at [Black Hat USA 2017](https://www.blackhat.com/us-17/briefings.html#electronegativity-a-study-of-electron-security).
