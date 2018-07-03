@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "gulp es6",
+    "build": "gulp es6 lint",
     "test": "npm run build && ./node_modules/.bin/_mocha --compilers js:babel-core/register"
   },
   "repository": {
@@ -24,10 +24,14 @@
     "chai": "^4.1.0",
     "cheerio": "^1.0.0-rc.2",
     "del": "^3.0.0",
+    "eslint": "^5.0.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
     "esprima": "^4.0.0",
     "estraverse": "^4.2.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^4.0.2",
     "gulp-plumber": "^1.1.0",
     "mocha": "^3.4.2"
   },

@@ -1,4 +1,4 @@
-import { file_exists } from '../util'
+import { file_exists } from '../util';
 
 export class Loader {
   constructor() {
@@ -15,5 +15,4 @@ export class Loader {
     this.loaded.set(filename, buffer);
     return this.loaded;
   }
-
 }

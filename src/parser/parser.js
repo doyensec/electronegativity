@@ -11,20 +11,19 @@ export class Parser {
 
   // returns map [sourceType, dataStructure]
   parse(filename, content) {
+    logger.debug(`Parsing file: ${filename}`);
 
-    logger.debug("Parsing file: " + filename);
-
-    let ext = extension(filename);
-    logger.debug("  -> extension is : " + ext);
-    let sourceType = sourceExtensions[ext];
-    logger.debug("  -> source type is : " + sourceType);
+    const ext = extension(filename);
+    logger.debug(`  -> extension is : ${ext}`);
+    const sourceType = sourceExtensions[ext];
+    logger.debug(`  -> source type is : ${sourceType}`);
 
     let data = null;
-    switch(sourceType) {
+    switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
-        logger.debug("... parsing JavaScript");
+        logger.debug('... parsing JavaScript');
         // try {
-          data = esprima_parse(content.toString(), { loc: true });
+        data = esprima_parse(content.toString(), { loc: true });
         // } catch (error) {
         //   logger.error("Error parsing JS...");
         //   logger.error(content.toString());
@@ -32,15 +31,14 @@ export class Parser {
         // }
         break;
       case sourceTypes.HTML:
-        logger.debug("... parsing HTML");
+        logger.debug('... parsing HTML');
         data = cheerio_load(content);
         break;
       default:
-      logger.error("No parser for file extension : " + filename);
-      break;
+        logger.error(`No parser for file extension : ${filename}`);
+        break;
     }
 
     return new Array(sourceType, data);
   }
-
 }

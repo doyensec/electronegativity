@@ -6,12 +6,12 @@ export function file_exists(file) {
   } catch (err) {
     return false;
   }
-};
+}
 
 export function read_file(file) {
   return fs.readFileSync(file, 'utf8');
 }
 
 export function extension(file) {
-  return file.slice((file.lastIndexOf(".") - 1 >>> 0) + 2);  
+  return file.slice((file.lastIndexOf('.') - 1 >>> 0) + 2);
 }
