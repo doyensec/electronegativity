@@ -1,4 +1,5 @@
 
+import EvalCheck from './EvalCheck';
 import SandboxCheck from './SandboxCheck';
 import AllowpopupCheck from './AllowpopupCheck';
 import OpenExternalCheck from './OpenExternalCheck';
@@ -12,6 +13,7 @@ import NodeIntegrationJavascriptAttachEventCheck from './NodeIntegrationJavascri
 
 
 const ENABLED_CHECKS = [
+  EvalCheck,
   SandboxCheck,
   AllowpopupCheck,
   OpenExternalCheck,
