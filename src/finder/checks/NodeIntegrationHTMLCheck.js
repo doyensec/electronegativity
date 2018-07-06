@@ -3,7 +3,7 @@ import logger from 'winston';
 import { HTMLCheck } from '../check';
 import { Dom } from '../Dom';
 
-export class NodeIntegrationHTMLCheck extends HTMLCheck {
+export default class NodeIntegrationHTMLCheck extends HTMLCheck {
   constructor() {
     const id = 'NODE_INTEGRATION_HTML_CHECK';
     const short = 'Disable nodeIntegration for untrusted origins';
@@ -22,6 +22,7 @@ export class NodeIntegrationHTMLCheck extends HTMLCheck {
 
   match(data) {
     super.match(data);
+    
     const loc = [];
     const webviews = data('webview');
     webviews.each(function (i, elem) {

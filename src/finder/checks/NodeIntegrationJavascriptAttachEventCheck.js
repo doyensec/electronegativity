@@ -4,7 +4,7 @@ import estraverse from 'estraverse';
 import { JavaScriptCheck } from '../check';
 import { Ast } from '../ast';
 
-export class NodeIntegrationJavascriptAttachEventCheck extends JavaScriptCheck {
+export default class NodeIntegrationJavascriptAttachEventCheck extends JavaScriptCheck {
   constructor() {
     const id = 'NODE_INTEGRATION_ATTACH_EVENT_JS_CHECK';
     const short = 'Disable nodeIntegration for untrusted origins';
