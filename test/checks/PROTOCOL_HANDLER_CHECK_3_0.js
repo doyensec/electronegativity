@@ -1,0 +1,3 @@
+app.somethingElse();
+
+somethingElse();
