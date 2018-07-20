@@ -5,8 +5,10 @@ import AllowpopupCheck from './AllowpopupCheck';
 import OpenExternalCheck from './OpenExternalCheck';
 import WebSecurityHTMLCheck from './WebSecurityHTMLCheck';
 import ProtocolHandlercheck from './ProtocolHandlersCheck';
+import InsecureContentHTMLCheck from './InsecureContentHTMLCheck';
 import NodeIntegrationHTMLCheck from './NodeIntegrationHTMLCheck';
 import WebSecurityJavascriptCheck from './WebSecurityJavascriptCheck';
+import InsecureContentJavascriptCheck from './InsecureContentJavascriptCheck';
 import NodeIntegrationJavascriptCheck from './NodeIntegrationJavascriptCheck';
 import NodeIntegrationJavascriptAttachEventCheck from './NodeIntegrationJavascriptAttachEventCheck';
 
@@ -19,8 +21,10 @@ const ENABLED_CHECKS = [
   OpenExternalCheck,
   WebSecurityHTMLCheck,
   ProtocolHandlercheck,
+  InsecureContentHTMLCheck,
   NodeIntegrationHTMLCheck,
   WebSecurityJavascriptCheck,
+  InsecureContentJavascriptCheck,
   NodeIntegrationJavascriptCheck,
   NodeIntegrationJavascriptAttachEventCheck,
 ];
