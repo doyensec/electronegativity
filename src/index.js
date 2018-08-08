@@ -2,51 +2,33 @@
 
 import program from 'commander';
 import path from 'path';
-import logger from 'winston';
+import chalk from 'chalk'; 
 
+import run from './runner.js'
 import { file_exists, extension } from './util';
 import { sourceExtensions } from './parser/types';
 
 
-program.arguments('<file>')
-  .option('-i, --input <input>', 'folder|asar|js|html')
-  .option('-d, --debug', 'Enable asserts and verbose output')
+program
+  .version('1.0')
+  .option('-f, --file <file>', 'Input file')
   .parse(process.argv);
 
-function main() {
-  const args = {
-    input: { input: null },
-    options: {
-      debug: false,
-    },
-  };
+const input = program.file;
 
-  args.options.debug = program.debug || false;
-
-  let input;
-  try{
-    input = path.resolve(program.input);
-  }catch(e){
-    logger.error(e);
-  }
-  
-  if (!file_exists(input)) {
-    console.error('Input file does not exist!');
-    return;
-  } if (!['asar', ...Object.keys(sourceExtensions)].includes(extension(input))) {
-    console.error('Unknown input file format!');
-    return;
-  }
-  args.input = path.resolve(input);
-
-
-  if (args.options.debug) {
-    logger.remove(logger.transports.Console);
-    logger.add(logger.transports.Console, { colorize: false, level: 'silly' });
-  }
-
-  const runner = require('./runner');
-  runner.run(args);
+if(!input){
+  program.outputHelp();
+  process.exit(1);
+}
+if (!file_exists(input)) {
+  console.log(chalk.red('Input file does not exist!'));
+  process.exit(1);
+} 
+if (!['asar', ...Object.keys(sourceExtensions)].includes(extension(input))) {
+  console.log(chalk.red('Unknown input file format!'));
+  process.exit(1);
 }
 
-main();
+const file = path.resolve(input);
+
+run(file);

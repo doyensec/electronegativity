@@ -7,13 +7,11 @@ import { Parser } from './parser';
 import { Finder } from './finder';
 import { extension } from './util';
 
-export function run(args) {
-  const input = args.input;
-
+export default function run(file) {
   // Load
-  const loader = ((extension(input) === 'asar') ? new LoaderAsar() : new LoaderFile());
+  const loader = ((extension(file) === 'asar') ? new LoaderAsar() : new LoaderFile());
   //logger.info(`Loading file : ${input}`);
-  loader.load_file(input);
+  loader.load_file(file);
 
   // Parse
   const parser = new Parser();
