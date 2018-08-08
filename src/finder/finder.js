@@ -3,7 +3,6 @@ import estraverse from 'estraverse';
 
 import { ENABLED_CHECKS } from './checks';
 import { sourceTypes, sourceExtensions } from '../parser/types';
-import { Issue } from './issue';
 
 export class Finder {
   constructor() {
@@ -39,16 +38,13 @@ export class Finder {
     const issues = [];
     switch (type) {
       case sourceTypes.JAVASCRIPT:
-        logger.debug(`Finding JAVASCRIPT issues in ${file}`);
-        // Traverse AST and apply checks
         estraverse.traverse(data, {
           enter: (node, parent) => {
             for (const check of checks) {
-              const loc = check.match(node);
-              if (loc) {
-                logger.debug(`    found issue at ${loc.line}:${loc.column}`);
-                const issue = new Issue(type, file, loc.line, loc.column);
-                issues.push(new Map().set('loc', issue).set('check', check));
+              const location = check.match(node);
+              if (location) {
+                const issue = {location, file, check};
+                issues.push(issue);
               }
             }
           },
@@ -56,14 +52,12 @@ export class Finder {
 
         break;
       case sourceTypes.HTML:
-        logger.debug('Finding HTML issues');
         for (const check of checks) {
           const loc = check.match(data);
           if (loc.length > 0) {
             for (const l of loc) {
-              logger.debug(`    found issue at ${l.line}:${l.column}`);
-              const issue = new Issue(type, file, l.line, l.column);
-              issues.push(new Map().set('loc', issue).set('check', check));
+              const issue = {location, file, check};
+              issues.push(issue);
             }
           }
         }

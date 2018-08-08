@@ -17,21 +17,7 @@ export default class NodeIntegrationJavascriptAttachEventCheck extends JavaScrip
     super(id, short, description);
   }
 
-  /*
-  app.on('web-contents-created',
-    (event, contents) => { contents.on('will-attach-webview',
-      (event, webPreferences, params) => {
-        webPreferences.nodeIntegration = false
-      })
-    })
-  */
 
-  // Need to match
-  // 1. type = CallExpression + callee.property.name = "on" + arguments[0].value = will-attach-webview
-  // 2. find AssignmentExpression where left.object.name = webPreferences + left.property.name = nodeIntegration + right.value = true
-
-  // TODO: should combine with NODE_INTEGRATION_JS_CHECK to understand cases
-  // where nodeIntegration was true and the event handler reset it to false
   match(data) {
     super.match(data);
 
@@ -52,7 +38,6 @@ export default class NodeIntegrationJavascriptAttachEventCheck extends JavaScrip
                   && (node.left.object.name === 'webPreferences')
                   && (node.left.property.name === 'nodeIntegration')
                   && (node.right.value === true)));
-      logger.debug(`[${this.id}] found ${found_nodes.length} node(s)`);
       if (found_nodes.length > 0) {
         main_loc = { line: found_nodes[0].loc.start.line, column: found_nodes[0].loc.start.column };
       }

@@ -1,28 +1,17 @@
-import colors from 'colors';
+#!/usr/bin/env node
+
 import program from 'commander';
 import path from 'path';
-import util from 'util';
 import logger from 'winston';
 
 import { file_exists, extension } from './util';
 import { sourceExtensions } from './parser/types';
 
-logger.addColors({
-  debug: 'green',
-  info: 'cyan',
-  silly: 'magenta',
-  warn: 'yellow',
-  error: 'red',
-});
-
-logger.remove(logger.transports.Console);
-logger.add(logger.transports.Console, { colorize: true });
-
-function error_text(txt) { return colors.red(txt); }
 
 program.arguments('<file>')
   .option('-i, --input <input>', 'folder|asar|js|html')
-  .option('--debug', 'Enable asserts and verbose output');
+  .option('-d, --debug', 'Enable asserts and verbose output')
+  .parse(process.argv);
 
 function main() {
   const args = {
@@ -32,11 +21,15 @@ function main() {
     },
   };
 
-  program.parse(process.argv);
-
   args.options.debug = program.debug || false;
 
-  const input = path.resolve(program.input);
+  let input;
+  try{
+    input = path.resolve(program.input);
+  }catch(e){
+    logger.error(e);
+  }
+  
   if (!file_exists(input)) {
     console.error('Input file does not exist!');
     return;

@@ -4,9 +4,9 @@ import estraverse from 'estraverse';
 import { JavaScriptCheck } from '../check';
 import { Ast } from '../ast';
 
-export default class EvalCheck extends JavaScriptCheck {
+export default class CustomArgumentsCheck extends JavaScriptCheck {
   constructor() {
-    const id = 'EVAL_CHECK';
+    const id = 'CUSTOM_ARGUMENTS_CHECK';
     const short = '';
     const description = ``;
     super(id, short, description);
@@ -14,9 +14,9 @@ export default class EvalCheck extends JavaScriptCheck {
 
   match(data) {
     super.match(data);
-    const methods = ['executeJavascript', 
-                     'eval', 
-                     'insertCSS'];
+
+    const methods = ['appendArgument', 
+                     'appendSwitch'];
 
     if (data.type !== 'CallExpression') return null;
     if (!methods.includes(data.callee.name) && !(data.callee.property && methods.includes(data.callee.property.name))) return null;

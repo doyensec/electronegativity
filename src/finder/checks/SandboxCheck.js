@@ -7,11 +7,12 @@ export default class SandboxCheck extends JavaScriptCheck {
   constructor() {
     const id = 'SANDBOX_CHECK';
     const short = 'Use sandbox for untrusted origins';
-    const description = `Sandboxed renderers only get access to the default
-                          Javascript API instead of the fancy Electron JS APIs.
-                          If set, this option will sandbox the renderer associated
-                          with the window, making it compatible with the
-                          Chromium OS-level sandbox.`;
+    const description = ``;
+    // const description = `Sandboxed renderers only get access to the default
+    //                       Javascript API instead of the fancy Electron JS APIs.
+    //                       If set, this option will sandbox the renderer associated
+    //                       with the window, making it compatible with the
+    //                       Chromium OS-level sandbox.`;
     super(id, short, description);
   }
 

@@ -1,10 +1,8 @@
 import logger from 'winston';
 import path from 'path';
 import asar from 'asar';
-import disk from 'asar';
 
 import { file_exists, read_file, extension } from '../util';
-import { map_to_string } from '../util';
 import { Loader } from './loader_interface';
 
 export class LoaderAsar extends Loader {
@@ -30,6 +28,8 @@ export class LoaderAsar extends Loader {
     logger.debug(`Files in ASAR archive: ${archived_files}`);
 
     for (const file of archived_files) {
+      if(file.startsWith('/node_modules')) continue;
+
       const f = file.startsWith('/') ? file.substr(1) : file;
       switch (extension(f)) {
         case 'js':
