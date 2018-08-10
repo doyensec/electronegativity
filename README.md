@@ -412,6 +412,6 @@ shell.openExternal('file:///Applications/Calculator.app')
 
 ## Credits
 
-Electronegativity was made possible thanks to the gracious contribution of [Claudio Merloni](https://github.com/p4p3r). Thanks P4p3r!
+Electronegativity was made possible thanks to the work of [Claudio Merloni](https://github.com/p4p3r) and [Ibram Marzouk](https://github.com/0xibram)
 
 This tool is based on a [Doyensec](https://www.doyensec.com) sponsored research published at [Black Hat USA 2017](https://www.blackhat.com/us-17/briefings.html#electronegativity-a-study-of-electron-security).
