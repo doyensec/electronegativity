@@ -29,7 +29,7 @@ If you're interested in Electron Security, have a look at our research - [Electr
 ```
 $ npm install
 $ npm run build
-$ node dist/index.js --input < .asar | .js | .html | .htm >
+$ node dist/index.js --file < .asar | .js | .html | .htm >
 ```
 
 ## Testing check with mocha
