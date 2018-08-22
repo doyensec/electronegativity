@@ -2,7 +2,7 @@ import logger from 'winston';
 import path from 'path';
 import asar from 'asar';
 
-import { file_exists, read_file, extension } from '../util';
+import { read_file, extension } from '../util';
 import { Loader } from './loader_interface';
 
 export class LoaderAsar extends Loader {
@@ -10,21 +10,9 @@ export class LoaderAsar extends Loader {
     super();
   }
 
-  get file() { return this._file; }
-
-  set file(value) { this._file = file; }
-
-  get loaded() { return this._loaded; }
-
   // returns map filename -> content
-  load_file(archive) {
-    const asar_filename = path.resolve(archive);
-    if (!file_exists(asar_filename)) {
-      logger.error(`ASAR archive does not exist: ${asar_filename}`);
-      throw new Error('ASAR_DOESNT_EXIST');
-    }
-
-    const archived_files = asar.listPackage(asar_filename);
+  load(archive) {
+    const archived_files = asar.listPackage(archive);
     logger.debug(`Files in ASAR archive: ${archived_files}`);
 
     for (const file of archived_files) {
@@ -35,7 +23,7 @@ export class LoaderAsar extends Loader {
         case 'js':
         case 'html':
           logger.debug(`Extracting file: ${f}`);
-          const buffer = asar.extractFile(asar_filename, f);
+          const buffer = asar.extractFile(archive, f);
           this.load_buffer(buffer, f);
           break;
         default:
@@ -45,12 +33,6 @@ export class LoaderAsar extends Loader {
 
     logger.debug(`Loaded ${this.loaded.size} files`);
 
-    return this.loaded;
-  }
-
-  // returns map filename -> content
-  load_buffer(buffer, filename) {
-    this.loaded.set(filename, buffer);
     return this.loaded;
   }
 }

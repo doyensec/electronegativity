@@ -1,17 +1,29 @@
-import logger from 'winston';
 import cliProgress from 'cli-progress';
 import Table from 'cli-table';
+import { statSync } from 'fs';
+import chalk from 'chalk'; 
 
-import { LoaderFile, LoaderAsar } from './loader';
+import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { extension } from './util';
+import { extension, input_exists, is_directory } from './util';
 
-export default function run(file) {
+export default async function run(input) {
+  if (!input_exists(input)) {
+    console.log(chalk.red('Input does not exist!'));
+    process.exit(1);
+  }
+
   // Load
-  const loader = ((extension(file) === 'asar') ? new LoaderAsar() : new LoaderFile());
-  //logger.info(`Loading file : ${input}`);
-  loader.load_file(file);
+  let loader;
+
+  if(is_directory(input)){
+    loader = new LoaderDirectory();
+  }else{
+    loader = ((extension(input) === 'asar') ? new LoaderAsar() : new LoaderFile());
+  }
+
+  await loader.load(input);
 
   // Parse
   const parser = new Parser();

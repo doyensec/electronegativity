@@ -2,33 +2,31 @@
 
 import program from 'commander';
 import path from 'path';
-import chalk from 'chalk'; 
 
 import run from './runner.js'
-import { file_exists, extension } from './util';
-import { sourceExtensions } from './parser/types';
 
+console.log(`
+███████╗██╗     ███████╗ ██████╗████████╗██████╗  ██████╗ ███╗   ██╗███████╗ ██████╗  █████╗ ████████╗██╗██╗   ██╗██╗████████╗██╗   ██╗
+██╔════╝██║     ██╔════╝██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗████╗  ██║██╔════╝██╔════╝ ██╔══██╗╚══██╔══╝██║██║   ██║██║╚══██╔══╝╚██╗ ██╔╝
+█████╗  ██║     █████╗  ██║        ██║   ██████╔╝██║   ██║██╔██╗ ██║█████╗  ██║  ███╗███████║   ██║   ██║██║   ██║██║   ██║    ╚████╔╝ 
+██╔══╝  ██║     ██╔══╝  ██║        ██║   ██╔══██╗██║   ██║██║╚██╗██║██╔══╝  ██║   ██║██╔══██║   ██║   ██║╚██╗ ██╔╝██║   ██║     ╚██╔╝  
+███████╗███████╗███████╗╚██████╗   ██║   ██║  ██║╚██████╔╝██║ ╚████║███████╗╚██████╔╝██║  ██║   ██║   ██║ ╚████╔╝ ██║   ██║      ██║   
+╚══════╝╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═══╝  ╚═╝   ╚═╝      ╚═╝   
+                                                      By @Doyensec                     
+
+`)
 
 program
   .version('1.0')
-  .option('-f, --file <file>', 'Input file')
+  .description('Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications.')
+  .option('-i, --input <input>', 'input [directory | .js | .html | .asar]')
   .parse(process.argv);
 
-const input = program.file;
-
-if(!input){
+if(!program.input){
   program.outputHelp();
   process.exit(1);
 }
-if (!file_exists(input)) {
-  console.log(chalk.red('Input file does not exist!'));
-  process.exit(1);
-} 
-if (!['asar', ...Object.keys(sourceExtensions)].includes(extension(input))) {
-  console.log(chalk.red('Unknown input file format!'));
-  process.exit(1);
-}
 
-const file = path.resolve(input);
+const input = path.resolve(program.input);
 
-run(file);
+run(input);
