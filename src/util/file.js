@@ -31,3 +31,13 @@ export function list_files(input){
     })
     .catch(console.error)
 }
+
+export function writeOutput(filename, issues){
+  let stream = fs.createWriteStream(filename);
+  stream.write('filename, location, issue, description, url\n');
+  for(let issue of issues){
+    stream.write(issue.toString());
+    stream.write('\n');
+  }
+  stream.end();
+}

@@ -1,14 +1,13 @@
 import cliProgress from 'cli-progress';
 import Table from 'cli-table';
-import { statSync } from 'fs';
-import chalk from 'chalk'; 
+import chalk from 'chalk';
 
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { extension, input_exists, is_directory } from './util';
+import { extension, input_exists, is_directory, writeOutput } from './util';
 
-export default async function run(input) {
+export default async function run(input, output) {
   if (!input_exists(input)) {
     console.log(chalk.red('Input does not exist!'));
     process.exit(1);
@@ -33,11 +32,12 @@ export default async function run(input) {
   const progress = new cliProgress.Bar({format: '{bar} {percentage}% | {value}/{total}'}, cliProgress.Presets.shades_grey);
   progress.start(filenames.length, 0);
 
-  var table = new Table({
+  let table = new Table({
     head: ['File', 'Location', 'Issue', 'Description', 'URL']
   });
 
-  // console.log("entering")
+  let issues = []; 
+
   for (const file of filenames) {
     progress.increment();
 
@@ -45,10 +45,13 @@ export default async function run(input) {
     const result = finder.find(file, data, type);
     
     for (const issue of result) {
-      table.push( [issue.file, `${issue.location.line}:${issue.location.column}`, issue.check._id, issue.check._description, 'url'] )
+      issues.push( [issue.file, `${issue.location.line}:${issue.location.column}`, issue.check._id, issue.check._description, 'url'] )
     }
   }
-  
-  progress.stop()
-  console.log(table.toString())
+  progress.stop();
+
+  if(output) writeOutput(output, issues);
+
+  table.push(...issues);
+  console.log(table.toString());
 }
