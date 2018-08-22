@@ -21,7 +21,6 @@ export default class ContextIsolationCheck extends JavaScriptCheck {
       const contextIsolation = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'contextIsolation' || node.key.name === 'contextIsolation'));
       if (preload.length > 0 && contextIsolation.length > 0) {
         let node = contextIsolation[0];
-        console.log(node)
         if(node.value.value != true){
             location = { line: node.key.loc.start.line, column: node.key.loc.start.column }; 
         }
