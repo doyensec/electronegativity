@@ -1,13 +1,15 @@
 {
-  "name": "electronegativity",
+  "name": "@doyensec/electronegativity",
   "version": "1.0.0",
-  "description": "",
+  "description": "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist/ && babel ./src --out-dir dist/",
     "test": "npm run build && mocha --compilers js:babel-core/register"
   },
-  "bin": "dist/index.js",
+  "bin": {
+    "electronegativity": "dist/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/doyensec/electronegativity.git"
@@ -35,5 +37,9 @@
     "cli-table": "^0.3.1",
     "node-dir": "^0.1.17",
     "winston": "^2.3.1"
-  }
+  },
+  "keywords": [
+    "electron",
+    "security"
+  ]
 }
