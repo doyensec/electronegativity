@@ -1,24 +1,20 @@
-import logger from 'winston';
-
-import { JavaScriptCheck } from '../Check';
+import { sourceTypes } from "../../parser/types";
 import { Ast } from '../ast';
 
-export default class SandboxCheck extends JavaScriptCheck {
+export default class SandboxCheck {
   constructor() {
-    const id = 'SANDBOX_CHECK';
-    const short = 'Use sandbox for untrusted origins';
-    const description = ``;
+    this.id = 'SANDBOX_CHECK';
+    this.short = 'Use sandbox for untrusted origins';
+    this.description = ``;
     // const description = `Sandboxed renderers only get access to the default
     //                       Javascript API instead of the fancy Electron JS APIs.
     //                       If set, this option will sandbox the renderer associated
     //                       with the window, making it compatible with the
     //                       Chromium OS-level sandbox.`;
-    super(id, short, description);
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
-
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 

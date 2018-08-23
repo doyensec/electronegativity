@@ -1,11 +1,11 @@
-import { JavaScriptCheck } from '../check';
+import { sourceTypes } from "../../parser/types";
 
-export default class OpenExternalCheck extends JavaScriptCheck {
+export default class OpenExternalCheck {
   constructor() {
-    const id = 'OPEN_EXTERNAL_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'OPEN_EXTERNAL_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {

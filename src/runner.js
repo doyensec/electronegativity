@@ -45,7 +45,7 @@ export default async function run(input, output) {
     const result = finder.find(file, data, type);
     
     for (const issue of result) {
-      issues.push( [issue.file, `${issue.location.line}:${issue.location.column}`, issue.check._id, issue.check._description, 'url'] )
+      issues.push( [issue.file, `${issue.location.line}:${issue.location.column}`, issue.check.id, issue.check.description, 'url'] )
     }
   }
   progress.stop();

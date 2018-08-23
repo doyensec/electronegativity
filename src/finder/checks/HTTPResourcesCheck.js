@@ -1,20 +1,14 @@
-import logger from 'winston';
-import estraverse from 'estraverse';
+import { sourceTypes } from "../../parser/types";
 
-import { JavaScriptCheck } from '../check';
-import { Ast } from '../ast';
-
-export default class HTTPResourcesCheck extends JavaScriptCheck {
+export default class HTTPResourcesCheck {
   constructor() {
-    const id = 'HTTP_RESOURCES_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'HTTP_RESOURCES_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
-
     if (data.type !== 'CallExpression') return null;
     if (!(data.callee.property && data.callee.property.name === "loadURL")) return null;
     let location;

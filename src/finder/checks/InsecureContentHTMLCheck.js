@@ -1,19 +1,14 @@
-import logger from 'winston';
+import { sourceTypes } from "../../parser/types";
 
-import { HTMLCheck } from '../check';
-import { Dom } from '../Dom';
-
-export default class InsecureContentHTMLCheck extends HTMLCheck {
+export default class InsecureContentHTMLCheck {
   constructor() {
-    const id = 'INSECURE_CONTENT_HTML_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'INSECURE_CONTENT_HTML_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.HTML;
   }
 
   match(data) {
-    super.match(data);
-
     const loc = [];
     const webviews = data('webview');
     webviews.each(function (i, elem) {

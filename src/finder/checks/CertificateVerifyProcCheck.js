@@ -1,12 +1,12 @@
 
-import { JavaScriptCheck } from '../check';
+import { sourceTypes } from '../../parser/types';
 
-export default class CertificateVerifyProcCheck extends JavaScriptCheck {
+export default class CertificateVerifyProcCheck {
   constructor() {
-    const id = 'CERTIFICATE_VERIFY_PROC_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'CERTIFICATE_VERIFY_PROC_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {

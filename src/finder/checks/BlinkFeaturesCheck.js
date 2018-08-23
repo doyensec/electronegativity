@@ -1,18 +1,15 @@
-import logger from 'winston';
-
-import { JavaScriptCheck } from '../Check';
+import { sourceTypes } from '../../parser/types';
 import { Ast } from '../ast';
 
-export default class BlinkFeaturesCheck extends JavaScriptCheck {
+export default class BlinkFeaturesCheck {
   constructor() {
-    const id = 'BLINK_FEATURES_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'BLINK_FEATURES_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT
   }
 
   match(data) {
-    super.match(data);
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 

@@ -1,11 +1,11 @@
-import { JavaScriptCheck } from '../check';
+import { sourceTypes } from "../../parser/types";
 
-export default class PermissionRequestHandler extends JavaScriptCheck {
+export default class PermissionRequestHandler {
   constructor() {
-    const id = 'PERMISSION_REQUEST_HANDLER';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'PERMISSION_REQUEST_HANDLER';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {

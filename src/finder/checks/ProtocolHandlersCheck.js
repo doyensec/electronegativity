@@ -1,20 +1,14 @@
-import logger from 'winston';
-import estraverse from 'estraverse';
+import { sourceTypes } from "../../parser/types";
 
-import { JavaScriptCheck } from '../check';
-import { Ast } from '../ast';
-
-export default class ProtocolHandlerCheck extends JavaScriptCheck {
+export default class ProtocolHandlerCheck {
   constructor() {
-    const id = 'PROTOCOL_HANDLER_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'PROTOCOL_HANDLER_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
-
     const methods = ['setAsDefaultProtocolClient', 
                      'registerStandardSchemes', 
                      'registerServiceWorkerSchemes', 

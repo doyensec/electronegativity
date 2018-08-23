@@ -1,19 +1,14 @@
-import logger from 'winston';
-import estraverse from 'estraverse';
+import { sourceTypes } from '../../parser/types';
 
-import { JavaScriptCheck } from '../check';
-import { Ast } from '../ast';
-
-export default class EvalCheck extends JavaScriptCheck {
+export default class EvalCheck {
   constructor() {
-    const id = 'EVAL_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'EVAL_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
     const methods = ['executeJavascript', 
                      'eval', 
                      'insertCSS'];

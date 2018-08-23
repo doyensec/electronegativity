@@ -1,21 +1,15 @@
-import logger from 'winston';
-import estraverse from 'estraverse';
+import { sourceTypes } from '../../parser/types';
 
-import { JavaScriptCheck } from '../check';
-import { Ast } from '../ast';
-
-export default class CertificateErrorEventCheck extends JavaScriptCheck {
+export default class CertificateErrorEventCheck {
   constructor() {
-    const id = 'CERTIFICATE_ERROR_EVENT_CHECK';
-    const short = ``;
-    const description = ``;
-    super(id, short, description);
+    this.id = 'CERTIFICATE_ERROR_EVENT_CHECK';
+    this.short = ``;
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
 
   match(data) {
-    super.match(data);
-
     if (!((data.type === 'CallExpression')
         && (data.callee.property)
         && (data.callee.property.name === 'on')

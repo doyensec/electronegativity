@@ -1,20 +1,14 @@
-import logger from 'winston';
-import estraverse from 'estraverse';
+import { sourceTypes } from '../../parser/types';
 
-import { JavaScriptCheck } from '../check';
-import { Ast } from '../ast';
-
-export default class CustomArgumentsCheck extends JavaScriptCheck {
+export default class CustomArgumentsCheck {
   constructor() {
-    const id = 'CUSTOM_ARGUMENTS_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'CUSTOM_ARGUMENTS_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
-
     const methods = ['appendArgument', 
                      'appendSwitch'];
 

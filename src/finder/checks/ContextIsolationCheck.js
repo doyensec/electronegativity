@@ -1,16 +1,15 @@
-import { JavaScriptCheck } from '../Check';
+import { sourceTypes } from '../../parser/types';
 import { Ast } from '../ast';
 
-export default class ContextIsolationCheck extends JavaScriptCheck {
+export default class ContextIsolationCheck {
   constructor() {
-    const id = 'CONTEXT_ISOLATION_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'CONTEXT_ISOLATION_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 

@@ -1,18 +1,15 @@
-import logger from 'winston';
-
-import { JavaScriptCheck } from '../Check';
+import { sourceTypes } from '../../parser/types';
 import { Ast } from '../ast';
 
-export default class ExperimentalFeaturesJavascriptCheck extends JavaScriptCheck {
+export default class ExperimentalFeaturesJavascriptCheck {
   constructor() {
-    const id = 'EXPERIMENTAL_FEATURES_JAVASCRIPT_CHECK';
-    const short = '';
-    const description = ``;
-    super(id, short, description);
+    this.id = 'EXPERIMENTAL_FEATURES_JAVASCRIPT_CHECK';
+    this.short = '';
+    this.description = ``;
+    this.type = sourceTypes.JAVASCRIPT;
   }
 
   match(data) {
-    super.match(data);
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
