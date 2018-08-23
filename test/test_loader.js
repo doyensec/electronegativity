@@ -31,16 +31,16 @@ describe('Loader classes', () => {
 
     it('fails if archive does not exist', () => {
       (() => {
-        loader.load_file('FOO');
+        loader.load('FOO');
       }).should.throw();
     });
 
     it('returns a Map', () => {
-      loader.load_file(test_files.get('asar')).should.be.a('Map');
+      loader.load(test_files.get('asar')).should.be.a('Map');
     });
 
     it('extracts file from ASAR', () => {
-      loader.load_file(test_files.get('asar')).size.should.equal(60);
+      loader.load(test_files.get('asar')).size.should.equal(60);
     });
   }),
 
@@ -53,16 +53,16 @@ describe('Loader classes', () => {
 
     it('fails if archive does not exist', () => {
       (() => {
-        loader.load_file('FOO');
+        loader.load('FOO');
       }).should.throw();
     });
 
     it('returns a Map', () => {
-      loader.load_file(test_files.get('js')).should.be.a('Map');
+      loader.load(test_files.get('js')).should.be.a('Map');
     });
 
     it('extracts file from ASAR', () => {
-      loader.load_file(test_files.get('js')).size.should.equal(1);
+      loader.load(test_files.get('js')).size.should.equal(1);
     });
   });
 });

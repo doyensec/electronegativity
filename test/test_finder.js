@@ -29,7 +29,7 @@ describe('Finder', () => {
   let loader = new LoaderFile();
   let list = fs.readdirSync(check_tests);
   for (let file of list) {
-      loader.load_file(path.join(check_tests, file));
+      loader.load(path.join(check_tests, file));
   }
   let filenames = [...loader.loaded.keys()];
 

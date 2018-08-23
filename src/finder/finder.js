@@ -56,7 +56,7 @@ export class Finder {
           const loc = check.match(data);
           if (loc.length > 0) {
             for (const l of loc) {
-              const issue = {location, file, check};
+              const issue = {loc, file, check};
               issues.push(issue);
             }
           }

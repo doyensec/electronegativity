@@ -26,7 +26,7 @@ describe('Parser', () => {
 
   describe('Parse JavaScript', () => {
     let loader = new LoaderFile();
-    loader.load_file(test_files.get('js'));
+    loader.load(test_files.get('js'));
     let filename = [...loader.loaded.keys()][0];
     let content = loader.loaded.get(filename);
 
@@ -63,7 +63,7 @@ describe('Parser', () => {
 
   describe('Parse HTML', () => {
     let loader = new LoaderFile();
-    loader.load_file(test_files.get('html'));
+    loader.load(test_files.get('html'));
     let filename = [...loader.loaded.keys()][0];
     let content = loader.loaded.get(filename);
 
