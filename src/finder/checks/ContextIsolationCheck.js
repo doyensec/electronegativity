@@ -15,7 +15,6 @@ export default class ContextIsolationCheck extends JavaScriptCheck {
     if (data.callee.name !== 'BrowserWindow') return null;
 
     let location;
-
     for (const arg of data.arguments) {
       const preload = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'preload' || node.key.name === 'preload'));
       const contextIsolation = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'contextIsolation' || node.key.name === 'contextIsolation'));
@@ -24,7 +23,7 @@ export default class ContextIsolationCheck extends JavaScriptCheck {
         if(node.value.value != true){
             location = { line: node.key.loc.start.line, column: node.key.loc.start.column }; 
         }
-      }else if(contextIsolation.length == 0){
+      }else if(preload.length > 0 && contextIsolation.length == 0){
         let node = preload[0];
         location = { line: node.key.loc.start.line, column: node.key.loc.start.column }; 
       }
