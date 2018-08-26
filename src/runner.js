@@ -1,5 +1,5 @@
 import cliProgress from 'cli-progress';
-import Table from 'cli-table';
+import Table from 'cli-table2';
 import chalk from 'chalk';
 
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
@@ -33,7 +33,8 @@ export default async function run(input, output) {
   progress.start(filenames.length, 0);
 
   let table = new Table({
-    head: ['File', 'Location', 'Issue', 'Description', 'URL']
+    head: ['Issue ID', 'File', 'Location', 'URL'],
+    wordWrap: true
   });
 
   let issues = []; 
@@ -44,13 +45,18 @@ export default async function run(input, output) {
     const [type, data] = parser.parse(file, loader.loaded.get(file));
     const result = finder.find(file, data, type);
     
+    if(output) writeOutput(output, result);
+
     for (const issue of result) {
-      issues.push( [issue.file, `${issue.location.line}:${issue.location.column}`, issue.check.id, issue.check.description, 'url'] )
+      issues.push([
+                    issue.check.id, 
+                    issue.file, 
+                    `${issue.location.line}:${issue.location.column}`, 
+                    `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+                  ])
     }
   }
   progress.stop();
-
-  if(output) writeOutput(output, issues);
 
   table.push(...issues);
   console.log(table.toString());
