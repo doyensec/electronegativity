@@ -4,13 +4,7 @@ import { Ast } from '../ast';
 export default class SandboxCheck {
   constructor() {
     this.id = 'SANDBOX_CHECK';
-    this.short = 'Use sandbox for untrusted origins';
-    this.description = ``;
-    // const description = `Sandboxed renderers only get access to the default
-    //                       Javascript API instead of the fancy Electron JS APIs.
-    //                       If set, this option will sandbox the renderer associated
-    //                       with the window, making it compatible with the
-    //                       Chromium OS-level sandbox.`;
+    this.description = `Use sandbox for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

@@ -3,8 +3,7 @@ import { sourceTypes } from "../../parser/types";
 export default class HTTPResourcesHTMLCheck {
   constructor() {
     this.id = 'HTTP_RESOURCES_HTML_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not allow insecure HTTP connections `;
     this.type = sourceTypes.HTML;
   }
 

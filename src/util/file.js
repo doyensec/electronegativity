@@ -32,11 +32,17 @@ export function list_files(input){
     .catch(console.error)
 }
 
-export function writeOutput(filename, issues){
+export function writeOutput(filename, result){
   let stream = fs.createWriteStream(filename);
-  stream.write('filename, location, issue, description, url\n');
-  for(let issue of issues){
-    stream.write(issue.toString());
+  stream.write('issue, filename, location, description, url\n');
+  for(let issue of result){
+    stream.write([
+      issue.check.id, 
+      issue.file, 
+      `${issue.location.line}:${issue.location.column}`, 
+      issue.check.description,
+      `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+    ].toString());
     stream.write('\n');
   }
   stream.end();

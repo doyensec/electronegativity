@@ -4,8 +4,7 @@ import { Ast } from '../ast';
 export default class ExperimentalFeaturesJavascriptCheck {
   constructor() {
     this.id = 'EXPERIMENTAL_FEATURES_JAVASCRIPT_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not use Chromium's experimental features`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

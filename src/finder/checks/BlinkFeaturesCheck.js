@@ -4,8 +4,7 @@ import { Ast } from '../ast';
 export default class BlinkFeaturesCheck {
   constructor() {
     this.id = 'BLINK_FEATURES_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not use Chromium’s experimental features`;
     this.type = sourceTypes.JAVASCRIPT
   }
 

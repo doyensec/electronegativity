@@ -4,8 +4,7 @@ import { Ast } from '../ast';
 export default class SandboxCheck {
   constructor() {
     this.id = 'WEB_SECURITY_JS_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not use disablewebsecurity`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

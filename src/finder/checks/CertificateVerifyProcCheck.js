@@ -4,8 +4,7 @@ import { sourceTypes } from '../../parser/types';
 export default class CertificateVerifyProcCheck {
   constructor() {
     this.id = 'CERTIFICATE_VERIFY_PROC_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not allow insecure HTTP connections `;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

@@ -3,8 +3,7 @@ import { sourceTypes } from "../../parser/types";
 export default class WebSecurityHTMLCheck {
   constructor() {
     this.id = 'WEB_SECURITY_HTML_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not use disablewebsecurity`;
     this.type = sourceTypes.HTML;
   }
 

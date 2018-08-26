@@ -3,8 +3,7 @@ import { sourceTypes } from '../../parser/types';
 export default class BlinkFeaturesHTMLCheck {
   constructor() {
     this.id = 'BLINK_FEATURES_HTML_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not use Chromium's experimental features`;
     this.type = sourceTypes.HTML;
   }
 

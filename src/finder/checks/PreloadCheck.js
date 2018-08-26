@@ -4,8 +4,7 @@ import { Ast } from '../ast';
 export default class PreloadCheck {
   constructor() {
     this.id = 'PRELOAD_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Review the use of preload scripts `;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

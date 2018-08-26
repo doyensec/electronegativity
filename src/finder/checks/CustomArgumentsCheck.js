@@ -3,8 +3,7 @@ import { sourceTypes } from '../../parser/types';
 export default class CustomArgumentsCheck {
   constructor() {
     this.id = 'CUSTOM_ARGUMENTS_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Review the use of custom command line arguments `;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

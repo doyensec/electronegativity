@@ -4,34 +4,9 @@ import { Ast } from '../ast';
 export default class NodeIntegrationJavascriptCheck {
   constructor() {
     this.id = 'NODE_INTEGRATION_JS_CHECK';
-    this.short = 'Disable nodeIntegration for untrusted origins';
-    this.description = ``;
-    // const description = `By default, Electron renderers can use Node.js primitives.
-    //   For instance, a remote untrusted domain rendered in a browser window could 
-    //   invoke Node.js APIs to execute native code on the user’s machine. Similarly, 
-    //   a Cross-Site Scripting (XSS) vulnerability on a website can lead to remote 
-    //   code execution. To display remote content, nodeIntegration should be 
-    //   disabled in the webPreferences of BrowserWindow and webview tag.`;
+    this.description = `Disable nodeIntegration for untrusted origins `;
     this.type = sourceTypes.JAVASCRIPT;
   }
-
-  /*
-  mainWindow = new BrowserWindow({ "webPreferences": {
-    "nodeIntegration": true,
-    "nodeIntegrationInWorker": 1 }
-  });
-
-  mainWindow = new BrowserWindow({ "webPreferences": {
-    "nodeIntegration": 1,
-    "nodeIntegrationInWorker": 1 }
-  });
-
-  mainWindow = new BrowserWindow({ "webPreferences": {
-    "nodeIntegrationInWorker": 1 }
-  });
-
-  mainWindow = new BrowserWindow();
-  */
 
   match(data) {
     if (data.type !== 'NewExpression') return null;

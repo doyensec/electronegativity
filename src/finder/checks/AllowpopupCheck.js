@@ -3,8 +3,7 @@ import { sourceTypes } from '../../parser/types';
 export default class AllowpopupsCheck {
   constructor() {
     this.id = 'ALLOWPOPUPS_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not allow popups in webview`;
     this.type = sourceTypes.HTML;
   }
 

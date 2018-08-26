@@ -3,8 +3,7 @@ import { sourceTypes } from "../../parser/types";
 export default class PermissionRequestHandler {
   constructor() {
     this.id = 'PERMISSION_REQUEST_HANDLER';
-    this.short = '';
-    this.description = ``;
+    this.description = `Use setPermissionRequestHandler for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

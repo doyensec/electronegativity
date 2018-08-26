@@ -4,13 +4,7 @@ import { Ast } from '../ast';
 export default class NodeIntegrationJavascriptAttachEventCheck {
   constructor() {
     this.id = 'NODE_INTEGRATION_ATTACH_EVENT_JS_CHECK';
-    this.short = 'Disable nodeIntegration for untrusted origins';
-    this.description = 'By default, Electron renderers can use Node.js primitives. \
-      For instance, a remote untrusted domain rendered in a browser window could \
-      invoke Node.js APIs to execute native code on the user’s machine. Similarly, \
-      a Cross-Site Scripting (XSS) vulnerability on a website can lead to remote \
-      code execution. To display remote content, nodeIntegration should be \
-      disabled in the webPreferences of BrowserWindow and webview tag.';
+    this.description = `Disable nodeIntegration for untrusted origins `;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
@@ -23,9 +17,7 @@ export default class NodeIntegrationJavascriptAttachEventCheck {
         && (data.arguments[0].value === 'will-attach-webview'))) {
       return null;
     }
-
-    // logger.debug(`[${this.id}] - looking into node : ${JSON.stringify(data)}`);
-
+    
     let main_loc = null;
     for (const arg of data.arguments) {
       const found_nodes = Ast.findNodeByType(arg, 'AssignmentExpression', 3, true,

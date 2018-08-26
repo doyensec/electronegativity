@@ -3,8 +3,7 @@ import { sourceTypes } from "../../parser/types";
 export default class ProtocolHandlerCheck {
   constructor() {
     this.id = 'PROTOCOL_HANDLER_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Review the use of custom protocol handlers `;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

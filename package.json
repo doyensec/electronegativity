@@ -34,7 +34,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "cli-progress": "^2.0.0",
-    "cli-table": "^0.3.1",
+    "cli-table2": "^0.2.0",
     "mocha": "^5.2.0",
     "node-dir": "^0.1.17",
     "winston": "^2.3.1"

@@ -4,8 +4,7 @@ import { Ast } from '../ast';
 export default class InsecureContentJavascriptCheck {
   constructor() {
     this.id = 'INSECURE_CONTENT_JAVASCRIPT_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Do not allow insecure HTTP connections `;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

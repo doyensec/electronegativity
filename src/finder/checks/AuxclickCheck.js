@@ -4,8 +4,7 @@ import { Ast } from '../ast';
 export default class AuxclickCheck {
   constructor() {
     this.id = 'AUXCLICK_CHECK';
-    this.short = '';
-    this.description = ``;
+    this.description = `Limit navigation flows to untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
