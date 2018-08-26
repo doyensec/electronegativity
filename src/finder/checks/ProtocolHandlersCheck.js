@@ -5,6 +5,7 @@ export default class ProtocolHandlerCheck {
     this.id = 'PROTOCOL_HANDLER_CHECK';
     this.description = `Review the use of custom protocol handlers `;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

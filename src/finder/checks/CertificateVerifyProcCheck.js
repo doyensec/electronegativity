@@ -6,6 +6,7 @@ export default class CertificateVerifyProcCheck {
     this.id = 'CERTIFICATE_VERIFY_PROC_CHECK';
     this.description = `Do not allow insecure HTTP connections `;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

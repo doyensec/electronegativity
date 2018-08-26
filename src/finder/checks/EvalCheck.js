@@ -3,9 +3,9 @@ import { sourceTypes } from '../../parser/types';
 export default class EvalCheck {
   constructor() {
     this.id = 'EVAL_CHECK';
-    this.description = `Do not use insertCSS, executeJavaScript or eval with user-supplied
-                        content`;
+    this.description = `Do not use insertCSS, executeJavaScript or eval with user-supplied content`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

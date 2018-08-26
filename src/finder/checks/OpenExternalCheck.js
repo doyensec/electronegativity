@@ -5,6 +5,7 @@ export default class OpenExternalCheck {
     this.id = 'OPEN_EXTERNAL_CHECK';
     this.description = `Review the use of openExternal`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

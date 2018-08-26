@@ -49,7 +49,7 @@ export default async function run(input, output) {
 
     for (const issue of result) {
       issues.push([
-                    issue.check.id, 
+                    `${issue.check.id} ${issue.check.manualReview!==undefined&&issue.check.manualReview?chalk.bgRed(`Manual Review Required`):``}`, 
                     issue.file, 
                     `${issue.location.line}:${issue.location.column}`, 
                     `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`

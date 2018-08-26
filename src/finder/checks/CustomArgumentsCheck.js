@@ -5,6 +5,7 @@ export default class CustomArgumentsCheck {
     this.id = 'CUSTOM_ARGUMENTS_CHECK';
     this.description = `Review the use of custom command line arguments `;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

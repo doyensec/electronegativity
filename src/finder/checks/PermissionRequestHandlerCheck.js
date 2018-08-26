@@ -5,6 +5,7 @@ export default class PermissionRequestHandler {
     this.id = 'PERMISSION_REQUEST_HANDLER';
     this.description = `Use setPermissionRequestHandler for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

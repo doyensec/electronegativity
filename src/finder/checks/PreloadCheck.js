@@ -6,6 +6,7 @@ export default class PreloadCheck {
     this.id = 'PRELOAD_CHECK';
     this.description = `Review the use of preload scripts `;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
   match(data) {

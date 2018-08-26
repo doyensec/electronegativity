@@ -5,6 +5,7 @@ export default class CertificateErrorEventCheck {
     this.id = 'CERTIFICATE_ERROR_EVENT_CHECK';
     this.description = `Do not allow insecure HTTP connections `;
     this.type = sourceTypes.JAVASCRIPT;
+    this.manualReview = true;
   }
 
 
