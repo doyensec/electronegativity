@@ -94,7 +94,7 @@ describe('Parser', () => {
     });
 
     it('parsed data should be a DOM', () => {
-      output[1].html().should.include("<!DOCTYPE html>");
+      output[1].parsed.html().should.include("<!DOCTYPE html>");
     });
   });
 
