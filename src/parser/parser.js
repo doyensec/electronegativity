@@ -20,6 +20,9 @@ export class Parser {
       case sourceTypes.HTML:
         data = cheerio_load(content);
         break;
+      case sourceTypes.JSON:
+        data = content;
+        break;
       default:
         break;
     }

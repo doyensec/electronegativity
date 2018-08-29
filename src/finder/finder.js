@@ -1,8 +1,7 @@
-import logger from 'winston';
 import estraverse from 'estraverse';
 
 import { ENABLED_CHECKS } from './checks';
-import { sourceTypes, sourceExtensions } from '../parser/types';
+import { sourceTypes } from '../parser/types';
 
 export class Finder {
   constructor() {
@@ -17,15 +16,12 @@ export class Finder {
 
   init_checks_list() {
     for (const type of Object.keys(sourceTypes)) {
-      logger.debug(`Known file types : ${type}`);
       this._checks_by_type.set(sourceTypes[type], []);
     }
     for (const check of this.enabled_checks) {
       const checkInstance = new check();
-      logger.debug(`Enabled checks : ${checkInstance.type}`);
       this._checks_by_type.get(checkInstance.type).push(checkInstance);
     }
-    logger.debug(`Initialized ${this.enabled_checks.length} check(s).`);
   }
 
   find(file, data, type, use_only_checks = null) {
@@ -53,18 +49,23 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         for (const check of checks) {
-          const loc = check.match(data);
-          if (loc.length > 0) {
-            for (const l of loc) {
-              const issue = {loc, file, check};
+          const locations = check.match(data);
+          if(locations.length > 0){
+            for(const location of locations) {
+              const issue = {location, file, check};
               issues.push(issue);
             }
           }
         }
         break;
-      default:
-        logger.error(`Unknown source type : ${type}`);
-        break;
+      case sourceTypes.JSON:
+        for (const check of checks) {
+          const location = check.match(data);
+          if (location){
+            const issue = {location, file, check};
+            issues.push(issue);
+          }
+        }
     }
 
     return issues;

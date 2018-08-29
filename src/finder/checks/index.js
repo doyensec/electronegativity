@@ -7,6 +7,7 @@ import AllowpopupCheck from './AllowpopupCheck';
 import OpenExternalCheck from './OpenExternalCheck';
 import BlinkFeaturesCheck from './BlinkFeaturesCheck';
 import HTTPResourcesCheck from './HTTPResourcesCheck';
+import ElectronVersionCheck from './ElectronVersionCheck';
 import WebSecurityHTMLCheck from './WebSecurityHTMLCheck';
 import CustomArgumentsCheck from './CustomArgumentsCheck';
 import ProtocolHandlercheck from './ProtocolHandlersCheck';
@@ -36,6 +37,7 @@ const ENABLED_CHECKS = [
   OpenExternalCheck,
   BlinkFeaturesCheck,
   HTTPResourcesCheck,
+  ElectronVersionCheck,
   WebSecurityHTMLCheck,
   CustomArgumentsCheck,
   ProtocolHandlercheck,
