@@ -7,13 +7,13 @@ export default class HTTPResourcesHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match(data) {
+  match({ content, parsed }) {
     const loc = [];
-    const webviews = data('webview');
+    const webviews = parsed('webview');
     webviews.each(function (i, elem) {
-      let src = data(this).attr('src');
+      let src = parsed(this).attr('src');
       if(src && (src.substring(0,7) == "http://")){
-        loc.push({ line: 1, column: 1 });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }
 
     });

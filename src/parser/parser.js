@@ -18,7 +18,8 @@ export class Parser {
         data = esprima_parse(content.toString(), { loc: true });
         break;
       case sourceTypes.HTML:
-        data = cheerio_load(content);
+        const parsed = cheerio_load(content, { xmlMode: true, withStartIndices: true });
+        data = {content, parsed}
         break;
       case sourceTypes.JSON:
         data = content;
