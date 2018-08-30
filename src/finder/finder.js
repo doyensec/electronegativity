@@ -31,8 +31,7 @@ export class Finder {
       }
       return true;
     });
-
-    const fileLines = content.split('\n');
+    const fileLines = content.toString().split('\n');
     const issues = [];
     switch (type) {
       case sourceTypes.JAVASCRIPT:
