@@ -18,8 +18,7 @@ export class Parser {
         data = esprima_parse(content.toString(), { loc: true });
         break;
       case sourceTypes.HTML:
-        const parsed = cheerio_load(content, { xmlMode: true, withStartIndices: true });
-        data = {content, parsed}
+        data = cheerio_load(content, { xmlMode: true, withStartIndices: true });
         break;
       case sourceTypes.JSON:
         data = content;
@@ -28,6 +27,6 @@ export class Parser {
         break;
     }
 
-    return new Array(sourceType, data);
+    return new Array(sourceType, data, content);
   }
 }

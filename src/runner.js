@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { extension, input_exists, is_directory, writeOutput } from './util';
+import { extension, input_exists, is_directory, writeCsvHeader, writeIssues } from './util';
 
 export default async function run(input, output) {
   if (!input_exists(input)) {
@@ -39,13 +39,16 @@ export default async function run(input, output) {
 
   let issues = []; 
 
+  if(output) writeCsvHeader(output);
+
   for (const file of filenames) {
     progress.increment();
 
-    const [type, data] = parser.parse(file, loader.loaded.get(file));
-    const result = finder.find(file, data, type);
+
+    const [type, data, content] = parser.parse(file, loader.loaded.get(file));
+    const result = finder.find(file, data, type, content);
     
-    if(output) writeOutput(output, result);
+    if(output) writeIssues(output, result);
 
     for (const issue of result) {
       issues.push([

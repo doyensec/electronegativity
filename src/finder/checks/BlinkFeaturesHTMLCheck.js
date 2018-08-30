@@ -7,11 +7,11 @@ export default class BlinkFeaturesHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match({ content, parsed }) {
+  match(data, content) {
     const loc = [];
-    const webviews = parsed('webview');
+    const webviews = data('webview');
     webviews.each(function (i, elem) {
-      let wp = parsed(this).attr('blinkfeatures');
+      let wp = data(this).attr('blinkfeatures');
       if(wp && (wp.indexOf('PreciseMemoryInfo') != -1 || wp.indexOf('CSSVariables') != -1)){
         loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }

@@ -7,11 +7,11 @@ export default class AllowpopupsCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match({ content, parsed }) {
+  match(data, content) {
     const loc = [];
-    const webviews = parsed('webview');
+    const webviews = data('webview');
     webviews.each(function (i, elem) {
-      const allowpopups = parsed(this).attr('allowpopups');
+      const allowpopups = data(this).attr('allowpopups');
       if (allowpopups !== undefined) {
         loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }

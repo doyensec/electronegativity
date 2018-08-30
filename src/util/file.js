@@ -32,18 +32,30 @@ export function list_files(input){
     .catch(console.error)
 }
 
-export function writeOutput(filename, result){
-  let stream = fs.createWriteStream(filename);
-  stream.write('issue, filename, location, description, url\n');
-  for(let issue of result){
-    stream.write([
+export function writeIssues(filename, result){
+  let issues = '';
+
+  result.forEach(issue => {
+    issues += [
       issue.check.id, 
       issue.file, 
       `${issue.location.line}:${issue.location.column}`, 
+      issue.sample,
       issue.check.description,
       `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
-    ].toString());
-    stream.write('\n');
-  }
-  stream.end();
+    ].toString();
+    issues += '\n'
+  })
+
+  fs.writeFile(filename, issues, { flag: 'a' }, (err) => {
+    if(err) throw err;
+  })
+}
+
+export function writeCsvHeader(filename){
+  let header = 'issue, filename, location, sample, description, url\n';
+
+  fs.writeFile(filename, header, (err) => {
+    if(err) throw err;
+  })
 }

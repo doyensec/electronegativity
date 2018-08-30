@@ -24,13 +24,15 @@ export class Finder {
     }
   }
 
-  find(file, data, type, use_only_checks = null) {
+  find(file, data, type, content, use_only_checks = null) {
     const checks = this._checks_by_type.get(type).filter((check) => {
       if (use_only_checks && !use_only_checks.includes(check.id)) {
         return false;
       }
       return true;
     });
+
+    const fileLines = content.split('\n');
     const issues = [];
     switch (type) {
       case sourceTypes.JAVASCRIPT:
@@ -39,7 +41,8 @@ export class Finder {
             for (const check of checks) {
               const location = check.match(node);
               if (location) {
-                const issue = {location, file, check};
+                const sample = fileLines[location.line-1]
+                const issue = {location, file, check, content, sample};
                 issues.push(issue);
               }
             }
@@ -49,10 +52,11 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         for (const check of checks) {
-          const locations = check.match(data);
+          const locations = check.match(data, content);
           if(locations.length > 0){
             for(const location of locations) {
-              const issue = {location, file, check};
+              const sample = fileLines[location.line-1]
+              const issue = {location, file, check, content, sample};
               issues.push(issue);
             }
           }
@@ -62,7 +66,8 @@ export class Finder {
         for (const check of checks) {
           const location = check.match(data);
           if (location){
-            const issue = {location, file, check};
+            const sample = fileLines[location.line-1]
+            const issue = {location, file, check, content, sample};
             issues.push(issue);
           }
         }

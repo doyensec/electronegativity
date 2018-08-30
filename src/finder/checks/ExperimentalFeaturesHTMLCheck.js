@@ -7,11 +7,11 @@ export default class ExperimentalFeaturesHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match({ content, parsed }) {
+  match(data, content) {
     const loc = [];
-    const webviews = parsed('webview');
+    const webviews = data('webview');
     webviews.each(function (i, elem) {
-      let wp = parsed(this).attr('webpreferences');
+      let wp = data(this).attr('webpreferences');
       if(wp && (wp.indexOf('experimentalFeatures=true') != -1 || wp.indexOf('experimentalCanvasFeatures=true') != -1)){
         loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }

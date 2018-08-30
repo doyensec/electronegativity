@@ -8,11 +8,11 @@ export default class NodeIntegrationHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match({ content, parsed }) {
+  match(data, content) {
     const loc = [];
-    const webviews = parsed('webview');
+    const webviews = data('webview');
     webviews.each(function (i, elem) {
-      const nodeintegration = parsed(this).attr('nodeintegration');
+      const nodeintegration = data(this).attr('nodeintegration');
       if (nodeintegration !== undefined) {
         loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }

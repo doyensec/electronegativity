@@ -9,16 +9,16 @@ export default class WebSecurityHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match({ content, parsed }) {
+  match(data, content) {
     const loc = [];
-    const webviews = parsed('webview');
+    const webviews = data('webview');
     webviews.each(function (i, elem) {
-      const disablewebsecurity = parsed(this).attr('disablewebsecurity');
+      const disablewebsecurity = data(this).attr('disablewebsecurity');
       if (disablewebsecurity !== undefined) {
         loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }
 
-      let wp = parsed(this).attr('webpreferences');
+      let wp = data(this).attr('webpreferences');
       if(wp && (wp.indexOf('webSecurity=false') != -1 || wp.indexOf('webSecurity=0') != -1)){
         loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
       }
