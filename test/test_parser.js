@@ -44,8 +44,8 @@ describe('Parser', () => {
       output.should.be.a('Array');
     });
 
-    it('returns an Array of length 2', () => {
-      output.length.should.equal(2);
+    it('returns an Array of length 3', () => {
+      output.length.should.equal(3);
     });
 
     it('parsed source type should not be null', () => {
@@ -82,7 +82,7 @@ describe('Parser', () => {
     });
 
     it('returns an Array of length 2', () => {
-      output.length.should.equal(2);
+      output.length.should.equal(3);
     });
 
     it('parsed source type should not be null', () => {
@@ -94,7 +94,7 @@ describe('Parser', () => {
     });
 
     it('parsed data should be a DOM', () => {
-      output[1].parsed.html().should.include("<!DOCTYPE html>");
+      output[1].html().should.include("<!DOCTYPE html>");
     });
   });
 

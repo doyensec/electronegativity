@@ -38,7 +38,7 @@ describe('Finder', () => {
   // Parse all files and ...
   let parser = new Parser();
   for (let file of filenames) {
-    const [type, data] = parser.parse(file, loader.loaded.get(file));
+    const [type, data, content] = parser.parse(file, loader.loaded.get(file));
     let split = path.basename(file.substr(0, file.lastIndexOf('.'))).split('_');
     let num_issues = +split.pop();
     split.pop()
@@ -47,13 +47,13 @@ describe('Finder', () => {
     if (!testcases.has(check)) {
       testcases.set(check, []);
     }
-    testcases.get(check).push([file, type, data, num_issues]);
+    testcases.get(check).push([file, type, data, num_issues, content]);
   }
 
   // For each ...
   for (let check of [...testcases.keys()]) {
-    for (let [file, type, data, num_issues] of testcases.get(check)) {
-      let result = finder.find(file, data, type, [ check ]);
+    for (let [file, type, data, num_issues, content] of testcases.get(check)) {
+      let result = finder.find(file, data, type, content, [ check ]);
       it('Finds ' + num_issues + ' issue(s) in ' + path.basename(file), () => {
         result.length.should.equal(num_issues);
       });
