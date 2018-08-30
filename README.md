@@ -13,7 +13,7 @@ If you're interested in Electron Security, have a look at our research - [Electr
 ## Installation
 
 ```
-$ npm install electronegativity -g
+$ npm install @doyensec/electronegativity -g
 ```
 
 ## Usage
