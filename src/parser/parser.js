@@ -1,4 +1,4 @@
-import { parse as esprima_parse } from 'esprima';
+import { parseModule as esprima_parse } from 'esprima';
 import { load as cheerio_load } from 'cheerio';
 
 import { extension } from '../util';
@@ -15,7 +15,11 @@ export class Parser {
     let data = null;
     switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
-        data = esprima_parse(content.toString(), { loc: true });
+        try{
+          data = esprima_parse(content.toString(), { loc: true, tolerant: true });
+        }catch(e){
+          data = '';
+        }
         break;
       case sourceTypes.HTML:
         data = cheerio_load(content, { xmlMode: true, withStartIndices: true });
