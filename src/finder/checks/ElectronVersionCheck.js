@@ -16,8 +16,8 @@ export default class ElectronVersionCheck {
     const json = JSON.parse(data);
     const latest = releases.find(release => release.npm_dist_tag === 'latest').version;
 
-    const electron = 'electron' in json.dependencies ? coerce(json.dependencies.electron) : undefined;
-    const electronDev = 'electron' in json.devDependencies ? coerce(json.devDependencies.electron) : undefined;
+    const electron = json.dependencies && 'electron' in json.dependencies ? coerce(json.dependencies.electron) : undefined;
+    const electronDev = json.devDependencies && 'electron' in json.devDependencies ? coerce(json.devDependencies.electron) : undefined;
 
     if(electron && lt(electron, latest) || electronDev && lt(electronDev, latest)) {
            let matches = linenumber(data, /"?electron"?:\s?.*,?/g);
