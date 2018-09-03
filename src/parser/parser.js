@@ -11,12 +11,12 @@ export class Parser {
     const ext = extension(filename);
 
     const sourceType = sourceExtensions[ext];
-
+    content = content.toString();
     let data = null;
     switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
         try{
-          data = esprima_parse(content.toString(), { loc: true, tolerant: true });
+          data = esprima_parse(content, { loc: true, tolerant: true });
         }catch(e){
           data = '';
         }

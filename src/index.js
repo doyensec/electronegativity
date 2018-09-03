@@ -17,7 +17,7 @@ console.log(`
 `)
 
 program
-  .version('1.0.5')
+  .version('1.0.6')
   .description('Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications.')
   .option('-i, --input <path>', 'input [directory | .js | .html | .asar]')
   .option('-o, --output <filename>', 'save the results in csv format to a file')
