@@ -6,6 +6,7 @@ import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
 import { extension, input_exists, is_directory, writeCsvHeader, writeIssues } from './util';
+import { isNull } from 'util';
 
 export default async function run(input, output) {
   if (!input_exists(input)) {
@@ -37,7 +38,8 @@ export default async function run(input, output) {
     wordWrap: true
   });
 
-  let issues = []; 
+  let issues = [];
+  let errors = []; 
 
   if(output) writeCsvHeader(output);
 
@@ -45,7 +47,12 @@ export default async function run(input, output) {
     progress.increment();
 
 
-    const [type, data, content] = parser.parse(file, loader.loaded.get(file));
+    const [type, data, content, error] = parser.parse(file, loader.loaded.get(file));
+    if (!isNull(error)) {
+      errors.push({file : file, message : error.message});
+      continue;
+    }
+
     const result = finder.find(file, data, type, content);
     
     if(output) writeIssues(output, result);
@@ -60,6 +67,9 @@ export default async function run(input, output) {
     }
   }
   progress.stop();
+
+  for (const error of errors)
+     console.log(chalk.red('Error parsing "' + error.file + '" - ' + error.message));
 
   table.push(...issues);
   console.log(table.toString());

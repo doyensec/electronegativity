@@ -13,12 +13,13 @@ export class Parser {
     const sourceType = sourceExtensions[ext];
     content = content.toString();
     let data = null;
+    let error = null;
     switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
         try{
           data = esprima_parse(content, { loc: true, tolerant: true });
         }catch(e){
-          data = '';
+          error = e;
         }
         break;
       case sourceTypes.HTML:
@@ -31,6 +32,6 @@ export class Parser {
         break;
     }
 
-    return new Array(sourceType, data, content);
+    return new Array(sourceType, data, content, error);
   }
 }
