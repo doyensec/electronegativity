@@ -16,7 +16,7 @@ export class Parser {
     switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
         try{
-          data = esprima_parse(content, { loc: true, tolerant: true });
+          data = esprima_parse(content, { loc: true, tolerant: true, jsx: true });
         }catch(e){
           data = '';
         }
