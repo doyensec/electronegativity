@@ -39,7 +39,7 @@ export default async function run(input, output) {
   });
 
   let issues = [];
-  let errors = []; 
+  let errors = [];
 
   if(output) writeCsvHeader(output);
 
@@ -48,9 +48,16 @@ export default async function run(input, output) {
 
 
     const [type, data, content, error] = parser.parse(file, loader.loaded.get(file));
+
     if (!isNull(error)) {
-      errors.push({file : file, message : error.message});
-      continue;
+      errors.push({file: file, message: error.message, tolerable: false});
+      continue; // 'data' is undefined - no need to collect data.errors
+    }
+
+    if (data.errors !== undefined) {
+      for (const warning of data.errors) {
+        errors.push({file: file, message: warning.message, tolerable: true});
+      }
     }
 
     const result = finder.find(file, data, type, content);
@@ -68,8 +75,12 @@ export default async function run(input, output) {
   }
   progress.stop();
 
-  for (const error of errors)
-     console.log(chalk.red('Error parsing "' + error.file + '" - ' + error.message));
+  for (const error of errors) {
+    if (error.tolerable)
+      console.log(chalk.yellow(`Tolerable error parsing ${error.file} - ${error.message}`));
+    else
+      console.log(chalk.red(`Error parsing ${error.file} - ${error.message}`));
+  }
 
   table.push(...issues);
   console.log(table.toString());
