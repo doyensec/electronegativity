@@ -1,1 +1,2 @@
-shell.openExternal("something");
+let something;
+shell.openExternal(something);
