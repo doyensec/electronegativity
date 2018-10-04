@@ -17,7 +17,7 @@ export class Parser {
     try {
       switch (sourceType) {
         case sourceTypes.JAVASCRIPT:
-          data = esprima_parse(content, { loc: true, tolerant: true });
+          data = esprima_parse(content, { loc: true, tolerant: true, jsx: true });
           break;
         case sourceTypes.HTML:
           data = cheerio_load(content, { xmlMode: true, withStartIndices: true });
