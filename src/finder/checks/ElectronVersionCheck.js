@@ -13,14 +13,13 @@ export default class ElectronVersionCheck {
 
   match(data) {
     let location;
-    const json = JSON.parse(data);
     const latest = releases.find(release => release.npm_dist_tag === 'latest').version;
 
-    const electron = json.dependencies && 'electron' in json.dependencies ? coerce(json.dependencies.electron) : undefined;
-    const electronDev = json.devDependencies && 'electron' in json.devDependencies ? coerce(json.devDependencies.electron) : undefined;
+    const electron = data.json.dependencies && 'electron' in data.json.dependencies ? coerce(data.json.dependencies.electron) : undefined;
+    const electronDev = data.json.devDependencies && 'electron' in data.json.devDependencies ? coerce(data.json.devDependencies.electron) : undefined;
 
     if(electron && lt(electron, latest) || electronDev && lt(electronDev, latest)) {
-           let matches = linenumber(data, /"?electron"?:\s?.*,?/g);
+           let matches = linenumber(data.text, /"?electron"?:\s?.*,?/g);
            location = {line: matches[0].line, column: 0};
        }
     return location;

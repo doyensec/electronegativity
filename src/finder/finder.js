@@ -1,4 +1,4 @@
-import estraverse from 'estraverse';
+import estraverse from 'estraverse-fb';
 
 import { ENABLED_CHECKS } from './checks';
 import { sourceTypes } from '../parser/types';
