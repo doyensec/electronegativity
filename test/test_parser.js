@@ -44,8 +44,8 @@ describe('Parser', () => {
       output.should.be.a('Array');
     });
 
-    it('returns an Array of length 3', () => {
-      output.length.should.equal(3);
+    it('returns an Array of length 4', () => {
+      output.length.should.equal(4);
     });
 
     it('parsed source type should not be null', () => {
@@ -81,8 +81,8 @@ describe('Parser', () => {
       output.should.be.a('Array');
     });
 
-    it('returns an Array of length 2', () => {
-      output.length.should.equal(3);
+    it('returns an Array of length 4', () => {
+      output.length.should.equal(4);
     });
 
     it('parsed source type should not be null', () => {
