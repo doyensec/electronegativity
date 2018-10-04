@@ -1,1 +1,1 @@
-some.thing();
+shell.openExternal("https://doyensec.com/");
