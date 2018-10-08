@@ -17,6 +17,8 @@ export class Parser {
     try {
       switch (sourceType) {
         case sourceTypes.JAVASCRIPT:
+          // replace shebang (https://en.wikipedia.org/wiki/Shebang_(Unix)) with spaces to keep offsets intact
+          content = content.replace(/(^#!.*)/, function(m) { return Array(m.length + 1).join(' ') });
           data = esprima_parse(content, { loc: true, tolerant: true, jsx: true });
           break;
         case sourceTypes.HTML:
