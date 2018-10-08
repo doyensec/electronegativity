@@ -16,9 +16,9 @@ export class LoaderAsar extends Loader {
     logger.debug(`Files in ASAR archive: ${archived_files}`);
 
     for (const file of archived_files) {
-      if(file.startsWith('/node_modules')) continue;
+      if(file.startsWith(`${path.sep}node_modules`)) continue;
 
-      const f = file.startsWith('/') ? file.substr(1) : file;
+      const f = file.startsWith(path.sep) ? file.substr(1) : file;
       switch (extension(f)) {
         case 'js':
         case 'html':
