@@ -25,8 +25,6 @@ export class LoaderAsar extends Loader {
             continue;
         case 'js':
         case 'jsx':
-        case 'ts':
-        case 'tsx':
         case 'htm':
         case 'html':
           logger.debug(`Extracting file: ${f}`);
