@@ -17,12 +17,12 @@ $ npm install @doyensec/electronegativity -g
 ```
 
 ## Usage
-|    Option    |                 Description                |
-|:------------:|:------------------------------------------:|
-| -V           | output the version number                  |
-| -i, --input  | input (directory, .js, .htm, .asar)        |
-| -o, --output | save the results in csv format to a file |
-| -h, --help   | output usage information                   |
+|    Option    |                 Description                       |
+|:------------:|:-------------------------------------------------:|
+| -V           | output the version number                         |
+| -i, --input  | input (directory, .js, .htm, .asar)               |
+| -o, --output | save the results to a file in csv or sarif format |
+| -h, --help   | output usage information                          |
 
 ## Examples
 Using electronegativity to look for issues in a directory containing an Electron app:

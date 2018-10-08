@@ -8,7 +8,7 @@ import { Finder } from './finder';
 import { extension, input_exists, is_directory, writeCsvHeader, writeIssues } from './util';
 import { isNull } from 'util';
 
-export default async function run(input, output) {
+export default async function run(input, output, isSarif) {
   if (!input_exists(input)) {
     console.log(chalk.red('Input does not exist!'));
     process.exit(1);
@@ -41,11 +41,8 @@ export default async function run(input, output) {
   let issues = [];
   let errors = [];
 
-  if(output) writeCsvHeader(output);
-
   for (const file of filenames) {
     progress.increment();
-
 
     const [type, data, content, error] = parser.parse(file, loader.loaded.get(file));
 
@@ -61,18 +58,12 @@ export default async function run(input, output) {
     }
 
     const result = finder.find(file, data, type, content);
-    
-    if(output) writeIssues(output, result);
-
-    for (const issue of result) {
-      issues.push([
-                    `${issue.check.id} ${issue.check.manualReview!==undefined&&issue.check.manualReview?chalk.bgRed(`Manual Review Required`):``}`, 
-                    issue.file, 
-                    `${issue.location.line}:${issue.location.column}`, 
-                    `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
-                  ])
-    }
+    issues.push(...result);
   }
+
+  if (output)
+    writeIssues(output, issues, isSarif);
+
   progress.stop();
 
   for (const error of errors) {
@@ -82,6 +73,16 @@ export default async function run(input, output) {
       console.log(chalk.red(`Error parsing ${error.file} - ${error.message}`));
   }
 
-  table.push(...issues);
+  let rows = [];
+  for (const issue of issues) {
+    rows.push([
+      `${issue.check.id} ${issue.check.manualReview !== undefined && issue.check.manualReview ? chalk.bgRed(`Manual Review Required`) : ``}`,
+      issue.file,
+      `${issue.location.line}:${issue.location.column}`,
+      `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+    ]);
+  }
+
+  table.push(...rows);
   console.log(table.toString());
 }

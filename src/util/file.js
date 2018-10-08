@@ -32,22 +32,86 @@ export function list_files(input){
     .catch(console.error)
 }
 
-export function writeIssues(filename, result){
+export function writeIssues(filename, result, isSarif){
   let issues = '';
 
-  result.forEach(issue => {
-    issues += [
-      issue.check.id, 
-      issue.file, 
-      `${issue.location.line}:${issue.location.column}`, 
-      issue.sample,
-      issue.check.description,
-      `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
-    ].toString();
-    issues += '\n'
-  })
+  if (isSarif){
+    issues =
+      {
+        $schema: "http://json.schemastore.org/sarif-2.0.0",
+        version: "2.0.0",
+        runs: [
+          {
+            tool: {
+              name: "Electronegativity",
+              fullName: "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
+              version: "1.0.6"
+            },
+            results: [],
+            resources: {
+              rules: {
+              }
+            }
+          }
+        ]
+      };
 
-  fs.writeFile(filename, issues, { flag: 'a' }, (err) => {
+    result.forEach(issue => {
+      if (issues.runs[0].resources.rules[issue.check.id] === undefined) {
+        issues.runs[0].resources.rules[issue.check.id] = {
+          id: issue.check.id,
+          name: {
+            text: issue.check.description
+          },
+          fullDescription: {
+            text: issue.check.description
+          },
+          configuration: {
+            defaultLevel: `${issue.check.manualReview ? 'warning' : 'error'}`
+          },
+          helpUri: `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+        };
+      }
+      issues.runs[0].results.push({
+        ruleId: issue.check.id,
+        message: {
+          text: issue.check.description
+        },
+        locations: [
+          {
+            physicalLocation: {
+              fileLocation: {
+                uri: issue.file
+              },
+              region: {
+                startLine: issue.location.line,
+                startColumn: issue.location.column,
+                charLength: issue.sample.length
+              }
+            }
+          }
+        ]
+      });
+    });
+
+    issues = JSON.stringify(issues, null, 2);
+  }
+  else{
+    writeCsvHeader(output);
+    result.forEach(issue => {
+      issues += [
+        issue.check.id, 
+        issue.file, 
+        `${issue.location.line}:${issue.location.column}`, 
+        issue.sample,
+        issue.check.description,
+        `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+      ].toString();
+      issues += '\n'
+    })
+  }
+
+  fs.writeFile(filename, issues, { flag: 'w' }, (err) => {
     if(err) throw err;
   })
 }
