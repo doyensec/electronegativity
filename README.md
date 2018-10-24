@@ -59,6 +59,6 @@ Feel free to take a look at some of the already implemented checks to get an ide
 
 ## Credits
 
-Electronegativity was made possible thanks to the work of [Claudio Merloni](https://github.com/p4p3r) and [Ibram Marzouk](https://github.com/0xibram)
+Electronegativity was made possible thanks to the work of [Claudio Merloni](https://github.com/p4p3r), [Ibram Marzouk](https://github.com/0xibram), [Jaroslav Lobačevski](https://github.com/JarLob) and many other [contributors](https://github.com/doyensec/electronegativity/graphs/contributors).
 
 This tool is based on a [Doyensec](https://www.doyensec.com) sponsored research published at [Black Hat USA 2017](https://www.blackhat.com/us-17/briefings.html#electronegativity-a-study-of-electron-security).
