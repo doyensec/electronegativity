@@ -2,7 +2,7 @@ import logger from 'winston';
 import path from 'path';
 import asar from 'asar';
 
-import { read_file, extension } from '../util';
+import { extension } from '../util';
 import { Loader } from './loader_interface';
 
 export class LoaderAsar extends Loader {
@@ -21,6 +21,8 @@ export class LoaderAsar extends Loader {
       const f = file.startsWith(path.sep) ? file.substr(1) : file;
       switch (extension(f)) {
         case 'js':
+        case 'ts':
+        case 'tsx':
         case 'html':
           logger.debug(`Extracting file: ${f}`);
           const buffer = asar.extractFile(archive, f);

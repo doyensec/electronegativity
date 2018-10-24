@@ -1,5 +1,4 @@
 import { sourceTypes } from '../../parser/types';
-import { Ast } from '../ast';
 
 export default class ContextIsolationCheck {
   constructor() {
@@ -9,14 +8,14 @@ export default class ContextIsolationCheck {
     this.manualReview = true;
   }
 
-  match(data) {
+  match(data, ast) {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
     let location;
     for (const arg of data.arguments) {
-      const preload = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'preload' || node.key.name === 'preload'));
-      const contextIsolation = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'contextIsolation' || node.key.name === 'contextIsolation'));
+      const preload = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'preload' || node.key.name === 'preload'));
+      const contextIsolation = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'contextIsolation' || node.key.name === 'contextIsolation'));
       if (preload.length > 0 && contextIsolation.length > 0) {
         let node = contextIsolation[0];
         if(node.value.value != true){

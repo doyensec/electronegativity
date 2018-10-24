@@ -7,12 +7,12 @@ export default class HTTPResourcesCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     if (data.type !== 'CallExpression') return null;
     if (!(data.callee.property && data.callee.property.name === "loadURL")) return null;
 
     switch (data.arguments[0].type) {
-      case "Literal":
+      case ast.StringLiteral:
         if (!data.arguments[0].value.toUpperCase().startsWith("HTTP://"))
           return undefined;
         break;

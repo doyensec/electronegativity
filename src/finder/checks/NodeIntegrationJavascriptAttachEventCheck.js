@@ -1,5 +1,4 @@
 import { sourceTypes } from "../../parser/types";
-import { Ast } from '../ast';
 
 export default class NodeIntegrationJavascriptAttachEventCheck {
   constructor() {
@@ -9,7 +8,7 @@ export default class NodeIntegrationJavascriptAttachEventCheck {
   }
 
 
-  match(data) {
+  match(data, ast) {
     if (!((data.type === 'CallExpression')
         && (data.callee.property)
         && (data.callee.property.name === 'on')
@@ -20,7 +19,7 @@ export default class NodeIntegrationJavascriptAttachEventCheck {
     
     let main_loc = null;
     for (const arg of data.arguments) {
-      const found_nodes = Ast.findNodeByType(arg, 'AssignmentExpression', 3, true,
+      const found_nodes = ast.findNodeByType(arg, 'AssignmentExpression', 3, true,
         node => ((node.left.type === 'MemberExpression')
                   && (node.left.object.name === 'webPreferences')
                   && (node.left.property.name === 'nodeIntegration')

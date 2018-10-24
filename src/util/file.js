@@ -25,7 +25,7 @@ export function list_files(input){
   return dir.promiseFiles(input)
     .then(files => {
       files = files.filter(file => {
-        return file.indexOf('node_modules') === -1 && (['js', 'html'].includes(extension(file)) || file.indexOf('package.json') > -1);
+        return file.indexOf('node_modules') === -1 && (['js', 'ts', 'tsx', 'html'].includes(extension(file)) || file.indexOf('package.json') > -1);
       });
       return files;
     })

@@ -1,5 +1,4 @@
 import { sourceTypes } from "../../parser/types";
-import { Ast } from '../ast';
 
 export default class SandboxCheck {
   constructor() {
@@ -8,14 +7,14 @@ export default class SandboxCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
     let location;
 
     for (const arg of data.arguments) {
-      const found_nodes = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'webSecurity' || node.key.name === 'webSecurity'));
+      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'webSecurity' || node.key.name === 'webSecurity'));
       if (found_nodes.length > 0) {
         const node = found_nodes[0]
         if (node.value.value == false) {
