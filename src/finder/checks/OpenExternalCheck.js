@@ -8,10 +8,10 @@ export default class OpenExternalCheck {
     this.manualReview = true;
   }
 
-  match(data) {
+  match(data, ast) {
     if (data.type !== 'CallExpression') return null;
     if (!(data.callee.property && data.callee.property.name === "openExternal")) return null;
-    if (data.arguments[0].type === "Literal") return null; // constant, not user supplied
+    if (data.arguments[0].type === ast.StringLiteral) return null; // constant, not user supplied
 
     const location = { line: data.loc.start.line, column: data.loc.start.column };
     

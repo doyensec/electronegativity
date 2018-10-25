@@ -4,7 +4,7 @@
   "description": "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist/ && babel ./src --out-dir dist/",
+    "build": "rimraf dist/ && babel ./src --out-dir dist/ --source-maps",
     "test": "npm run build && mocha --compilers js:babel-core/register"
   },
   "bin": {
@@ -28,12 +28,15 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
+    "@babel/parser": "^7.1.2",
+    "@babel/traverse": "^7.1.4",
     "asar": "^0.13.0",
     "chalk": "^2.4.1",
     "cheerio": "^1.0.0-rc.2",
     "cli-progress": "^2.0.0",
     "cli-table2": "^0.2.0",
     "electron-releases": "^2.66.0",
+    "eslint": "^5.7.0",
     "esprima": "^4.0.0",
     "estraverse": "^4.2.0",
     "estraverse-fb": "^1.3.2",
@@ -41,6 +44,8 @@
     "mocha": "^5.2.0",
     "node-dir": "^0.1.17",
     "semver": "^5.5.1",
+    "typescript": "^3.1.3",
+    "typescript-estree": "^3.0.0",
     "winston": "^2.3.1"
   },
   "keywords": [

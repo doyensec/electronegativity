@@ -2,7 +2,7 @@ import logger from 'winston';
 import path from 'path';
 import asar from 'asar';
 
-import { read_file, extension } from '../util';
+import { extension } from '../util';
 import { Loader } from './loader_interface';
 
 export class LoaderAsar extends Loader {
@@ -25,6 +25,8 @@ export class LoaderAsar extends Loader {
             continue;
         case 'js':
         case 'jsx':
+        case 'ts':
+        case 'tsx':
         case 'htm':
         case 'html':
           logger.debug(`Extracting file: ${f}`);

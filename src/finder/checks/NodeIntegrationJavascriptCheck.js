@@ -1,5 +1,4 @@
 import { sourceTypes } from "../../parser/types";
-import { Ast } from '../ast';
 
 export default class NodeIntegrationJavascriptCheck {
   constructor() {
@@ -8,7 +7,7 @@ export default class NodeIntegrationJavascriptCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
@@ -16,7 +15,7 @@ export default class NodeIntegrationJavascriptCheck {
     let set = false;
     let main_loc = null;
     for (const arg of data.arguments) {
-      const found_nodes = Ast.findNodeByType(arg, 'Property', 2, true, node => (node.key.value === 'nodeIntegration'));
+      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'nodeIntegration'));
       if (found_nodes.length > 0) {
         set = true;
         if ((found_nodes[0].value.value === true) || (found_nodes[0].value.value === 1)) main_loc = { line: found_nodes[0].key.loc.start.line, column: found_nodes[0].key.loc.start.column };

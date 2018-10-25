@@ -1,5 +1,3 @@
-import estraverse from 'estraverse-fb';
-
 import { ENABLED_CHECKS } from './checks';
 import { sourceTypes } from '../parser/types';
 
@@ -33,19 +31,21 @@ export class Finder {
     });
     const fileLines = content.toString().split('\n');
     const issues = [];
+    const rootData = data;
+
     switch (type) {
       case sourceTypes.JAVASCRIPT:
-        estraverse.traverse(data, {
-          enter: (node, parent) => {
+        data.astParser.traverseTree(data, {
+          enter: (node) => {
             for (const check of checks) {
-              const location = check.match(node);
+              const location = check.match(rootData.astParser.getNode(node), rootData.astParser);
               if (location) {
-                const sample = fileLines[location.line-1]
-                const issue = {location, file, check, content, sample};
+                const sample = fileLines[location.line - 1];
+                const issue = { location, file, check, content, sample };
                 issues.push(issue);
               }
             }
-          },
+          }
         });
 
         break;
@@ -54,7 +54,7 @@ export class Finder {
           const locations = check.match(data, content);
           if(locations.length > 0){
             for(const location of locations) {
-              const sample = fileLines[location.line-1]
+              const sample = fileLines[location.line-1];
               const issue = {location, file, check, content, sample};
               issues.push(issue);
             }
@@ -65,7 +65,7 @@ export class Finder {
         for (const check of checks) {
           const location = check.match(data);
           if (location){
-            const sample = fileLines[location.line-1]
+            const sample = fileLines[location.line-1];
             const issue = {location, file, check, content, sample};
             issues.push(issue);
           }

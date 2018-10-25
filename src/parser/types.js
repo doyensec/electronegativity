@@ -7,6 +7,8 @@ export const sourceTypes = {
 export const sourceExtensions = {
   js: sourceTypes.JAVASCRIPT,
   jsx: sourceTypes.JAVASCRIPT,
+  ts: sourceTypes.JAVASCRIPT,
+  tsx: sourceTypes.JAVASCRIPT,
   html: sourceTypes.HTML,
   htm: sourceTypes.HTML,
   json: sourceTypes.JSON,
