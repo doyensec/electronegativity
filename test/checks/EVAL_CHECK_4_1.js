@@ -1,1 +1,2 @@
-eval("something();");
+let something;
+eval(something);

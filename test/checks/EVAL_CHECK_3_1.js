@@ -5,4 +5,4 @@ win.loadURL('http://github.com')
 
 let contents = win.webContents
 
-contents.insertCSS("something()");
+contents.insertCSS(contents);
