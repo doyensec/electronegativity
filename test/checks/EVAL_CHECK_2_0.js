@@ -5,4 +5,4 @@ win.loadURL('http://github.com')
 
 let contents = win.webContents
 
-contents.executeJavascript(contents);
+contents.executeJavascript("something()");
