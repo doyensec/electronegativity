@@ -20,9 +20,14 @@ export class LoaderAsar extends Loader {
 
       const f = file.startsWith(path.sep) ? file.substr(1) : file;
       switch (extension(f)) {
+        case 'json':
+          if (f.toLowerCase().indexOf('package.json') < 0)
+            continue;
         case 'js':
+        case 'jsx':
         case 'ts':
         case 'tsx':
+        case 'htm':
         case 'html':
           logger.debug(`Extracting file: ${f}`);
           const buffer = asar.extractFile(archive, f);
