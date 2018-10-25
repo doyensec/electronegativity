@@ -5,6 +5,7 @@ export default function initialize() {
   let mainWindow: BrowserWindow | undefined;
 
   function createWindow() {
-    mainWindow = new BrowserWindow({ "webPreferences": {}});
+    mainWindow = new new BrowserWindow();
+    mainWindow.loadURL('https://doyensec.com/');
   }
 }

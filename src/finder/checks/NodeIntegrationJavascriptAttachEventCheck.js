@@ -19,7 +19,7 @@ export default class NodeIntegrationJavascriptAttachEventCheck {
     
     let main_loc = null;
     for (const arg of data.arguments) {
-      const found_nodes = ast.findNodeByType(arg, 'AssignmentExpression', 3, true,
+      const found_nodes = ast.findNodeByType(arg, 'AssignmentExpression', 4, true,
         node => ((node.left.type === 'MemberExpression')
                   && (node.left.object.name === 'webPreferences')
                   && (node.left.property.name === 'nodeIntegration')

@@ -5,6 +5,10 @@ export default function initialize() {
   let mainWindow: BrowserWindow | undefined;
 
   function createWindow() {
-    mainWindow = new BrowserWindow({ "webPreferences": {}});
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        "nodeIntegrationInWorker": 1
+      }
+    });
   }
 }

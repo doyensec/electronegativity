@@ -11,14 +11,35 @@ class Ast {
       }
     });
   }
+  
+  constructor(settings) {
+    this.settings = settings;
+  }
+
+  get PropertyName() {
+    return this.settings.PropertyName;
+  }
+
+  get StringLiteral() {
+    return this.settings.StringLiteral;
+  }
+
+  get PropertyDepth() {
+    return this.settings.PropertyDepth;
+  }
+}
+
+export class TreeSettings {
+  constructor({propertyName = 'Property', stringLiteral = 'Literal', propertyDepth = 4} = {}) {
+    this.PropertyName = propertyName;
+    this.StringLiteral = stringLiteral;
+    this.PropertyDepth = propertyDepth;
+  }
 }
 
 export class EsprimaAst extends Ast {
-  constructor() {
-    super();
-    this.PropertyName = 'Property';
-    this.StringLiteral = 'Literal';
-    this.PropertyDepth = 2;
+  constructor(settings) {
+    super(settings);
   }
 
   traverseTree(tree, options) {
@@ -37,9 +58,11 @@ export class EsprimaAst extends Ast {
         depth += 1;
         if (found(node)) {
           nodes.push(node);
-          if (stopAtFirst) estraverse.VisitorOption.Break;
+          if (stopAtFirst)
+            return estraverse.VisitorOption.Break;
         }
-        if ((max_depth > 0) && (depth === max_depth)) estraverse.VisitorOption.Skip;
+        if ((max_depth > 0) && (depth === max_depth))
+          return estraverse.VisitorOption.Skip;
       },
       leave: (node, parent) => {
         depth -= 1;
@@ -50,11 +73,8 @@ export class EsprimaAst extends Ast {
 }
 
 export class BabelAst extends Ast {
-  constructor() {
-    super();
-    this.PropertyName = 'ObjectProperty';
-    this.StringLiteral = 'StringLiteral';
-    this.PropertyDepth = 3;
+  constructor(settings) {
+    super(settings);
   }
 
   traverseTree(tree, options) {
@@ -78,6 +98,7 @@ export class BabelAst extends Ast {
           if (stopAtFirst) {
             shouldStop = true;
             node.stop();
+            return;
           }
         }
         if ((max_depth > 0) && (depth === max_depth)) {
@@ -96,12 +117,18 @@ export class BabelAst extends Ast {
 }
 
 export class ESLintAst extends Ast {
-  constructor() {
-    super();
-    this.PropertyName = 'Property';
-    this.StringLiteral = 'Literal';
-    this.PropertyDepth = 2;
+  constructor(settings) {
+    super(settings);
     this.esLintTraverser = new ESLintTraverser();
+  }
+
+  findNodeByTypeParent(ast, type, max_depth, stopAtFirst, found) {
+    return super.findNodeByType(ast, type, max_depth, stopAtFirst, found);
+  }
+
+  findNodeByType(ast, type, max_depth, stopAtFirst, found) {
+    // create new instance, because findNode might stop traversing for current esLintTraverser
+    return new ESLintAst(this.settings).findNodeByTypeParent(ast, type, max_depth, stopAtFirst, found);
   }
 
   traverseTree(tree, options) {
@@ -124,6 +151,7 @@ export class ESLintAst extends Ast {
           if (stopAtFirst) {
             shouldStop = true;
             this.esLintTraverser.break();
+            return;
           }
         }
         if ((max_depth > 0) && (depth === max_depth)) {
@@ -134,7 +162,7 @@ export class ESLintAst extends Ast {
       leave: (node) => {
         depth -= 1;
         if (shouldStop)
-        this.esLintTraverser.stop();
+          this.esLintTraverser.stop();
       },
     });
     return nodes;

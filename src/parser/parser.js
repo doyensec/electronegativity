@@ -6,13 +6,15 @@ import { load as cheerio_load } from 'cheerio';
 import { extension } from '../util';
 import { sourceTypes, sourceExtensions } from './types';
 
-import { EsprimaAst, BabelAst, ESLintAst } from '../finder/ast';
+import { EsprimaAst, BabelAst, ESLintAst, TreeSettings } from '../finder/ast';
 
 export class Parser {
   constructor(babelFirst, typescriptBabelFirst) {
-    this.esLintAst = new ESLintAst();
-    this.babelAst = new BabelAst();
-    this.esprimaAst = new EsprimaAst();
+    this.esLintESTreeAst = new ESLintAst(new TreeSettings());
+    this.esLintBabelTreeAst = new ESLintAst(new TreeSettings({propertyName: 'ObjectProperty', stringLiteral: 'StringLiteral'}));
+    this.babelAst = new BabelAst(new TreeSettings({propertyName: 'ObjectProperty', stringLiteral: 'StringLiteral'}));
+    this.esprimaAst = new EsprimaAst(new TreeSettings());
+
     this.babelFirst = babelFirst;
     this.typescriptBabelFirst = typescriptBabelFirst;
    }
@@ -54,7 +56,7 @@ export class Parser {
       "asyncGenerators",
       "decorators-legacy",
       "typescript",
-      "dynamicImport",
+      "dynamicImport"
     ];
 
     let data = babelParser.parse(content, {
@@ -62,7 +64,7 @@ export class Parser {
       plugins: plugins
     });
 
-    data.astParser = this.esLintAst;
+    data.astParser = this.esLintBabelTreeAst;
     return data;
   }
 
@@ -78,9 +80,9 @@ export class Parser {
       }
     });
     
-    data.astParser = this.esLintAst;
+    data.astParser = this.esLintESTreeAst;
 
-    return data;
+    return data;    
   }
 
   parse(filename, content) {
@@ -100,7 +102,7 @@ export class Parser {
             data = this.typescriptBabelFirst ? this.parseTypeScript(content) : this.parseTypescriptEstree(content);
           } catch (error1) {
             try {
-              data = this.typescriptBabelFirst ? this.parseTypescriptEstree(content) : this.parseTypeScript(content);
+              data = this.typescriptBabelFirst ? this.parseTypescriptEstree(content) : this.parseTypeScript(content); 
             } catch (error2) {
               throw this.typescriptBabelFirst ? error1 : error2; // prefer babel as it contains line number
             }
