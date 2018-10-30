@@ -35,9 +35,9 @@ function parseFile(file, parser, finder) {
   let output = null;
 
   it('does not Throw', () => {
-    (() => {
+    (async () => {
       output = parser.parse(filename, content);
-      finder.find(filename, output[1], output[0], content);
+      await finder.find(filename, output[1], output[0], content);
     }).should.not.throw();
   });
 

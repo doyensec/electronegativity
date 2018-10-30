@@ -19,7 +19,7 @@ import { Finder } from '../src/finder';
 
 let check_tests = "test/checks";
 
-describe('Finder', () => {
+describe('Finder', async () => {
   let finder = new Finder();
 
   // Load all test files
@@ -51,7 +51,7 @@ describe('Finder', () => {
     // For each ...
     for (let check of [...testcases.keys()]) {
       for (let [file, type, data, num_issues, content] of testcases.get(check)) {
-        let result = finder.find(file, data, type, content);
+        let result = await finder.find(file, data, type, content);
         it('Finds ' + num_issues + ' issue(s) in ' + path.basename(file), () => {
           result.filter(r => {return r.check.id === check}).length.should.equal(num_issues);
         });

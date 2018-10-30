@@ -22,7 +22,7 @@ export class Finder {
     }
   }
 
-  find(file, data, type, content, use_only_checks = null) {
+  async find(file, data, type, content, use_only_checks = null) {
     const checks = this._checks_by_type.get(type).filter((check) => {
       if (use_only_checks && !use_only_checks.includes(check.id)) {
         return false;
@@ -63,7 +63,7 @@ export class Finder {
         break;
       case sourceTypes.JSON:
         for (const check of checks) {
-          const location = check.match(data);
+          const location = await check.match(data);
           if (location){
             const sample = fileLines[location.line-1];
             const issue = {location, file, check, content, sample};
