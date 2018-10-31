@@ -1,19 +1,17 @@
 mainWindow = new BrowserWindow({ "webPreferences": {
-  "nodeIntegration": true,
   "nodeIntegrationInWorker": false }
 });
 
-mainWindow = new BrowserWindow({ "webPreferences": {
-  "nodeIntegration": 0,
+otherWindow = new BrowserWindow({ "webPreferences": {
+  "nodeIntegration": 1,
   "nodeIntegrationInWorker": false }
 });
 
 mainWindow = new BrowserWindow({ webPreferences: {
-  nodeIntegration: true,
   nodeIntegrationInWorker: false }
 });
 
-mainWindow = new BrowserWindow({ webPreferences: {
-  nodeIntegration: 0,
+otherWindow = new BrowserWindow({ webPreferences: {
+  nodeIntegration: 1,
   nodeIntegrationInWorker: false }
 });

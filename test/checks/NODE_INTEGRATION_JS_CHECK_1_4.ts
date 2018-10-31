@@ -8,28 +8,28 @@ export default function initialize() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
         "nodeIntegration": true,
-        "nodeIntegrationInWorker": 1
+        "nodeIntegrationInWorker": false
       }
     });
 
     mainWindow = new BrowserWindow({
       "webPreferences": {
         "nodeIntegration": 0,
-        "nodeIntegrationInWorker": 1
+        "nodeIntegrationInWorker": false
       }
     });
 
     mainWindow = new BrowserWindow({
       webPreferences: {
         nodeIntegration: true,
-        nodeIntegrationInWorker: 1
+        nodeIntegrationInWorker: false
       }
     });
 
     mainWindow = new BrowserWindow({
       webPreferences: {
         nodeIntegration: 0,
-        nodeIntegrationInWorker: 1
+        nodeIntegrationInWorker: false
       }
     });
   }

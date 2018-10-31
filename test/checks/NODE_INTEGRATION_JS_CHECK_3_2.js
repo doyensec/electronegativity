@@ -1,9 +1,9 @@
 mainWindow = new BrowserWindow({ "webPreferences": {
   "nodeIntegration": false,
-  "nodeIntegrationInWorker": false }
+  "nodeIntegrationInWorker": true }
 });
 
 mainWindow = new BrowserWindow({ webPreferences: {
   nodeIntegration: false,
-  nodeIntegrationInWorker: false }
+  nodeIntegrationInWorker: true }
 });
