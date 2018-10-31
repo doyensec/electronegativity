@@ -14,10 +14,18 @@ export default class NodeIntegrationJavascriptCheck {
     let set = false;
     let loc = [];
     for (const arg of data.arguments) {
-      set = this.findNode(ast, arg, 'nodeIntegration', loc);
+      let argLoc = [];
+      set = this.findNode(ast, arg, 'nodeIntegration', argLoc);
       // nodeIntegrationInWorker default value is safe
       // so no check for return value (don't care if it was found)
-      this.findNode(ast, arg, 'nodeIntegrationInWorker', loc);
+      this.findNode(ast, arg, 'nodeIntegrationInWorker', argLoc);
+
+      let sandboxLoc = [];
+      let sandboxFound = this.findNode(ast, arg, 'sandbox', sandboxLoc);
+      if (sandboxFound && sandboxLoc.length > 0)
+        continue; // sandbox disables node integration
+
+      loc = loc.concat(argLoc);
     }
 
     if (!set) {
