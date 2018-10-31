@@ -28,43 +28,54 @@ export default async function run(input, output, isSarif) {
   const parser = new Parser(false, true);
   const finder = new Finder();
   const filenames = [...loader.loaded.keys()];
-
-  const progress = new cliProgress.Bar({format: '{bar} {percentage}% | {value}/{total}'}, cliProgress.Presets.shades_grey);
-  progress.start(filenames.length, 0);
-
+  let issues = [];
+  let errors = [];
   let table = new Table({
     head: ['Issue ID', 'File', 'Location', 'URL'],
     wordWrap: true
   });
 
-  let issues = [];
-  let errors = [];
-
-  for (const file of filenames) {
-    progress.increment();
-
-    try {
-      const [type, data, content, warnings] = parser.parse(file, loader.loaded.get(file));
-      if (data === null)
-        continue;
-
-      if (warnings !== undefined) {
-        for (const warning of warnings) {
-          errors.push({ file: file, message: warning.message, tolerable: true });
-        }
-      }
-
-      const result = finder.find(file, data, type, content);
-      issues.push(...result);
-    } catch (error) {
-      errors.push({ file: file, message: error.message, tolerable: false });
-    }
+  const progress = new cliProgress.Bar({format: '{bar} {percentage}% | {value}/{total}'}, cliProgress.Presets.shades_grey);
+  let oldLog = console.log;
+  let consoleArguments = [];
+  console.log = function () {
+    consoleArguments.push(arguments);
   }
 
-  if (output)
-    writeIssues(output, issues, isSarif);
-
-  progress.stop();
+  try {
+    progress.start(filenames.length, 0);
+ 
+    for (const file of filenames) {
+      progress.increment();
+  
+      try {
+        const [type, data, content, warnings] = parser.parse(file, loader.loaded.get(file));
+        if (data === null)
+          continue;
+  
+        if (warnings !== undefined) {
+          for (const warning of warnings) {
+            errors.push({ file: file, message: warning.message, tolerable: true });
+          }
+        }
+  
+        const result = await finder.find(file, data, type, content);
+        issues.push(...result);
+      } catch (error) {
+        errors.push({ file: file, message: error.message, tolerable: false });
+      }
+    }
+  
+    if (output)
+      writeIssues(output, issues, isSarif);
+  
+    progress.stop();
+  }
+  finally {
+    console.log = oldLog;
+    for (let i = 0; i < consoleArguments.length; i++)
+      console.log.apply(this, consoleArguments[i]); 
+  }
 
   for (const error of errors) {
     if (error.tolerable)
