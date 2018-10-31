@@ -32,5 +32,20 @@ export default function initialize() {
         nodeIntegrationInWorker: false
       }
     });
+
+    let something;
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: something,
+        nodeIntegrationInWorker: false
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        "nodeIntegration": something,
+        "nodeIntegrationInWorker": false
+      }
+    });
   }
 }

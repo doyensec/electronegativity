@@ -6,5 +6,8 @@ export default function initialize() {
 
   function createWindow() {
     mainWindow = new BrowserWindow();
+
+    let something;
+    mainWindow = new BrowserWindow(something);
   }
 }

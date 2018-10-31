@@ -18,5 +18,20 @@ export default function initialize() {
         nodeIntegrationInWorker: true
       }
     });
+
+    let something;
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        "nodeIntegration": false,
+        "nodeIntegrationInWorker": something
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: false,
+        nodeIntegrationInWorker: something
+      }
+    });
   }
 }

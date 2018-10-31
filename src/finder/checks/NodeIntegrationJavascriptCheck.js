@@ -3,7 +3,7 @@ import { sourceTypes } from "../../parser/types";
 export default class NodeIntegrationJavascriptCheck {
   constructor() {
     this.id = 'NODE_INTEGRATION_JS_CHECK';
-    this.description = `Disable nodeIntegration for untrusted origins `;
+    this.description = `Disable nodeIntegration for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
@@ -11,31 +11,33 @@ export default class NodeIntegrationJavascriptCheck {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
-    let set = false;
-    let loc = [];
-    for (const arg of data.arguments) {
-      let argLoc = [];
-      set = this.findNode(ast, arg, 'nodeIntegration', argLoc);
+    let nodeIntegrationFound = false;
+    let locations = [];
+    if (data.arguments.length > 0) {
+      let loc = [];
+      nodeIntegrationFound = this.findNode(ast, data.arguments[0], 'nodeIntegration', value => value === false, loc);
       // nodeIntegrationInWorker default value is safe
       // so no check for return value (don't care if it was found)
-      this.findNode(ast, arg, 'nodeIntegrationInWorker', argLoc);
+      this.findNode(ast, data.arguments[0], 'nodeIntegrationInWorker', value => value === false, loc);
 
       let sandboxLoc = [];
-      let sandboxFound = this.findNode(ast, arg, 'sandbox', sandboxLoc);
-      if (sandboxFound && sandboxLoc.length > 0)
-        continue; // sandbox disables node integration
-
-      loc = loc.concat(argLoc);
+      let sandboxFound = this.findNode(ast, data.arguments[0], 'sandbox', value => value !== true, sandboxLoc);
+      if (!sandboxFound || sandboxLoc.length <= 0) // sandbox disables node integration
+        locations = locations.concat(loc);
     }
 
-    if (!set) {
-      loc.push({ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false });
+    if (!nodeIntegrationFound) {
+      let manualReview = false;
+      if (data.arguments.length > 0 && data.arguments[0].type !== "ObjectExpression") {
+        manualReview = true;
+      }
+      locations.push({ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview });
     }
 
-    return loc;
+    return locations;
   }
 
-  findNode(ast, startNode, name, locations) {
+  findNode(ast, startNode, name, skipCondition, locations) {
     let found = false;
 
     const nodes = ast.findNodeByType(startNode, ast.PropertyName, ast.PropertyDepth, false, node => {
@@ -47,10 +49,16 @@ export default class NodeIntegrationJavascriptCheck {
       // but technically it is an invalid json
       // just to be on the safe side show a warning if any value is insecure
       found = true;
-      if (node.value.value === false)
-        continue; // anything other than false is ignored
+      if (skipCondition(node.value.value))
+        continue;
 
-      locations.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+      locations.push({
+        line: node.key.loc.start.line,
+        column: node.key.loc.start.column,
+        id: this.id,
+        description: this.description,
+        manualReview: node.value.value !== true && node.value.value !== false
+      });
     }
 
     return found;
