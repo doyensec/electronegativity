@@ -38,11 +38,13 @@ export class Finder {
         data.astParser.traverseTree(data, {
           enter: (node) => {
             for (const check of checks) {
-              const location = check.match(rootData.astParser.getNode(node), rootData.astParser);
-              if (location) {
-                const sample = fileLines[location.line - 1];
-                const issue = { location, file, check, content, sample };
-                issues.push(issue);
+              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser);
+              if (matches) {
+                for(const m of matches) {
+                  const sample = fileLines[m.line - 1];
+                  const issue = { file, content, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview };
+                  issues.push(issue);
+                }
               }
             }
           }
@@ -51,11 +53,11 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         for (const check of checks) {
-          const locations = check.match(data, content);
-          if(locations.length > 0){
-            for(const location of locations) {
-              const sample = fileLines[location.line-1];
-              const issue = {location, file, check, content, sample};
+          const matches = check.match(data, content);
+          if(matches){
+            for(const m of matches) {
+              const sample = fileLines[m.line-1];
+              const issue = {file, content, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
               issues.push(issue);
             }
           }
@@ -63,11 +65,13 @@ export class Finder {
         break;
       case sourceTypes.JSON:
         for (const check of checks) {
-          const location = await check.match(data);
-          if (location){
-            const sample = fileLines[location.line-1];
-            const issue = {location, file, check, content, sample};
-            issues.push(issue);
+          const matches = await check.match(data);
+          if (matches) {
+            for(const m of matches) {
+              const sample = fileLines[m.line-1];
+              const issue = {file, content, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
+              issues.push(issue);
+            }
           }
         }
     }

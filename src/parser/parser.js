@@ -17,7 +17,7 @@ export class Parser {
 
     this.babelFirst = babelFirst;
     this.typescriptBabelFirst = typescriptBabelFirst;
-   }
+  }
 
   parseEsprima(content) {
     let data = esprima_parse(content, { loc: true, tolerant: true, jsx: true });
@@ -27,16 +27,16 @@ export class Parser {
 
   parseBabel(content) {
     let plugins = [
-        "jsx",
-        "objectRestSpread",
-        "classProperties",
-        "optionalCatchBinding",
-        "asyncGenerators",
-        "decorators-legacy",
-        "flow",
-        "dynamicImport",
-        "estree",
-      ];
+      "jsx",
+      "objectRestSpread",
+      "classProperties",
+      "optionalCatchBinding",
+      "asyncGenerators",
+      "decorators-legacy",
+      "flow",
+      "dynamicImport",
+      "estree",
+    ];
 
     let data = babelParser.parse(content, {
       sourceType: "module",
@@ -95,7 +95,7 @@ export class Parser {
     switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
         // replace shebang (https://en.wikipedia.org/wiki/Shebang_(Unix)) with spaces to keep offsets intact
-        content = content.replace(/(^#!.*)/, function(m) { return Array(m.length + 1).join(' ') });
+        content = content.replace(/(^#!.*)/, function(m) { return Array(m.length + 1).join(' '); });
 
         if(ext === 'ts' || ext === 'tsx') {
           try {
@@ -126,6 +126,6 @@ export class Parser {
         break;
     }
 
-    return new Array(sourceType, data, content, data ? data.errors : undefined);
+    return [sourceType, data, content, data ? data.errors : undefined];
   }
 }

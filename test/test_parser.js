@@ -20,11 +20,11 @@ import { LoaderFile } from '../src/loader';
 import { Parser } from '../src/parser';
 
 let test_files = new Map()
-                      .set('html', 'test/file_formats/test.html')
-                      .set('ts', 'test/file_formats/test.ts')
-                      .set('js', 'test/file_formats/test.js')
-                      .set('esprima', 'test/file_formats/esprima.js')
-                      .set('babel', 'test/file_formats/babel.js');
+  .set('html', 'test/file_formats/test.html')
+  .set('ts', 'test/file_formats/test.ts')
+  .set('js', 'test/file_formats/test.js')
+  .set('esprima', 'test/file_formats/esprima.js')
+  .set('babel', 'test/file_formats/babel.js');
 
 function parseFile(file, parser, finder) {
   let loader = new LoaderFile();

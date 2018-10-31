@@ -3,7 +3,7 @@
 import program from 'commander';
 import path from 'path';
 import chalk from 'chalk';
-import run from './runner.js'
+import run from './runner.js';
 
 console.log(`
 ███████╗██╗     ███████╗ ██████╗████████╗██████╗  ██████╗ ███╗   ██╗███████╗ ██████╗  █████╗ ████████╗██╗██╗   ██╗██╗████████╗██╗   ██╗
@@ -14,7 +14,7 @@ console.log(`
 ╚══════╝╚══════╝╚══════╝ ╚═════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═══╝  ╚═╝   ╚═╝      ╚═╝   
                                                       By @Doyensec                     
 
-`)
+`);
 
 program
   .version('1.0.6')

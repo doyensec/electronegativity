@@ -11,22 +11,18 @@ export default class InsecureContentJavascriptCheck {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
-    let location;
+    let location = [];
 
     for (const arg of data.arguments) {
       const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'allowRunningInsecureContent' || node.key.name === 'allowRunningInsecureContent'));
       if (found_nodes.length > 0) {
-        const node = found_nodes[0]
-        if (node.value.value == true) {
-          location = { line: node.key.loc.start.line, column: node.key.loc.start.column };
+        const node = found_nodes[0];
+        if (node.value.value) {
+          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }
     }
 
-    if (location) {
-      return location;
-    } else {
-      return null;
-    }
+    return location;
   }
 }

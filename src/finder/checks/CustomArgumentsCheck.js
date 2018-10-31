@@ -5,18 +5,14 @@ export default class CustomArgumentsCheck {
     this.id = 'CUSTOM_ARGUMENTS_CHECK';
     this.description = `Review the use of custom command line arguments `;
     this.type = sourceTypes.JAVASCRIPT;
-    this.manualReview = true;
   }
 
   match(data) {
-    const methods = ['appendArgument', 
-                     'appendSwitch'];
+    const methods = ['appendArgument', 'appendSwitch'];
 
     if (data.type !== 'CallExpression') return null;
     if (!methods.includes(data.callee.name) && !(data.callee.property && methods.includes(data.callee.property.name))) return null;
 
-    const location = { line: data.loc.start.line, column: data.loc.start.column };
-    
-    return location;
+    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

@@ -26,7 +26,6 @@ export default class HTTPResourcesCheck {
         return undefined;
     }
     
-    let location = { line: data.loc.start.line, column: data.loc.start.column };   
-    return location;
+    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false }];
   }
 }

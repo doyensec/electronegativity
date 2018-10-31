@@ -10,10 +10,11 @@ export default class InsecureContentHTMLCheck {
   match(data, content) {
     const loc = [];
     const webviews = data('webview');
+    const self = this;
     webviews.each(function (i, elem) {
       let wp = data(this).attr('webpreferences');
-      if(wp && (wp.indexOf('allowRunningInsecureContent=true') != -1 || wp.indexOf('allowRunningInsecureContent=1') != -1)){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
+      if(wp && (wp.indexOf('allowRunningInsecureContent=true') !== -1 || wp.indexOf('allowRunningInsecureContent=1') !== -1)){
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });

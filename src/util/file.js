@@ -29,7 +29,7 @@ export function list_files(input){
       });
       return files;
     })
-    .catch(console.error)
+    .catch(console.error);
 }
 
 export function writeIssues(filename, result, isSarif){
@@ -57,25 +57,25 @@ export function writeIssues(filename, result, isSarif){
       };
 
     result.forEach(issue => {
-      if (issues.runs[0].resources.rules[issue.check.id] === undefined) {
-        issues.runs[0].resources.rules[issue.check.id] = {
-          id: issue.check.id,
+      if (issues.runs[0].resources.rules[issue.id] === undefined) {
+        issues.runs[0].resources.rules[issue.id] = {
+          id: issue.id,
           name: {
-            text: issue.check.description
+            text: issue.description
           },
           fullDescription: {
-            text: issue.check.description
+            text: issue.description
           },
           configuration: {
-            defaultLevel: `${issue.check.manualReview ? 'warning' : 'error'}`
+            defaultLevel: `${issue.manualReview ? 'warning' : 'error'}`
           },
-          helpUri: `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+          helpUri: `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
         };
       }
       issues.runs[0].results.push({
-        ruleId: issue.check.id,
+        ruleId: issue.id,
         message: {
-          text: issue.check.description
+          text: issue.description
         },
         locations: [
           {
@@ -97,23 +97,23 @@ export function writeIssues(filename, result, isSarif){
     issues = JSON.stringify(issues, null, 2);
   }
   else{
-    writeCsvHeader(output);
+    writeCsvHeader(filename);
     result.forEach(issue => {
       issues += [
-        issue.check.id, 
-        issue.file, 
-        `${issue.location.line}:${issue.location.column}`, 
+        issue.id,
+        issue.file,
+        `${issue.location.line}:${issue.location.column}`,
         issue.sample,
-        issue.check.description,
-        `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+        issue.description,
+        `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
       ].toString();
-      issues += '\n'
-    })
+      issues += '\n';
+    });
   }
 
   fs.writeFile(filename, issues, { flag: 'w' }, (err) => {
     if(err) throw err;
-  })
+  });
 }
 
 export function writeCsvHeader(filename){
@@ -121,5 +121,5 @@ export function writeCsvHeader(filename){
 
   fs.writeFile(filename, header, (err) => {
     if(err) throw err;
-  })
+  });
 }

@@ -26,7 +26,7 @@ describe('Finder', async () => {
   let loader = new LoaderFile();
   let list = fs.readdirSync(check_tests);
   for (let file of list) {
-      loader.load(path.join(check_tests, file));
+    loader.load(path.join(check_tests, file));
   }
   let filenames = [...loader.loaded.keys()];
 
@@ -53,7 +53,7 @@ describe('Finder', async () => {
       for (let [file, type, data, num_issues, content] of testcases.get(check)) {
         let result = await finder.find(file, data, type, content);
         it('Finds ' + num_issues + ' issue(s) in ' + path.basename(file), () => {
-          result.filter(r => {return r.check.id === check}).length.should.equal(num_issues);
+          result.filter(r => {return r.id === check;}).length.should.equal(num_issues);
         });
       }
     }

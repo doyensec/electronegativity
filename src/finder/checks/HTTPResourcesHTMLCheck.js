@@ -10,10 +10,11 @@ export default class HTTPResourcesHTMLCheck {
   match(data, content) {
     const loc = [];
     const webviews = data('webview');
+    const self = this;
     webviews.each(function (i, elem) {
       let src = data(this).attr('src');
       if(src && (src.substring(0,7) == "http://")){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });

@@ -23,7 +23,7 @@ export default class ElectronVersionCheck {
     const electron = data.json.dependencies && 'electron' in data.json.dependencies ? coerce(data.json.dependencies.electron) : undefined;
     const electronDev = data.json.devDependencies && 'electron' in data.json.devDependencies ? coerce(data.json.devDependencies.electron) : undefined;
 
-    let location;
+    let location = [];
     if (electron || electronDev) {
       if (!releases) {
         try {
@@ -45,7 +45,8 @@ export default class ElectronVersionCheck {
 
       if (electron && this.isVulnerableVersion(electron) || electronDev && this.isVulnerableVersion(electronDev)) {
         let matches = linenumber(data.text, /(?:"electron"|electron)\s*:\s*.*[,}]?/g);
-        location = { line: matches[0].line, column: 0 };
+        for (const m of matches)
+          location.push({ line: m.line, column: 0, id: this.id, description: this.description, manualReview: false });
       }
     }
     return location;

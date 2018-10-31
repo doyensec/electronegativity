@@ -1,5 +1,3 @@
-import linenumber from 'linenumber';
-
 import { sourceTypes } from "../../parser/types";
 
 export default class WebSecurityHTMLCheck {
@@ -12,15 +10,16 @@ export default class WebSecurityHTMLCheck {
   match(data, content) {
     const loc = [];
     const webviews = data('webview');
+    const self = this;
     webviews.each(function (i, elem) {
       const disablewebsecurity = data(this).attr('disablewebsecurity');
       if (disablewebsecurity !== undefined) {
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
       let wp = data(this).attr('webpreferences');
-      if(wp && (wp.indexOf('webSecurity=false') != -1 || wp.indexOf('webSecurity=0') != -1)){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
+      if(wp && (wp.indexOf('webSecurity=false') !== -1 || wp.indexOf('webSecurity=0') !== -1)){
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });

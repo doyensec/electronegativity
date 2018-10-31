@@ -10,10 +10,11 @@ export default class ExperimentalFeaturesHTMLCheck {
   match(data, content) {
     const loc = [];
     const webviews = data('webview');
+    const self = this;
     webviews.each(function (i, elem) {
       let wp = data(this).attr('webpreferences');
       if(wp && (wp.indexOf('experimentalFeatures=true') != -1 || wp.indexOf('experimentalCanvasFeatures=true') != -1)){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0 });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });

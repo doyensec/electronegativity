@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { extension, input_exists, is_directory, writeCsvHeader, writeIssues } from './util';
+import { extension, input_exists, is_directory, writeIssues } from './util';
 
 export default async function run(input, output, isSarif) {
   if (!input_exists(input)) {
@@ -19,7 +19,7 @@ export default async function run(input, output, isSarif) {
   if(is_directory(input)){
     loader = new LoaderDirectory();
   }else{
-    loader = ((extension(input) === 'asar') ? new LoaderAsar() : new LoaderFile());
+    loader = (extension(input) === 'asar') ? new LoaderAsar() : new LoaderFile();
   }
 
   await loader.load(input);
@@ -40,7 +40,7 @@ export default async function run(input, output, isSarif) {
   let consoleArguments = [];
   console.log = function () {
     consoleArguments.push(arguments);
-  }
+  };
 
   try {
     progress.start(filenames.length, 0);
@@ -87,10 +87,10 @@ export default async function run(input, output, isSarif) {
   let rows = [];
   for (const issue of issues) {
     rows.push([
-      `${issue.check.id} ${issue.check.manualReview !== undefined && issue.check.manualReview ? chalk.bgRed(`Manual Review Required`) : ``}`,
+      `${issue.id} ${issue.manualReview && issue.manualReview ? chalk.bgRed(`Manual Review Required`) : ``}`,
       issue.file,
       `${issue.location.line}:${issue.location.column}`,
-      `https://github.com/doyensec/electronegativity/wiki/${issue.check.id}`
+      `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
     ]);
   }
 

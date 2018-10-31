@@ -5,9 +5,7 @@ export default class CertificateErrorEventCheck {
     this.id = 'CERTIFICATE_ERROR_EVENT_CHECK';
     this.description = `Do not allow insecure HTTP connections `;
     this.type = sourceTypes.JAVASCRIPT;
-    this.manualReview = true;
   }
-
 
   match(data) {
     if (!((data.type === 'CallExpression')
@@ -18,8 +16,6 @@ export default class CertificateErrorEventCheck {
       return null;
     }
 
-    const location = { line: data.loc.start.line, column: data.loc.start.column };
-
-    return location;
+    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

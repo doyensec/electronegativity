@@ -54,7 +54,7 @@ export class EsprimaAst extends Ast {
     const nodes = [];
     let depth = 0;
     estraverse.traverse(ast, {
-      enter: (node, parent) => {
+      enter: (node) => {
         depth += 1;
         if (found(node)) {
           nodes.push(node);
@@ -64,7 +64,7 @@ export class EsprimaAst extends Ast {
         if ((max_depth > 0) && (depth === max_depth))
           return estraverse.VisitorOption.Skip;
       },
-      leave: (node, parent) => {
+      leave: () => {
         depth -= 1;
       },
     });
@@ -159,7 +159,7 @@ export class ESLintAst extends Ast {
           depth -= 1; // leave will be not called
         }
       },
-      leave: (node) => {
+      leave: () => {
         depth -= 1;
         if (shouldStop)
           this.esLintTraverser.stop();

@@ -5,7 +5,6 @@ export default class OpenExternalCheck {
     this.id = 'OPEN_EXTERNAL_CHECK';
     this.description = `Review the use of openExternal`;
     this.type = sourceTypes.JAVASCRIPT;
-    this.manualReview = true;
   }
 
   match(data, ast) {
@@ -13,8 +12,6 @@ export default class OpenExternalCheck {
     if (!(data.callee.property && data.callee.property.name === "openExternal")) return null;
     if (data.arguments[0].type === ast.StringLiteral) return null; // constant, not user supplied
 
-    const location = { line: data.loc.start.line, column: data.loc.start.column };
-    
-    return location;
+    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }
