@@ -15,11 +15,16 @@ export default class NodeIntegrationJavascriptCheck {
     let set = false;
     let loc = [];
     for (const arg of data.arguments) {
-      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'nodeIntegration'));
-      if (found_nodes.length > 0) {
+      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'nodeIntegration' || node.key.name === 'nodeIntegration'));
+      for (const node of found_nodes) {
+        // in practice if there are two keys with the same name, the value of the last one wins
+        // but technically it is an invalid json
+        // just to be on the safe side show a warning if any value is insecure
         set = true;
-        if ((found_nodes[0].value.value === true) || (found_nodes[0].value.value === 1))
-          loc.push({ line: found_nodes[0].key.loc.start.line, column: found_nodes[0].key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+        if (node.value.value === false)
+          continue; // anything other than false is ignored
+
+        loc.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
       }
     }
 

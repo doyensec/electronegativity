@@ -7,14 +7,28 @@ export default function initialize() {
   function createWindow() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        "nodeIntegration": false,
+        "nodeIntegration": true,
+        "nodeIntegrationInWorker": 1
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        "nodeIntegration": 0,
         "nodeIntegrationInWorker": 1
       }
     });
 
     mainWindow = new BrowserWindow({
       webPreferences: {
-        nodeIntegration: false,
+        nodeIntegration: true,
+        nodeIntegrationInWorker: 1
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: 0,
         nodeIntegrationInWorker: 1
       }
     });
