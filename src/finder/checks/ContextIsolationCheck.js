@@ -22,13 +22,13 @@ export default class ContextIsolationCheck {
           ast.PropertyDepth,
           true, // any preload is enough
           node => (node.key.value === 'preload' || node.key.name === 'preload'));
-  
+
         const contextIsolation = ast.findNodeByType(data.arguments[0],
           ast.PropertyName,
           ast.PropertyDepth,
           false,
           node => (node.key.value === 'contextIsolation' || node.key.name === 'contextIsolation'));
-  
+
         if (preload.length > 0) {
           if (contextIsolation.length > 0) {
             for (const node of contextIsolation) {

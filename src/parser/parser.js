@@ -79,10 +79,10 @@ export class Parser {
         jsx: true
       }
     });
-    
+
     data.astParser = this.esLintESTreeAst;
 
-    return data;    
+    return data;
   }
 
   parse(filename, content) {
@@ -102,7 +102,7 @@ export class Parser {
             data = this.typescriptBabelFirst ? this.parseTypeScript(content) : this.parseTypescriptEstree(content);
           } catch (error1) {
             try {
-              data = this.typescriptBabelFirst ? this.parseTypescriptEstree(content) : this.parseTypeScript(content); 
+              data = this.typescriptBabelFirst ? this.parseTypescriptEstree(content) : this.parseTypeScript(content);
             } catch (error2) {
               throw this.typescriptBabelFirst ? error1 : error2; // prefer babel as it contains line number
             }

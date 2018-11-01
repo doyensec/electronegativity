@@ -15,7 +15,7 @@ export default class NodeIntegrationJavascriptAttachEventCheck {
         && (data.arguments[0].value === 'will-attach-webview'))) {
       return null;
     }
-    
+
     let loc = [];
     if (data.arguments.length > 1) {
       const found_nodes = ast.findNodeByType(data.arguments[1], 'AssignmentExpression', 4, true,

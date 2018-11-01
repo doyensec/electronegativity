@@ -11,7 +11,7 @@ class Ast {
       }
     });
   }
-  
+
   constructor(settings) {
     this.settings = settings;
   }

@@ -44,37 +44,37 @@ export default async function run(input, output, isSarif) {
 
   try {
     progress.start(filenames.length, 0);
- 
+
     for (const file of filenames) {
       progress.increment();
-  
+
       try {
         const [type, data, content, warnings] = parser.parse(file, loader.loaded.get(file));
         if (data === null)
           continue;
-  
+
         if (warnings !== undefined) {
           for (const warning of warnings) {
             errors.push({ file: file, message: warning.message, tolerable: true });
           }
         }
-  
+
         const result = await finder.find(file, data, type, content);
         issues.push(...result);
       } catch (error) {
         errors.push({ file: file, message: error.message, tolerable: false });
       }
     }
-  
+
     if (output)
       writeIssues(output, issues, isSarif);
-  
+
     progress.stop();
   }
   finally {
     console.log = oldLog;
     for (let i = 0; i < consoleArguments.length; i++)
-      console.log.apply(this, consoleArguments[i]); 
+      console.log.apply(this, consoleArguments[i]);
   }
 
   for (const error of errors) {

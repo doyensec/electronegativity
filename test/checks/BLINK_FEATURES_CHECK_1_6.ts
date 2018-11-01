@@ -30,7 +30,7 @@ export default function initialize() {
         enableBlinkFeatures: "CSSVariables"
       }
     });
-    
+
     mainWindow = new BrowserWindow({
       webPreferences: {
         enableBlinkFeatures: "UnknownFeature"

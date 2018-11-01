@@ -3,7 +3,7 @@ import { sourceTypes } from "../../parser/types";
 export default class InsecureContentHTMLCheck {
   constructor() {
     this.id = 'INSECURE_CONTENT_HTML_CHECK';
-    this.description = `Do not allow insecure HTTP connections `;
+    this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.HTML;
   }
 

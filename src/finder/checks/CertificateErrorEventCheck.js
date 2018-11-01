@@ -3,7 +3,7 @@ import { sourceTypes } from '../../parser/types';
 export default class CertificateErrorEventCheck {
   constructor() {
     this.id = 'CERTIFICATE_ERROR_EVENT_CHECK';
-    this.description = `Do not allow insecure HTTP connections `;
+    this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

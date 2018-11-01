@@ -4,7 +4,7 @@
 
 **Electronegativity** is a tool to identify misconfigurations and security anti-patterns in [Electron](https://electron.atom.io/) applications.
 
-It leverages AST parsing to look for security-relevant configurations, as described in the ["Electron Security Checklist - A Guide for Developers and Auditors"](https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf) whitepaper. 
+It leverages AST parsing to look for security-relevant configurations, as described in the ["Electron Security Checklist - A Guide for Developers and Auditors"](https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf) whitepaper.
 
 Software developers and security auditors can use this tool to mitigate potential weaknesses and implementation bugs when developing applications using Electron.
 
@@ -55,7 +55,7 @@ export default class MyCheck {
 
 ```
 
-Feel free to take a look at some of the already implemented checks to get an idea on how things work. 
+Feel free to take a look at some of the already implemented checks to get an idea on how things work.
 
 ## Credits
 

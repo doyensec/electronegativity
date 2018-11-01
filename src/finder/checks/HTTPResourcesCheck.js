@@ -25,7 +25,7 @@ export default class HTTPResourcesCheck {
       default:
         return undefined;
     }
-    
+
     return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false }];
   }
 }

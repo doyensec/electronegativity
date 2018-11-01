@@ -10,7 +10,7 @@ export default function initialize() {
         "disableBlinkFeatures": "CSSVariables"
       }
     });
-    
+
     mainWindow = new BrowserWindow({
       webPreferences: {
         disableBlinkFeatures: "CSSVariables"

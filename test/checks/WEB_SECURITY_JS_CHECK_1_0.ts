@@ -12,7 +12,7 @@ export default function initialize() {
         webSecurity: true
       }
     });
-    
+
     mainWindow = new BrowserWindow({
       "webPreferences": {
         "webSecurity": true
