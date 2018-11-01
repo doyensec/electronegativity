@@ -13,8 +13,8 @@ export default class InsecureContentJavascriptCheck {
 
     let location = [];
 
-    for (const arg of data.arguments) {
-      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'allowRunningInsecureContent' || node.key.name === 'allowRunningInsecureContent'));
+    if (data.arguments.length > 0) {
+      const found_nodes = ast.findNodeByType(data.arguments[0], ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'allowRunningInsecureContent' || node.key.name === 'allowRunningInsecureContent'));
       if (found_nodes.length > 0) {
         const node = found_nodes[0];
         if (node.value.value) {

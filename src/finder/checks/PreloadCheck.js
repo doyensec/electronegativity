@@ -13,8 +13,8 @@ export default class PreloadCheck {
 
     let location = [];
 
-    for (const arg of data.arguments) {
-      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'preload' || node.key.name === 'preload'));
+    if (data.arguments.length > 0) {
+      const found_nodes = ast.findNodeByType(data.arguments[0], ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'preload' || node.key.name === 'preload'));
       if (found_nodes.length > 0) {
         for (const node of found_nodes)
           location.push ({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: true });

@@ -13,8 +13,8 @@ export default class BlinkFeaturesCheck {
 
     let location = [];
 
-    for (const arg of data.arguments) {
-      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'blinkFeatures' || node.key.name === 'blinkFeatures'));
+    if (data.arguments.length > 0) {
+      const found_nodes = ast.findNodeByType(data.arguments[0], ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'blinkFeatures' || node.key.name === 'blinkFeatures'));
       if (found_nodes.length > 0) {
         const node = found_nodes[0];
         if (node.value.value.indexOf("PreciseMemoryInfo") != -1 || node.value.value.indexOf("CSSVariables") != -1) {
