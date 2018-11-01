@@ -1,7 +1,7 @@
 mainWindow = new BrowserWindow({ "webPreferences": {
-  "disableBlinkFeatures": "Auxclick"
+  "disableBlinkFeatures": "somethingElse"
 }});
 
 mainWindow = new BrowserWindow({ webPreferences: {
-  disableBlinkFeatures: "Auxclick"
+  disableBlinkFeatures: "somethingElse"
 }});

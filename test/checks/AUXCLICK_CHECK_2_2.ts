@@ -7,13 +7,13 @@ export default function initialize() {
   function createWindow() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        "disableBlinkFeatures": "Auxclick"
+        "disableBlinkFeatures": "somethingElse"
       }
     });
 
     mainWindow = new BrowserWindow({
       webPreferences: {
-        disableBlinkFeatures: "Auxclick"
+        disableBlinkFeatures: "somethingElse"
       }
     });
   }
