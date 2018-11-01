@@ -12,9 +12,9 @@ export default class BlinkFeaturesHTMLCheck {
     const webviews = data('webview');
     const self = this;
     webviews.each(function (i, elem) {
-      let wp = data(this).attr('blinkfeatures');
-      if(wp && (wp.indexOf('PreciseMemoryInfo') != -1 || wp.indexOf('CSSVariables') != -1)){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+      let wp = data(this).attr('enableblinkfeatures');
+      if(wp){
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: true });
       }
 
     });

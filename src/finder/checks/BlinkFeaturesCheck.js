@@ -14,11 +14,15 @@ export default class BlinkFeaturesCheck {
     let location = [];
 
     if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0], ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'blinkFeatures' || node.key.name === 'blinkFeatures'));
+      const found_nodes = ast.findNodeByType(data.arguments[0],
+        ast.PropertyName,
+        ast.PropertyDepth,
+        false,
+        node => (node.key.value === 'enableBlinkFeatures' || node.key.name === 'enableBlinkFeatures'));
+
       if (found_nodes.length > 0) {
-        const node = found_nodes[0];
-        if (node.value.value.indexOf("PreciseMemoryInfo") != -1 || node.value.value.indexOf("CSSVariables") != -1) {
-          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+        for (const node of found_nodes) {
+          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: true });
         }
       }
     }

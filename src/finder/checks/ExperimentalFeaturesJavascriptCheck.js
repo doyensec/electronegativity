@@ -14,7 +14,14 @@ export default class ExperimentalFeaturesJavascriptCheck {
     let location = [];
 
     if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0], ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'experimentalFeatures' || node.key.name === 'experimentalFeatures' || node.key.value === 'experimentalCanvasFeatures' || node.key.name === 'experimentalCanvasFeatures'));
+      const found_nodes = ast.findNodeByType(data.arguments[0],
+        ast.PropertyName, ast.PropertyDepth,
+        true,
+        node => (node.key.value === 'experimentalFeatures' ||
+                 node.key.name  === 'experimentalFeatures' ||
+                 node.key.value === 'experimentalCanvasFeatures' ||
+                 node.key.name  === 'experimentalCanvasFeatures'));
+
       if (found_nodes.length > 0) {
         const node = found_nodes[0];
         if (node.value.value == true) {

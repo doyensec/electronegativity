@@ -7,14 +7,17 @@ export default function initialize() {
   function createWindow() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        "blinkFeatures": "CSSVariables"
+        "disableBlinkFeatures": "CSSVariables"
+      }
+    });
+    
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        disableBlinkFeatures: "CSSVariables"
       }
     });
 
-    mainWindow = new BrowserWindow({
-      "webPreferences": {
-        "blinkFeatures": "PreciseMemoryInfo"
-      }
-    });
+    let something;
+    mainWindow = new BrowserWindow(something);
   }
 }
