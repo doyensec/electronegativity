@@ -117,7 +117,7 @@ export class Parser {
         }
         break;
       case sourceTypes.HTML:
-        data = cheerio_load(content, { xmlMode: true, withStartIndices: true });
+        data = cheerio_load(content, { xmlMode: true, withStartIndices: true, lowerCaseTags: true, lowerCaseAttributeNames: true });
         break;
       case sourceTypes.JSON:
         data = {json: JSON.parse(content), text: content};
