@@ -23,16 +23,18 @@ export class LoaderAsar extends Loader {
         case 'json':
           if (f.toLowerCase().indexOf('package.json') < 0)
             continue;
+        // eslint-disable-next-line no-fallthrough
         case 'js':
         case 'jsx':
         case 'ts':
         case 'tsx':
         case 'htm':
-        case 'html':
+        case 'html': {
           logger.debug(`Extracting file: ${f}`);
           const buffer = asar.extractFile(archive, f);
           this.load_buffer(buffer, f);
           break;
+        }
         default:
           break;
       }
