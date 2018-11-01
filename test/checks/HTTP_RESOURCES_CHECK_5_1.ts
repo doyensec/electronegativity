@@ -6,6 +6,6 @@ export default function initialize() {
 
   function createWindow() {
     mainWindow = new new BrowserWindow();
-    mainWindow.loadURL(`HttP://doyensec.com/`);
+    mainWindow.loadURL(`     HttP://doyensec.com/`);
   }
 }

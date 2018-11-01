@@ -13,13 +13,13 @@ export default class HTTPResourcesCheck {
 
     switch (data.arguments[0].type) {
       case ast.StringLiteral:
-        if (!data.arguments[0].value.toUpperCase().startsWith("HTTP://"))
+        if (!data.arguments[0].value.trim().toUpperCase().startsWith("HTTP://"))
           return undefined;
         break;
       case "TemplateLiteral":
         if (data.arguments[0].type !== "TemplateLiteral" ||
             data.arguments[0].quasis[0].type !== "TemplateElement" ||
-            !data.arguments[0].quasis[0].value.cooked.toUpperCase().startsWith("HTTP://"))
+            !data.arguments[0].quasis[0].value.cooked.trim().toUpperCase().startsWith("HTTP://"))
           return undefined;
         break;
       default:
