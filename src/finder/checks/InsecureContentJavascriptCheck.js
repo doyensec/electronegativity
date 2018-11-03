@@ -14,10 +14,14 @@ export default class InsecureContentJavascriptCheck {
     let location = [];
 
     if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0], ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'allowRunningInsecureContent' || node.key.name === 'allowRunningInsecureContent'));
-      if (found_nodes.length > 0) {
-        const node = found_nodes[0];
-        if (node.value.value) {
+      const found_nodes = ast.findNodeByType(data.arguments[0],
+        ast.PropertyName,
+        ast.PropertyDepth,
+        false,
+        node => (node.key.value === 'allowRunningInsecureContent' || node.key.name === 'allowRunningInsecureContent'));
+
+      for (const node of found_nodes) {
+        if (node.value.value === true) {
           location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }

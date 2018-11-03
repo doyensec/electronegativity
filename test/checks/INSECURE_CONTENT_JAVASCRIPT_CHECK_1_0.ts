@@ -10,5 +10,11 @@ export default function initialize() {
         allowRunningInsecureContent: false
       }
     });
+
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        allowRunningInsecureContent: 1
+      }
+    });
   }
 }
