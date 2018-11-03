@@ -1,4 +1,5 @@
 import { sourceTypes } from "../../parser/types";
+import { parseWebPreferencesFeaturesString } from '../../util';
 
 export default class WebSecurityHTMLCheck {
   constructor() {
@@ -18,8 +19,10 @@ export default class WebSecurityHTMLCheck {
       }
 
       let wp = data(this).attr('webpreferences');
-      if(wp && (wp.indexOf('webSecurity=false') !== -1 || wp.indexOf('webSecurity=0') !== -1)){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+      if (wp) {
+        let features = parseWebPreferencesFeaturesString(wp);
+        if (features['webSecurity'] === false)
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });
