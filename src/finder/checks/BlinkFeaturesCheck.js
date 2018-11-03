@@ -20,10 +20,8 @@ export default class BlinkFeaturesCheck {
         false,
         node => (node.key.value === 'enableBlinkFeatures' || node.key.name === 'enableBlinkFeatures'));
 
-      if (found_nodes.length > 0) {
-        for (const node of found_nodes) {
-          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: true });
-        }
+      for (const node of found_nodes) {
+        location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: true });
       }
     }
 
