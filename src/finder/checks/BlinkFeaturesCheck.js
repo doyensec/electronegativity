@@ -18,7 +18,11 @@ export default class BlinkFeaturesCheck {
         ast.PropertyName,
         ast.PropertyDepth,
         false,
-        node => (node.key.value === 'enableBlinkFeatures' || node.key.name === 'enableBlinkFeatures'));
+        // search for both names for now
+        // todo: implement taking electron version into account
+        // https://github.com/electron/electron/blob/master/docs/api/breaking-changes.md#browserwindow
+        node => (node.key.value === 'enableBlinkFeatures' || node.key.name === 'enableBlinkFeatures' ||
+                 node.key.value === 'blinkFeatures' || node.key.name === 'blinkFeatures'));
 
       for (const node of found_nodes) {
         location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: true });
