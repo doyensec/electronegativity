@@ -5,8 +5,10 @@ export default function initialize() {
   let mainWindow: BrowserWindow | undefined;
 
   function createWindow() {
-	mainWindow = new BrowserWindow({ "webPreferences": {
-		"sandbox": true }
-	});
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        "sandbox": true
+      }
+    });
   }
 }
