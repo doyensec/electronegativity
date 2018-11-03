@@ -15,7 +15,8 @@ export default class ExperimentalFeaturesJavascriptCheck {
 
     if (data.arguments.length > 0) {
       const found_nodes = ast.findNodeByType(data.arguments[0],
-        ast.PropertyName, ast.PropertyDepth,
+        ast.PropertyName,
+        ast.PropertyDepth,
         false,
         node => (node.key.value === 'experimentalFeatures' ||
                  node.key.name  === 'experimentalFeatures' ||
