@@ -16,15 +16,14 @@ export default class ExperimentalFeaturesJavascriptCheck {
     if (data.arguments.length > 0) {
       const found_nodes = ast.findNodeByType(data.arguments[0],
         ast.PropertyName, ast.PropertyDepth,
-        true,
+        false,
         node => (node.key.value === 'experimentalFeatures' ||
                  node.key.name  === 'experimentalFeatures' ||
                  node.key.value === 'experimentalCanvasFeatures' ||
                  node.key.name  === 'experimentalCanvasFeatures'));
 
-      if (found_nodes.length > 0) {
-        const node = found_nodes[0];
-        if (node.value.value == true) {
+      for (const node of found_nodes) {
+        if (node.value.value === true) {
           location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }
