@@ -1,3 +1,5 @@
+const {app} = require('electron');
+
 app.on('web-contents-created', (event, contents) => {
   contents.on('will-attach-webview', (event, webPreferences, params) => {
     // Strip away preload scripts if unused
