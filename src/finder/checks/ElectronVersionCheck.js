@@ -43,13 +43,20 @@ export default class ElectronVersionCheck {
         }
       }
 
-      if (electron && this.isVulnerableVersion(electron) || electronDev && this.isVulnerableVersion(electronDev)) {
-        let matches = linenumber(data.text, /(?:"electron"|electron)\s*:\s*.*[,}]?/g);
-        for (const m of matches)
+      this.checkVersion(data, location, electron);
+      this.checkVersion(data, location, electronDev);
+    }
+    return location;
+  }
+
+  checkVersion(data, location, version) {
+    if (version && this.isVulnerableVersion(version)) {
+      let matches = linenumber(data.text, /(?:"electron"|electron)\s*:\s*.*[,}]?/g);
+      for (const m of matches) {
+        if (m.match.includes(version.raw))
           location.push({ line: m.line, column: 0, id: this.id, description: this.description, manualReview: false });
       }
     }
-    return location;
   }
 
   isVulnerableVersion(version) {
