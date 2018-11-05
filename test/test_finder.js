@@ -28,7 +28,7 @@ describe('Finder', async () => {
   for (let file of list) {
     loader.load(path.join(check_tests, file));
   }
-  let filenames = [...loader.loaded.keys()];
+  let filenames = [...loader.list_files];
 
   // Parse all files and ...
   let parsers = [new Parser(false, true), new Parser(true, true), new Parser(true, false), new Parser(false, false)];
@@ -36,7 +36,7 @@ describe('Finder', async () => {
     let testcases = new Map();
 
     for (let file of filenames) {
-      const [type, data, content] = parser.parse(file, loader.loaded.get(file));
+      const [type, data, content] = parser.parse(file, loader.load_buffer(file));
       let split = path.basename(file.substr(0, file.lastIndexOf('.'))).split('_');
       let num_issues = +split.pop();
       split.pop();

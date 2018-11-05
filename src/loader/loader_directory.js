@@ -10,10 +10,12 @@ export class LoaderDirectory extends Loader {
     const files = await list_files(dir);
 
     for (const file of files) {
-      const buffer = read_file(file);
-      this.load_buffer(buffer, file);
+      this._loaded.add(file);
     }
+  }
 
-    return this.loaded;
+  load_buffer(filename) {
+    const buffer = read_file(filename);
+    return buffer;
   }
 }

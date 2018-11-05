@@ -30,9 +30,7 @@ export class LoaderAsar extends Loader {
         case 'tsx':
         case 'htm':
         case 'html': {
-          logger.debug(`Extracting file: ${f}`);
-          const buffer = asar.extractFile(archive, f);
-          this.load_buffer(buffer, f);
+          this._loaded.add(f);
           break;
         }
         default:
@@ -40,8 +38,13 @@ export class LoaderAsar extends Loader {
       }
     }
 
-    logger.debug(`Loaded ${this.loaded.size} files`);
+    logger.debug(`Discovered ${this.list_files.size} files`);
+    this.archive = archive;
+  }
 
-    return this.loaded;
+  load_buffer(filename) {
+    logger.debug(`Extracting file: ${filename}`);
+    const buffer = asar.extractFile(this.archive, filename);
+    return buffer;
   }
 }

@@ -42,7 +42,7 @@ export class Finder {
               if (matches) {
                 for(const m of matches) {
                   const sample = fileLines[m.line - 1];
-                  const issue = { file, content, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview };
+                  const issue = { file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview };
                   issues.push(issue);
                 }
               }
@@ -57,7 +57,7 @@ export class Finder {
           if(matches){
             for(const m of matches) {
               const sample = fileLines[m.line-1];
-              const issue = {file, content, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
               issues.push(issue);
             }
           }
@@ -69,7 +69,7 @@ export class Finder {
           if (matches) {
             for(const m of matches) {
               const sample = fileLines[m.line-1];
-              const issue = {file, content, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
               issues.push(issue);
             }
           }

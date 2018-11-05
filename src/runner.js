@@ -27,7 +27,7 @@ export default async function run(input, output, isSarif) {
   // Parse
   const parser = new Parser(false, true);
   const finder = new Finder();
-  const filenames = [...loader.loaded.keys()];
+  const filenames = [...loader.list_files];
   let issues = [];
   let errors = [];
   let table = new Table({
@@ -49,7 +49,7 @@ export default async function run(input, output, isSarif) {
       progress.increment();
 
       try {
-        const [type, data, content, warnings] = parser.parse(file, loader.loaded.get(file));
+        const [type, data, content, warnings] = parser.parse(file, loader.load_buffer(file));
         if (data === null)
           continue;
 
@@ -87,7 +87,7 @@ export default async function run(input, output, isSarif) {
   let rows = [];
   for (const issue of issues) {
     rows.push([
-      `${issue.id} ${issue.manualReview && issue.manualReview ? chalk.bgRed(`Manual Review Required`) : ``}`,
+      `${issue.id} ${issue.manualReview ? chalk.bgRed(`Manual Review Required`) : ``}`,
       issue.file,
       `${issue.location.line}:${issue.location.column}`,
       `https://github.com/doyensec/electronegativity/wiki/${issue.id}`

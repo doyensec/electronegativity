@@ -35,12 +35,9 @@ describe('Loader classes', () => {
       }).should.throw();
     });
 
-    it('returns a Map', () => {
-      loader.load(test_files.get('asar')).should.be.a('Map');
-    });
-
     it('extracts file from ASAR', () => {
-      loader.load(test_files.get('asar')).size.should.equal(60);
+      loader.load(test_files.get('asar'));
+      loader.list_files.size.should.equal(60);
     });
   }),
 
@@ -57,12 +54,9 @@ describe('Loader classes', () => {
       }).should.throw();
     });
 
-    it('returns a Map', () => {
-      loader.load(test_files.get('js')).should.be.a('Map');
-    });
-
     it('extracts file from ASAR', () => {
-      loader.load(test_files.get('js')).size.should.equal(1);
+      loader.load(test_files.get('js'));
+      loader.list_files.size.should.equal(1);
     });
   });
 });

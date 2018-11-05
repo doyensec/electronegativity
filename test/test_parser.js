@@ -29,8 +29,8 @@ let test_files = new Map()
 function parseFile(file, parser, finder) {
   let loader = new LoaderFile();
   loader.load(test_files.get(file));
-  let filename = [...loader.loaded.keys()][0];
-  let content = loader.loaded.get(filename);
+  let filename = [...loader.list_files][0];
+  let content = loader.load_buffer(filename);
 
   let output = null;
 
@@ -81,8 +81,8 @@ describe('Parser', () => {
   describe('Parse HTML', () => {
     let loader = new LoaderFile();
     loader.load(test_files.get('html'));
-    let filename = [...loader.loaded.keys()][0];
-    let content = loader.loaded.get(filename);
+    let filename = [...loader.list_files][0];
+    let content = loader.load_buffer(filename);
 
     let output = null;
 
