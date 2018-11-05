@@ -97,7 +97,7 @@ export function writeIssues(filename, result, isSarif){
     issues = JSON.stringify(issues, null, 2);
   }
   else{
-    writeCsvHeader(output);
+    writeCsvHeader(filename);
     result.forEach(issue => {
       issues += [
         issue.check.id, 

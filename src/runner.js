@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { extension, input_exists, is_directory, writeCsvHeader, writeIssues } from './util';
+import { extension, input_exists, is_directory, writeIssues } from './util';
 
 export default async function run(input, output, isSarif) {
   if (!input_exists(input)) {
