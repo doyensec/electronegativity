@@ -1,5 +1,6 @@
 import fs from 'fs';
 import dir from 'node-dir';
+import os from 'os';
 
 export function is_directory(input){
   return fs.statSync(input).isDirectory();
@@ -34,8 +35,9 @@ export function list_files(input){
 
 export function writeIssues(filename, result, isSarif){
   let issues = '';
+  let fileFlag = 'w';
 
-  if (isSarif){
+  if (isSarif) {
     issues =
       {
         $schema: "http://json.schemastore.org/sarif-2.0.0",
@@ -98,6 +100,7 @@ export function writeIssues(filename, result, isSarif){
   }
   else{
     writeCsvHeader(filename);
+    fileFlag = 'a';
     result.forEach(issue => {
       issues += [
         issue.id,
@@ -107,17 +110,17 @@ export function writeIssues(filename, result, isSarif){
         issue.description,
         `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
       ].toString();
-      issues += '\n';
+      issues += os.EOL;
     });
   }
 
-  fs.writeFile(filename, issues, { flag: 'w' }, (err) => {
+  fs.writeFile(filename, issues, { flag: fileFlag }, (err) => {
     if(err) throw err;
   });
 }
 
 export function writeCsvHeader(filename){
-  let header = 'issue, filename, location, sample, description, url\n';
+  let header = `issue, filename, location, sample, description, url${os.EOL}`;
 
   fs.writeFile(filename, header, (err) => {
     if(err) throw err;
