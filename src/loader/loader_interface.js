@@ -1,12 +1,12 @@
 export class Loader {
   constructor() {
-    this._loaded = new Map();
+    this._loaded = new Set();
   }
 
-  get loaded() { return this._loaded; }
+  get list_files() { return this._loaded; }
 
-  load_buffer(buffer, filename) {
-    this.loaded.set(filename, buffer);
-    return this.loaded;
+  // eslint-disable-next-line no-unused-vars
+  load_buffer(filename) {
+    return undefined;
   }
 }

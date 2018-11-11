@@ -7,8 +7,17 @@ export default function initialize() {
   function createWindow() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        "nodeIntegrationInWorker": 1
+        "disableBlinkFeatures": "CSSVariables"
       }
     });
+
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        disableBlinkFeatures: "CSSVariables"
+      }
+    });
+
+    let something;
+    mainWindow = new BrowserWindow(something);
   }
 }

@@ -1,3 +1,3 @@
 mainWindow = new BrowserWindow({ "webPreferences": {
-	sandbox: 1 }
+  sandbox: 1 }
 });

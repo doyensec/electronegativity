@@ -1,5 +1,5 @@
 import path from 'path';
-import chalk from 'chalk'; 
+import fs from 'fs';
 
 import { read_file } from '../util';
 import { Loader } from './loader_interface';
@@ -11,8 +11,13 @@ export class LoaderFile extends Loader {
 
   load(file) {
     const filename = path.resolve(file);
-    
+    if (!fs.existsSync(filename))
+      throw new Error(`File ${filename} not found.`);
+    this._loaded.add(filename);
+  }
+
+  load_buffer(filename) {
     const buffer = read_file(filename);
-    return this.load_buffer(buffer, filename);
+    return buffer;
   }
 }

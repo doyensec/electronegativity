@@ -11,22 +11,22 @@ export default class SandboxCheck {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
 
-    let location;
+    let location = [];
 
-    for (const arg of data.arguments) {
-      const found_nodes = ast.findNodeByType(arg, ast.PropertyName, ast.PropertyDepth, true, node => (node.key.value === 'webSecurity' || node.key.name === 'webSecurity'));
-      if (found_nodes.length > 0) {
-        const node = found_nodes[0]
-        if (node.value.value == false) {
-          location = { line: node.key.loc.start.line, column: node.key.loc.start.column };
+    if (data.arguments.length > 0) {
+      const found_nodes = ast.findNodeByType(data.arguments[0],
+        ast.PropertyName,
+        ast.PropertyDepth,
+        false,
+        node => (node.key.value === 'webSecurity' || node.key.name === 'webSecurity'));
+
+      for (const node of found_nodes) {
+        if (!node.value.value) {
+          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }
     }
 
-    if (location) {
-      return location;
-    } else {
-      return null;
-    }
+    return location;
   }
 }

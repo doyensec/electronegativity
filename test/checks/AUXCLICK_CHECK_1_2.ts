@@ -6,5 +6,7 @@ export default function initialize() {
 
   function createWindow() {
     mainWindow = new BrowserWindow({ "webPreferences": {}});
+
+    mainWindow = new BrowserWindow({ webPreferences: {}});
   }
 }

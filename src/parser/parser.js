@@ -17,7 +17,7 @@ export class Parser {
 
     this.babelFirst = babelFirst;
     this.typescriptBabelFirst = typescriptBabelFirst;
-   }
+  }
 
   parseEsprima(content) {
     let data = esprima_parse(content, { loc: true, tolerant: true, jsx: true });
@@ -27,16 +27,16 @@ export class Parser {
 
   parseBabel(content) {
     let plugins = [
-        "jsx",
-        "objectRestSpread",
-        "classProperties",
-        "optionalCatchBinding",
-        "asyncGenerators",
-        "decorators-legacy",
-        "flow",
-        "dynamicImport",
-        "estree",
-      ];
+      "jsx",
+      "objectRestSpread",
+      "classProperties",
+      "optionalCatchBinding",
+      "asyncGenerators",
+      "decorators-legacy",
+      "flow",
+      "dynamicImport",
+      "estree",
+    ];
 
     let data = babelParser.parse(content, {
       sourceType: "module",
@@ -79,10 +79,10 @@ export class Parser {
         jsx: true
       }
     });
-    
+
     data.astParser = this.esLintESTreeAst;
 
-    return data;    
+    return data;
   }
 
   parse(filename, content) {
@@ -95,14 +95,14 @@ export class Parser {
     switch (sourceType) {
       case sourceTypes.JAVASCRIPT:
         // replace shebang (https://en.wikipedia.org/wiki/Shebang_(Unix)) with spaces to keep offsets intact
-        content = content.replace(/(^#!.*)/, function(m) { return Array(m.length + 1).join(' ') });
+        content = content.replace(/(^#!.*)/, function(m) { return Array(m.length + 1).join(' '); });
 
         if(ext === 'ts' || ext === 'tsx') {
           try {
             data = this.typescriptBabelFirst ? this.parseTypeScript(content) : this.parseTypescriptEstree(content);
           } catch (error1) {
             try {
-              data = this.typescriptBabelFirst ? this.parseTypescriptEstree(content) : this.parseTypeScript(content); 
+              data = this.typescriptBabelFirst ? this.parseTypescriptEstree(content) : this.parseTypeScript(content);
             } catch (error2) {
               throw this.typescriptBabelFirst ? error1 : error2; // prefer babel as it contains line number
             }
@@ -117,7 +117,7 @@ export class Parser {
         }
         break;
       case sourceTypes.HTML:
-        data = cheerio_load(content, { xmlMode: true, withStartIndices: true });
+        data = cheerio_load(content, { xmlMode: true, withStartIndices: true, lowerCaseTags: true, lowerCaseAttributeNames: true });
         break;
       case sourceTypes.JSON:
         data = {json: JSON.parse(content), text: content};
@@ -126,6 +126,6 @@ export class Parser {
         break;
     }
 
-    return new Array(sourceType, data, content, data ? data.errors : undefined);
+    return [sourceType, data, content, data ? data.errors : undefined];
   }
 }

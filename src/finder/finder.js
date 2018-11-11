@@ -22,6 +22,15 @@ export class Finder {
     }
   }
 
+  get_sample(fileLines, index) {
+    let sample = fileLines[index];
+    // Also removes the \r leftover from split('\n') on Windows
+    // Using split('\n') in checkers however is OK, because file ending depends on Git settings and *may* be just '\n' even on Windows
+    sample = sample.trim();
+
+    return sample;
+  }
+
   async find(file, data, type, content, use_only_checks = null) {
     const checks = this._checks_by_type.get(type).filter((check) => {
       if (use_only_checks && !use_only_checks.includes(check.id)) {
@@ -38,11 +47,13 @@ export class Finder {
         data.astParser.traverseTree(data, {
           enter: (node) => {
             for (const check of checks) {
-              const location = check.match(rootData.astParser.getNode(node), rootData.astParser);
-              if (location) {
-                const sample = fileLines[location.line - 1];
-                const issue = { location, file, check, content, sample };
-                issues.push(issue);
+              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser);
+              if (matches) {
+                for(const m of matches) {
+                  const sample = this.get_sample(fileLines, m.line - 1);
+                  const issue = { file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview };
+                  issues.push(issue);
+                }
               }
             }
           }
@@ -51,11 +62,11 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         for (const check of checks) {
-          const locations = check.match(data, content);
-          if(locations.length > 0){
-            for(const location of locations) {
-              const sample = fileLines[location.line-1];
-              const issue = {location, file, check, content, sample};
+          const matches = check.match(data, content);
+          if(matches){
+            for(const m of matches) {
+              const sample = this.get_sample(fileLines, m.line - 1);
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
               issues.push(issue);
             }
           }
@@ -63,11 +74,13 @@ export class Finder {
         break;
       case sourceTypes.JSON:
         for (const check of checks) {
-          const location = await check.match(data);
-          if (location){
-            const sample = fileLines[location.line-1];
-            const issue = {location, file, check, content, sample};
-            issues.push(issue);
+          const matches = await check.match(data);
+          if (matches) {
+            for(const m of matches) {
+              const sample = this.get_sample(fileLines, m.line - 1);
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
+              issues.push(issue);
+            }
           }
         }
     }

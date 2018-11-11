@@ -10,5 +10,11 @@ export default function initialize() {
         "disableBlinkFeatures": "Auxclick"
       }
     });
+
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        disableBlinkFeatures: "Auxclick"
+      }
+    });
   }
 }

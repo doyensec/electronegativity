@@ -16,5 +16,17 @@ export default function initialize() {
         experimentalFeatures: false
       }
     });
+
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        experimentalCanvasFeatures: 1
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      "webPreferences": {
+        experimentalFeatures: 1
+      }
+    });
   }
 }

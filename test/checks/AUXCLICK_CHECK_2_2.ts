@@ -7,14 +7,13 @@ export default function initialize() {
   function createWindow() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        "nodeIntegrationInWorker": 1
+        "disableBlinkFeatures": "somethingElse"
       }
     });
 
-    otherWindow = new BrowserWindow({
-      "webPreferences": {
-        "nodeIntegration": 1,
-        "nodeIntegrationInWorker": 1
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        disableBlinkFeatures: "somethingElse"
       }
     });
   }

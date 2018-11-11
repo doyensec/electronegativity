@@ -1,5 +1,11 @@
 mainWindow = new BrowserWindow({
-    "webPreferences": {
-      allowRunningInsecureContent: false
-    }
-}); 
+  "webPreferences": {
+    allowRunningInsecureContent: false
+  }
+});
+
+mainWindow = new BrowserWindow({
+  "webPreferences": {
+    allowRunningInsecureContent: 1
+  }
+});

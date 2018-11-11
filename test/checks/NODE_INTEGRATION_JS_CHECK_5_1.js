@@ -1,1 +1,0 @@
-mainWindow = new BrowserWindow();

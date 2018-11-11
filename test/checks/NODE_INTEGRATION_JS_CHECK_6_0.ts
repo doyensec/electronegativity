@@ -7,7 +7,15 @@ export default function initialize() {
   function createWindow() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        "disableBlinkFeatures": "somethingElse"
+        "nodeIntegration": true,
+        "sandbox": true
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: true,
+        sandbox: true
       }
     });
   }

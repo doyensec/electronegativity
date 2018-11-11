@@ -11,7 +11,7 @@ class Ast {
       }
     });
   }
-  
+
   constructor(settings) {
     this.settings = settings;
   }
@@ -54,17 +54,22 @@ export class EsprimaAst extends Ast {
     const nodes = [];
     let depth = 0;
     estraverse.traverse(ast, {
-      enter: (node, parent) => {
+      enter: (node) => {
         depth += 1;
         if (found(node)) {
           nodes.push(node);
           if (stopAtFirst)
             return estraverse.VisitorOption.Break;
         }
-        if ((max_depth > 0) && (depth === max_depth))
-          return estraverse.VisitorOption.Skip;
+        if (max_depth > 0) {
+          if (depth > max_depth)
+            throw new Error('Traversal error'); // shouldn't be here
+
+          if (depth === max_depth)
+            return estraverse.VisitorOption.Skip;
+        }
       },
-      leave: (node, parent) => {
+      leave: () => {
         depth -= 1;
       },
     });
@@ -101,9 +106,14 @@ export class BabelAst extends Ast {
             return;
           }
         }
-        if ((max_depth > 0) && (depth === max_depth)) {
-          node.skip();
-          depth -= 1; // exit will be not called
+        if (max_depth > 0) {
+          if (depth > max_depth)
+            throw new Error('Traversal error'); // shouldn't be here
+
+          if (depth === max_depth) {
+            node.skip();
+            depth -= 1; // exit will be not called
+          }
         }
       },
       exit: (node) => {
@@ -142,27 +152,28 @@ export class ESLintAst extends Ast {
   findNode(ast, max_depth, stopAtFirst, found) {
     const nodes = [];
     let depth = 0;
-    let shouldStop = false;
     this.esLintTraverser.traverse(ast, {
       enter: (node) => {
+        if (max_depth > 0) {
+          if (depth === max_depth) {
+            this.esLintTraverser.skip();
+            return;
+          }
+          if (depth > max_depth)
+            throw new Error('Traversal error'); // shouldn't be here
+        }
+
         depth += 1;
         if (found(this.getNode(node))) {
           nodes.push(this.getNode(node));
           if (stopAtFirst) {
-            shouldStop = true;
             this.esLintTraverser.break();
             return;
           }
         }
-        if ((max_depth > 0) && (depth === max_depth)) {
-          this.esLintTraverser.break();
-          depth -= 1; // leave will be not called
-        }
       },
-      leave: (node) => {
+      leave: () => {
         depth -= 1;
-        if (shouldStop)
-          this.esLintTraverser.stop();
       },
     });
     return nodes;

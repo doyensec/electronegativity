@@ -8,7 +8,14 @@ export default function initialize() {
     mainWindow = new BrowserWindow({
       "webPreferences": {
         "nodeIntegration": false,
-        "nodeIntegrationInWorker": 1
+        "nodeIntegrationInWorker": false
+      }
+    });
+
+    mainWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: false,
+        nodeIntegrationInWorker: false
       }
     });
   }
