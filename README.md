@@ -35,6 +35,8 @@ Using electronegativity to look for issues in an `asar` archive and saving the r
 $ electronegativity -i /path/to/asar/archive -o result.csv
 ```
 
+If you're running into the Fatal Error "JavaScript heap out of memory", you can run node using ```node --max-old-space-size=4096 electronegativity -i /path/to/asar/archive -o result.csv```
+
 ## Creating new checks
 Electronegativity is build in such a way to allow any developer/hacker to add their own checks to the tool. All you need to do is create a new file in `/src/finder/checks` and creating a new class with one method, `match(data, ast)`, and a constructor that specifies the check details such as the name, the description, etc. For example:
 ```js
