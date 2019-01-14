@@ -44,6 +44,10 @@ $ electronegativity -i /path/to/asar/archive -o result.csv
 
 Note: if you're running into the Fatal Error "JavaScript heap out of memory", you can run node using ```node --max-old-space-size=4096 electronegativity -i /path/to/asar/archive -o result.csv```
 
+## Contributing
+
+If you're thinking about contributing to this project, please take a look at our [CONTRIBUTING.md](https://github.com/doyensec/electronegativity/blob/master/CONTRIBUTING.md).
+
 ## Credits
 
 Electronegativity was made possible thanks to the work of [Claudio Merloni](https://github.com/p4p3r), [Ibram Marzouk](https://github.com/0xibram), [Jaroslav Lobačevski](https://github.com/JarLob) and many other [contributors](https://github.com/doyensec/electronegativity/graphs/contributors).
