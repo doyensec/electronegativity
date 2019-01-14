@@ -50,3 +50,9 @@ Test cases for unit testing are placed in `test/checks/`.
 Filenames should have the following format: ```<CHECK_NAME_IDENTIFIER>_<test number #>_<number of issues>.<js|htm|html>```
 
 For instance, the ```NODE_INTEGRATION_JS_CHECK_1_0.js ``` will be analyzed using the ```NODE_INTEGRATION_JS_CHECK``` check and the test is expected to find ```0``` issues.
+
+To run all tests, use the following:
+
+```js
+$ npm test
+```
