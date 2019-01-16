@@ -25,9 +25,9 @@ For example:
 ```js
 import { sourceTypes } from '../../parser/types';
 
-export default class MyCheck {
+export default class MyCustomHTMLCheck {
     constructor() {
-        this.id = 'MY_CUSTOM_CHECK';
+        this.id = 'MY_CUSTOM_HTML_CHECK';
         this.description = `this is a custom check`;
         this.type = sourceTypes.JAVASCRIPT;
     }
@@ -44,7 +44,8 @@ Take a look at some of the checks in `/src/finder/checks` to get an idea on how 
 
 ### Naming conventions
 
-* The classname (and file) for each check uses camelCase notation with the following convention: ```<NAME><TYPE>Check``` (e.g. AllowpopupHTMLCheck)
+* The classname (and file) for each check uses CamelCase notation with the following convention: 
+```<NAME><TYPE>Check``` (e.g. AllowPopupHTMLCheck)
 
 where `NAME` is a self-descriptive identifier
 
