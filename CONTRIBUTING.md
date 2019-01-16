@@ -42,12 +42,21 @@ export default class MyCheck {
 
 Take a look at some of the checks in `/src/finder/checks` to get an idea on how things work.
 
+### Naming conventions
+
+* The classname (and file) for each check uses camelCase notation with the following convention: ```<NAME><TYPE>Check``` (e.g. AllowpopupHTMLCheck)
+
+where `NAME` is a self-descriptive identifier
+
+where `TYPE` can be *HTML*, *JSON* or *JS* 
+
+* The ```<CHECK_NAME_IDENTIFIER>``` (class id) uses uppercase notation with the following convention: ```<NAME_UNDERSCORE_SEPARATED>_<TYPE>_CHECK``` (e.g. ALLOWPOPUPS_HTML_CHECK)
 
 ## Testing checks with Mocha
 
 Test cases for unit testing are placed in `test/checks/`.
 
-Filenames should have the following format: ```<CHECK_NAME_IDENTIFIER>_<test number #>_<number of issues>.<js|htm|html>```
+Filenames for tests should have the following format: ```<CHECK_NAME_IDENTIFIER>_<test number #>_<number of issues>.<js|htm|html>```
 
 For instance, the ```NODE_INTEGRATION_JS_CHECK_1_0.js ``` will be analyzed using the ```NODE_INTEGRATION_JS_CHECK``` check and the test is expected to find ```0``` issues.
 
