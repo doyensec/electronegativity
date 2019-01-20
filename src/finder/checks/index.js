@@ -1,60 +1,60 @@
-
-import EvalCheck from './EvalCheck';
-import SandboxCheck from './SandboxCheck';
-import PreloadCheck from './PreloadCheck';
-import AuxclickCheck from './AuxclickCheck';
-import AllowpopupCheck from './AllowpopupCheck';
-import OpenExternalCheck from './OpenExternalCheck';
-import BlinkFeaturesCheck from './BlinkFeaturesCheck';
-import HTTPResourcesCheck from './HTTPResourcesCheck';
-import ElectronVersionCheck from './ElectronVersionCheck';
-import WebSecurityHTMLCheck from './WebSecurityHTMLCheck';
-import CustomArgumentsCheck from './CustomArgumentsCheck';
-import ProtocolHandlercheck from './ProtocolHandlersCheck';
-import ContextIsolationCheck from './ContextIsolationCheck';
+import AllowPopupsHTMLCheck from './AllowPopupHTMLCheck';
+import AuxclickHTMLCheck from './AuxclickHTMLCheck';
+import AuxclickJSCheck from './AuxclickJSCheck';
 import BlinkFeaturesHTMLCheck from './BlinkFeaturesHTMLCheck';
-import HTTPResourcesHTMLCheck from './HTTPResourcesHTMLCheck';
-import InsecureContentHTMLCheck from './InsecureContentHTMLCheck';
-import NodeIntegrationHTMLCheck from './NodeIntegrationHTMLCheck';
-import CertificateVerifyProcCheck from './CertificateVerifyProcCheck';
-import WebSecurityJavascriptCheck from './WebSecurityJavascriptCheck';
-import CertificateErrorEventCheck from './CertificateErrorEventCheck';
-import PermissionRequestHandlerCheck from './PermissionRequestHandlerCheck';
+import BlinkFeaturesJSCheck from './BlinkFeaturesJSCheck';
+import CertificateErrorEventJSCheck from './CertificateErrorEventJSCheck';
+import CertificateVerifyProcJSCheck from './CertificateVerifyProcJSCheck';
+import ContextIsolationJSCheck from './ContextIsolationJSCheck';
+import CustomArgumentsJSCheck from './CustomArgumentsJSCheck';
+import DangerousFunctionsJSCheck from './DangerousFunctionsJSCheck';
+import ElectronVersionJSONCheck from './ElectronVersionJSONCheck';
 import ExperimentalFeaturesHTMLCheck from './ExperimentalFeaturesHTMLCheck';
-import InsecureContentJavascriptCheck from './InsecureContentJavascriptCheck';
-import NodeIntegrationJavascriptCheck from './NodeIntegrationJavascriptCheck';
-import ExperimentalFeaturesJavascriptCheck from './ExperimentalFeaturesJavascriptCheck';
-import NodeIntegrationJavascriptAttachEventCheck from './NodeIntegrationJavascriptAttachEventCheck';
-
+import ExperimentalFeaturesJSCheck from './ExperimentalFeaturesJSCheck';
+import HTTPResourcesHTMLCheck from './HTTPResourcesHTMLCheck';
+import HTTPResourcesJSCheck from './HTTPResourcesJSCheck';
+import InsecureContentHTMLCheck from './InsecureContentHTMLCheck';
+import InsecureContentJSCheck from './InsecureContentJSCheck';
+import NodeIntegrationHTMLCheck from './NodeIntegrationHTMLCheck';
+import NodeIntegrationJSCheck from './NodeIntegrationJSCheck';
+import NodeIntegrationAttachEventJSCheck from './NodeIntegrationAttachEventJSCheck';
+import OpenExternalJSCheck from './OpenExternalJSCheck';
+import PermissionRequestHandlerJSCheck from './PermissionRequestHandlerJSCheck';
+import SandboxJSCheck from './SandboxJSCheck';
+import PreloadJSCheck from './PreloadJSCheck';
+import ProtocolHandlersJSCheck from './ProtocolHandlersJSCheck';
+import WebSecurityHTMLCheck from './WebSecurityHTMLCheck';
+import WebSecurityJSCheck from './WebSecurityJSCheck';
 
 
 const ENABLED_CHECKS = [
-  EvalCheck,
-  SandboxCheck,
-  PreloadCheck,
-  AuxclickCheck,
-  AllowpopupCheck,
-  OpenExternalCheck,
-  BlinkFeaturesCheck,
-  HTTPResourcesCheck,
-  ElectronVersionCheck,
-  WebSecurityHTMLCheck,
-  CustomArgumentsCheck,
-  ProtocolHandlercheck,
-  ContextIsolationCheck,
-  HTTPResourcesHTMLCheck,
+  AllowPopupsHTMLCheck,
+  AuxclickHTMLCheck,
+  AuxclickJSCheck,
   BlinkFeaturesHTMLCheck,
-  InsecureContentHTMLCheck,
-  NodeIntegrationHTMLCheck,
-  CertificateVerifyProcCheck,
-  WebSecurityJavascriptCheck,
-  CertificateErrorEventCheck,
-  PermissionRequestHandlerCheck,
+  BlinkFeaturesJSCheck,
+  CertificateErrorEventJSCheck,
+  CertificateVerifyProcJSCheck,
+  ContextIsolationJSCheck,
+  CustomArgumentsJSCheck,
+  DangerousFunctionsJSCheck,
+  //ElectronVersionJSONCheck, //removed until marking the git public
+  ExperimentalFeaturesJSCheck,
   ExperimentalFeaturesHTMLCheck,
-  InsecureContentJavascriptCheck,
-  NodeIntegrationJavascriptCheck,
-  ExperimentalFeaturesJavascriptCheck,
-  NodeIntegrationJavascriptAttachEventCheck,
+  HTTPResourcesHTMLCheck,
+  HTTPResourcesJSCheck,
+  InsecureContentHTMLCheck,
+  InsecureContentJSCheck,
+  NodeIntegrationHTMLCheck,
+  NodeIntegrationJSCheck,
+  NodeIntegrationAttachEventJSCheck,
+  OpenExternalJSCheck,
+  PermissionRequestHandlerJSCheck,
+  SandboxJSCheck,
+  PreloadJSCheck,
+  ProtocolHandlersJSCheck,
+  WebSecurityHTMLCheck,
+  WebSecurityJSCheck,
 ];
 
 module.exports.ENABLED_CHECKS = ENABLED_CHECKS;

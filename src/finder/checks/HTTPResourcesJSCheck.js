@@ -1,8 +1,8 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class HTTPResourcesCheck {
+export default class HTTPResourcesJavascriptCheck {
   constructor() {
-    this.id = 'HTTP_RESOURCES_CHECK';
+    this.id = 'HTTP_RESOURCES_JS_CHECK';
     this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.JAVASCRIPT;
   }

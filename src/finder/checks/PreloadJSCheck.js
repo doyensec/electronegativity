@@ -1,8 +1,8 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class PreloadCheck {
+export default class PreloadJSCheck {
   constructor() {
-    this.id = 'PRELOAD_CHECK';
+    this.id = 'PRELOAD_JS_CHECK';
     this.description = `Review the use of preload scripts`;
     this.type = sourceTypes.JAVASCRIPT;
   }

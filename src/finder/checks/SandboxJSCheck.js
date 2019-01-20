@@ -1,8 +1,8 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class SandboxCheck {
+export default class SandboxJSCheck {
   constructor() {
-    this.id = 'SANDBOX_CHECK';
+    this.id = 'SANDBOX_JS_CHECK';
     this.description = `Use sandbox for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
   }

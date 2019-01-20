@@ -1,6 +1,6 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class NodeIntegrationJavascriptAttachEventCheck {
+export default class NodeIntegrationAttachEventJSCheck {
   constructor() {
     this.id = 'NODE_INTEGRATION_ATTACH_EVENT_JS_CHECK';
     this.description = 'Disable nodeIntegration for untrusted origins';

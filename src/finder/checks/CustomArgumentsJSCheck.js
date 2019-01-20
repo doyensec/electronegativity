@@ -1,13 +1,13 @@
 import { sourceTypes } from '../../parser/types';
 
-export default class CustomArgumentsCheck {
+export default class CustomArgumentsJSCheck {
   constructor() {
-    this.id = 'CUSTOM_ARGUMENTS_CHECK';
+    this.id = 'CUSTOM_ARGUMENTS_JS_CHECK';
     this.description = `Review the use of custom command line arguments`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     const methods = ['appendArgument', 'appendSwitch'];
 
     if (data.type !== 'CallExpression') return null;

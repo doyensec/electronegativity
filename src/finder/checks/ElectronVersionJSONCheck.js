@@ -10,10 +10,10 @@ import { sourceTypes } from '../../parser/types';
 
 let releases;
 
-export default class ElectronVersionCheck {
+export default class ElectronVersionJSONCheck {
   constructor() {
-    this.id = 'ELECTRON_VERSION';
-    this.description = `The electron version used is outdated.`;
+    this.id = 'ELECTRON_VERSION_JSON_CHECK';
+    this.description = `Keep dependencies up-to-date. The electron version used is outdated.`;
     this.type = sourceTypes.JSON;
     this.versionsUrl = 'https://raw.githubusercontent.com/doyensec/electronegativity/master/safe_releases.json';
     this.cacheFileName = 'electronegativity_safe_releases.json';
@@ -33,7 +33,6 @@ export default class ElectronVersionCheck {
         } catch (error) {
           let cache = path.join(os.tmpdir(), this.cacheFileName);
 
-          // while the repo is private the url won't work
           const devPath = path.resolve('safe_releases.json');
           if (fs.existsSync(devPath))
             cache = devPath;

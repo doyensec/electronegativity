@@ -1,13 +1,13 @@
 import { sourceTypes } from '../../parser/types';
 
-export default class CertificateErrorEventCheck {
+export default class CertificateErrorEventJSCheck {
   constructor() {
-    this.id = 'CERTIFICATE_ERROR_EVENT_CHECK';
-    this.description = `Do not allow insecure HTTP connections`;
+    this.id = 'CERTIFICATE_ERROR_EVENT_JS_CHECK';
+    this.description = `Do not allow insecure connections, by explicitly opting-out from TLS validation`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     if (!((data.type === 'CallExpression')
         && (data.callee.property)
         && (data.callee.property.name === 'on')

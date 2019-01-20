@@ -1,8 +1,8 @@
 import { sourceTypes } from '../../parser/types';
 
-export default class EvalCheck {
+export default class DangerousFunctionsJSCheck {
   constructor() {
-    this.id = 'EVAL_CHECK';
+    this.id = 'DANGEROUS_FUNCTIONS_JS_CHECK';
     this.description = `Do not use insertCSS, executeJavaScript or eval with user-supplied content`;
     this.type = sourceTypes.JAVASCRIPT;
   }

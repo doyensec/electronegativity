@@ -1,9 +1,9 @@
-import { sourceTypes } from '../../parser/types';
+import { sourceTypes } from "../../parser/types";
 
-export default class ExperimentalFeaturesJavascriptCheck {
+export default class WebSecurityJSCheck {
   constructor() {
-    this.id = 'EXPERIMENTAL_FEATURES_JAVASCRIPT_CHECK';
-    this.description = `Do not use Chromium's experimental features`;
+    this.id = 'WEB_SECURITY_JS_CHECK';
+    this.description = `Do not use disablewebsecurity`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
@@ -18,13 +18,10 @@ export default class ExperimentalFeaturesJavascriptCheck {
         ast.PropertyName,
         ast.PropertyDepth,
         false,
-        node => (node.key.value === 'experimentalFeatures' ||
-                 node.key.name  === 'experimentalFeatures' ||
-                 node.key.value === 'experimentalCanvasFeatures' ||
-                 node.key.name  === 'experimentalCanvasFeatures'));
+        node => (node.key.value === 'webSecurity' || node.key.name === 'webSecurity'));
 
       for (const node of found_nodes) {
-        if (node.value.value === true) {
+        if (node.value.value === false) {
           location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }

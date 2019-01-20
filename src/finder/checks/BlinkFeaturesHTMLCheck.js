@@ -7,14 +7,14 @@ export default class BlinkFeaturesHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match(data, content) {
+  match(data, ast) {
     const loc = [];
     const webviews = data('webview');
     const self = this;
     webviews.each(function (i, elem) {
       let wp = data(this).attr('enableblinkfeatures');
       if(wp){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: true });
+        loc.push({ line: ast.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: true });
       }
 
       // search for both names for now
@@ -22,7 +22,7 @@ export default class BlinkFeaturesHTMLCheck {
       // https://github.com/electron/electron/blob/master/docs/api/breaking-changes.md#browserwindow
       wp = data(this).attr('blinkfeatures');
       if(wp){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: true });
+        loc.push({ line: ast.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: true });
       }
     });
     return loc;

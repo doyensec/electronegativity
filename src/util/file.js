@@ -46,8 +46,7 @@ export function writeIssues(filename, result, isSarif){
           {
             tool: {
               name: "Electronegativity",
-              fullName: "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
-              version: "1.0.6"
+              fullName: "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications"
             },
             results: [],
             resources: {

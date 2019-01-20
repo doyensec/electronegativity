@@ -1,8 +1,8 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class OpenExternalCheck {
+export default class OpenExternalJSCheck {
   constructor() {
-    this.id = 'OPEN_EXTERNAL_CHECK';
+    this.id = 'OPEN_EXTERNAL_JS_CHECK';
     this.description = `Review the use of openExternal`;
     this.type = sourceTypes.JAVASCRIPT;
   }

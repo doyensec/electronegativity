@@ -31,7 +31,7 @@ export default async function run(input, output, isSarif) {
   let issues = [];
   let errors = [];
   let table = new Table({
-    head: ['Issue ID', 'File', 'Location', 'URL'],
+    head: ['Check ID', 'Affected File', 'Location', 'Issue Description'],
     wordWrap: true
   });
 
@@ -87,7 +87,7 @@ export default async function run(input, output, isSarif) {
   let rows = [];
   for (const issue of issues) {
     rows.push([
-      `${issue.id} ${issue.manualReview ? chalk.bgRed(`Manual Review Required`) : ``}`,
+      `${issue.id} ${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}`,
       issue.file,
       `${issue.location.line}:${issue.location.column}`,
       `https://github.com/doyensec/electronegativity/wiki/${issue.id}`

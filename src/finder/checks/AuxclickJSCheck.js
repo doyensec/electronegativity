@@ -1,9 +1,9 @@
 import { sourceTypes } from '../../parser/types';
 
-export default class AuxclickCheck {
+export default class AuxclickJSCheck {
   constructor() {
-    this.id = 'AUXCLICK_CHECK';
-    this.description = `Limit navigation flows to untrusted origins`;
+    this.id = 'AUXCLICK_JS_CHECK';
+    this.description = `Limit navigation flows to untrusted origins. Middle-click may cause Electron to open a link within a new window`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 

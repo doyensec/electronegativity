@@ -8,7 +8,7 @@ export default class ExperimentalFeaturesHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match(data, content) {
+  match(data, ast) {
     const loc = [];
     const webviews = data('webview');
     const self = this;
@@ -17,7 +17,7 @@ export default class ExperimentalFeaturesHTMLCheck {
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['experimentalFeatures'] === true || features['experimentalCanvasFeatures'] === true)
-          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+          loc.push({ line: ast.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });

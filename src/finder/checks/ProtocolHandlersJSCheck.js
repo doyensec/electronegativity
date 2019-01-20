@@ -1,13 +1,13 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class ProtocolHandlerCheck {
+export default class ProtocolHandlerJSCheck {
   constructor() {
-    this.id = 'PROTOCOL_HANDLER_CHECK';
+    this.id = 'PROTOCOL_HANDLER_JS_CHECK';
     this.description = `Review the use of custom protocol handlers`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     const methods = [
       'setAsDefaultProtocolClient',
       'registerStandardSchemes',
@@ -15,7 +15,8 @@ export default class ProtocolHandlerCheck {
       'registerFileProtocol',
       'registerHttpProtocol',
       'registerStringProtocol',
-      'registerBufferProtocol'];
+      'registerBufferProtocol',
+      'registerStreamProtocol'];
 
     if (data.type !== 'CallExpression') return null;
     if (!methods.includes(data.callee.name) && !(data.callee.property && methods.includes(data.callee.property.name))) return null;

@@ -1,8 +1,8 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class InsecureContentJavascriptCheck {
+export default class InsecureContentJSCheck {
   constructor() {
-    this.id = 'INSECURE_CONTENT_JAVASCRIPT_CHECK';
+    this.id = 'INSECURE_CONTENT_JS_CHECK';
     this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.JAVASCRIPT;
   }

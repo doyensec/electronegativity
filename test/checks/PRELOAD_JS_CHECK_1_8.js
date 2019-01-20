@@ -1,6 +1,6 @@
 mainWindow = new BrowserWindow({
   webPreferences: {
-    contextIsolation: false,
+    contextIsolation: true,
     preload: 'preload.js',
   }
 });

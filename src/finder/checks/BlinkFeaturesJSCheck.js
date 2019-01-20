@@ -1,8 +1,8 @@
 import { sourceTypes } from '../../parser/types';
 
-export default class BlinkFeaturesCheck {
+export default class BlinkFeaturesJSCheck {
   constructor() {
-    this.id = 'BLINK_FEATURES_CHECK';
+    this.id = 'BLINK_FEATURES_JS_CHECK';
     this.description = `Do not use Chromium’s experimental features`;
     this.type = sourceTypes.JAVASCRIPT;
   }

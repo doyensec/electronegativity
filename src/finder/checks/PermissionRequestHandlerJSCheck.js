@@ -1,11 +1,16 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class PermissionRequestHandler {
+export default class PermissionRequestHandlerJSCheck {
   constructor() {
-    this.id = 'PERMISSION_REQUEST_HANDLER';
-    this.description = 'Evaluate the implementation and security of the custom callback in setPermissionRequestHandler';
+    this.id = 'PERMISSION_REQUEST_HANDLER_JS_CHECK';
+    this.description = 'Evaluate the implementation of the custom callback in setPermissionRequestHandler';
     this.type = sourceTypes.JAVASCRIPT;
   }
+
+  /*
+    Ideally, we should improve this check to detect whenever `setPermissionRequestHandler` is not used at all
+    See https://github.com/doyensec/electronegativity/issues/24
+  */
 
   match(data) {
     if (data.type !== 'CallExpression') return null;

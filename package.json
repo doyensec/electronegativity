@@ -1,6 +1,6 @@
 {
   "name": "@doyensec/electronegativity",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
   "main": "dist/index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "type": "git",
     "url": "git+https://github.com/doyensec/electronegativity.git"
   },
-  "author": "ibram@doyensec.com",
-  "license": "ISC",
+  "author": "info@doyensec.com",
+  "license": "Apache2",
   "bugs": {
     "url": "https://github.com/doyensec/electronegativity/issues"
   },

@@ -7,6 +7,9 @@ export default class NodeIntegrationJavascriptCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
+  //nodeIntegration Boolean (optional) - Whether node integration is enabled. Default is true.
+  //nodeIntegrationInWorker Boolean (optional) - Whether node integration is enabled in web workers. Default is false
+
   match(data, ast) {
     if (data.type !== 'NewExpression') return null;
     if (data.callee.name !== 'BrowserWindow') return null;
@@ -18,7 +21,7 @@ export default class NodeIntegrationJavascriptCheck {
       nodeIntegrationFound = this.findNode(ast, data.arguments[0], 'nodeIntegration', value => value === false, loc);
       // nodeIntegrationInWorker default value is safe
       // so no check for return value (don't care if it was found)
-      this.findNode(ast, data.arguments[0], 'nodeIntegrationInWorker', value => value === false, loc);
+      this.findNode(ast, data.arguments[0], 'nodeIntegrationInWorker', value => value !== true, loc);
 
       let sandboxLoc = [];
       let sandboxFound = this.findNode(ast, data.arguments[0], 'sandbox', value => value !== true, sandboxLoc);
@@ -49,15 +52,18 @@ export default class NodeIntegrationJavascriptCheck {
       // but technically it is an invalid json
       // just to be on the safe side show a warning if any value is insecure
       found = true;
-      if (skipCondition(node.value.value))
-        continue;
-
+      let isIdentifier = (node.value.type === "Identifier")? true : false;
+      if (skipCondition(node.value.value)){
+        if ((node.key.value === "sandbox" || node.key.name === "sandbox") && isIdentifier) continue;
+        if ((node.key.value === "nodeIntegration" || node.key.name === "nodeIntegration" || node.key.value === "nodeIntegrationInWorker" || node.key.name === "nodeIntegrationInWorker") && !isIdentifier) continue;
+      }
+        
       locations.push({
         line: node.key.loc.start.line,
         column: node.key.loc.start.column,
         id: this.id,
         description: this.description,
-        manualReview: node.value.value !== true && node.value.value !== false
+        manualReview: isIdentifier
       });
     }
 

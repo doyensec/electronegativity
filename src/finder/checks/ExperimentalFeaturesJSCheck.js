@@ -1,9 +1,9 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
 
-export default class SandboxCheck {
+export default class ExperimentalFeaturesJSCheck {
   constructor() {
-    this.id = 'WEB_SECURITY_JS_CHECK';
-    this.description = `Do not use disablewebsecurity`;
+    this.id = 'EXPERIMENTAL_FEATURES_JS_CHECK';
+    this.description = `Do not use Chromium's experimental features`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
@@ -18,10 +18,13 @@ export default class SandboxCheck {
         ast.PropertyName,
         ast.PropertyDepth,
         false,
-        node => (node.key.value === 'webSecurity' || node.key.name === 'webSecurity'));
+        node => (node.key.value === 'experimentalFeatures' ||
+                 node.key.name  === 'experimentalFeatures' ||
+                 node.key.value === 'experimentalCanvasFeatures' ||
+                 node.key.name  === 'experimentalCanvasFeatures'));
 
       for (const node of found_nodes) {
-        if (!node.value.value) {
+        if (node.value.value === true) {
           location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }

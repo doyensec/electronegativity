@@ -1,12 +1,13 @@
 import { sourceTypes } from '../../parser/types';
 
-export default class CertificateVerifyProcCheck {
+export default class CertificateVerifyProcJSCheck {
   constructor() {
-    this.id = 'CERTIFICATE_VERIFY_PROC_CHECK';
+    this.id = 'CERTIFICATE_VERIFY_PROC_JS_CHECK';
+    this.description = `Do not allow insecure connections, by explicitly opting-out from TLS validation or importing untrusted certificates`;
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data) {
+  match(data, ast) {
     if (data.type !== 'CallExpression')
       return null;
 
