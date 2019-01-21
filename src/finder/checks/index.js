@@ -38,7 +38,7 @@ const ENABLED_CHECKS = [
   ContextIsolationJSCheck,
   CustomArgumentsJSCheck,
   DangerousFunctionsJSCheck,
-  //ElectronVersionJSONCheck, //removed until marking the git public
+  ElectronVersionJSONCheck, 
   ExperimentalFeaturesJSCheck,
   ExperimentalFeaturesHTMLCheck,
   HTTPResourcesHTMLCheck,
