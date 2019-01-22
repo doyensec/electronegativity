@@ -2,7 +2,7 @@ import linenumber from 'linenumber';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
-import { lt, coerce, major } from 'semver';
+import { lt, coerce, major, minor } from 'semver';
 import got from 'got';
 import chalk from 'chalk';
 
@@ -60,8 +60,9 @@ export default class ElectronVersionJSONCheck {
 
   isVulnerableVersion(version) {
     const majorVersion = major(version);
+    const minorVersion = minor(version);
     for (const safe of releases.safe) {
-      if (major(safe) === majorVersion)
+      if (major(safe) === majorVersion && minor(safe) === minorVersion)
         return lt(version, safe);
     }
     return true;
