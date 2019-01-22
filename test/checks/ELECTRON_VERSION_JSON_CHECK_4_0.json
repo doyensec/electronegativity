@@ -1,7 +1,7 @@
 
 {
     "name": "example_desktop_app",
-    "description": "A fake app using a very old Electron release",
+    "description": "A fake app using a newer version for an old family release",
     "main": "app/index.js",
     "dependencies": {
       "electron":"3.1.0",
