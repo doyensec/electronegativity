@@ -7,16 +7,16 @@ export default class BlinkFeaturesJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'NewExpression') return null;
-    if (data.callee.name !== 'BrowserWindow') return null;
+  match(astNode, astHelper){
+    if (astNode.type !== 'NewExpression') return null;
+    if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let location = [];
 
-    if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0],
-        ast.PropertyName,
-        ast.PropertyDepth,
+    if (astNode.arguments.length > 0) {
+      const found_nodes = astHelper.findNodeByType(astNode.arguments[0],
+        astHelper.PropertyName,
+        astHelper.PropertyDepth,
         false,
         // search for both names for now
         // todo: implement taking electron version into account

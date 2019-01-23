@@ -8,16 +8,16 @@ export default class ExperimentalFeaturesHTMLCheck {
     this.type = sourceTypes.HTML;
   }
 
-  match(data, ast) {
+  match(cheerioObj, content) {
     const loc = [];
-    const webviews = data('webview');
+    const webviews = cheerioObj('webview');
     const self = this;
     webviews.each(function (i, elem) {
-      let wp = data(this).attr('webpreferences');
+      let wp = cheerioObj(this).attr('webpreferences');
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['experimentalFeatures'] === true || features['experimentalCanvasFeatures'] === true)
-          loc.push({ line: ast.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
       }
 
     });

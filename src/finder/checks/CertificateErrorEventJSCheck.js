@@ -7,15 +7,15 @@ export default class CertificateErrorEventJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (!((data.type === 'CallExpression')
-        && (data.callee.property)
-        && (data.callee.property.name === 'on')
-        && (data.arguments[0])
-        && (data.arguments[0].value === 'certificate-error'))) {
+  match(astNode){
+    if (!((astNode.type === 'CallExpression')
+        && (astNode.callee.property)
+        && (astNode.callee.property.name === 'on')
+        && (astNode.arguments[0])
+        && (astNode.arguments[0].value === 'certificate-error'))) {
       return null;
     }
 
-    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

@@ -7,18 +7,18 @@ export default class CertificateVerifyProcJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'CallExpression')
+  match(astNode){
+    if (astNode.type !== 'CallExpression')
       return null;
 
-    if (data.callee.property && data.callee.property.name === "setCertificateVerifyProc") {
+    if (astNode.callee.property && astNode.callee.property.name === "setCertificateVerifyProc") {
       const description = 'Verify that the application does not explicitly opt-out from TLS validation';
-      return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: description, manualReview: true }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: description, manualReview: true }];
     }
 
-    if (data.callee.property && data.callee.property.name === "importCertificate") {
+    if (astNode.callee.property && astNode.callee.property.name === "importCertificate") {
       const description = 'Verify custom TLS certificates imported into the platform certificate store';
-      return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: description, manualReview: true }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: description, manualReview: true }];
     }
   }
 }

@@ -7,25 +7,25 @@ export default class ContextIsolationJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'NewExpression') return null;
-    if (data.callee.name !== 'BrowserWindow') return null;
+  match(astNode, astHelper){
+    if (astNode.type !== 'NewExpression') return null;
+    if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let location = [];
-    if (data.arguments.length > 0) {
-      if (data.arguments[0].type !== "ObjectExpression") {
-        location.push({ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false });
+    if (astNode.arguments.length > 0) {
+      if (astNode.arguments[0].type !== "ObjectExpression") {
+        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
       }
       else {
-        const preload = ast.findNodeByType(data.arguments[0],
-          ast.PropertyName,
-          ast.PropertyDepth,
+        astHelper.findNodeByType(astNode.arguments[0],
+          astHelper.PropertyName,
+          astHelper.PropertyDepth,
           true, // any preload is enough
           node => (node.key.value === 'preload' || node.key.name === 'preload'));
 
-        const contextIsolation = ast.findNodeByType(data.arguments[0],
-          ast.PropertyName,
-          ast.PropertyDepth,
+        const contextIsolation = astHelper.findNodeByType(astNode.arguments[0],
+          astHelper.PropertyName,
+          astHelper.PropertyDepth,
           false,
           node => (node.key.value === 'contextIsolation' || node.key.name === 'contextIsolation'));
 
@@ -41,12 +41,12 @@ export default class ContextIsolationJSCheck {
             }
           }
         }else {
-          location.push({ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false });
+          location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }
     }else{
       //No webpreferences
-      location.push({ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false });
+      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
     }
 
     return location;

@@ -7,16 +7,16 @@ export default class SandboxJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'NewExpression') return null;
-    if (data.callee.name !== 'BrowserWindow') return null;
+  match(astNode, astHelper){
+    if (astNode.type !== 'NewExpression') return null;
+    if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let wasFound = false;
     let loc = [];
-    if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0],
-        ast.PropertyName,
-        ast.PropertyDepth,
+    if (astNode.arguments.length > 0) {
+      const found_nodes = astHelper.findNodeByType(astNode.arguments[0],
+        astHelper.PropertyName,
+        astHelper.PropertyDepth,
         false,
         node => (node.key.value === 'sandbox' || node.key.name === 'sandbox'));
 
@@ -32,7 +32,7 @@ export default class SandboxJSCheck {
     if (wasFound) {
       return loc;
     } else { // default is false
-      return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: false }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
     }
   }
 }

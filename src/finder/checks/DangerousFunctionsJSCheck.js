@@ -7,16 +7,16 @@ export default class DangerousFunctionsJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
+  match(astNode, astHelper){
     const methods = [
       'executeJavascript',
       'eval',
       'insertCSS'];
 
-    if (data.type !== 'CallExpression') return null;
-    if (!methods.includes(data.callee.name) && !(data.callee.property && methods.includes(data.callee.property.name))) return null;
-    if (data.arguments[0].type === ast.StringLiteral) return null; // constant, not user supplied
+    if (astNode.type !== 'CallExpression') return null;
+    if (!methods.includes(astNode.callee.name) && !(astNode.callee.property && methods.includes(astNode.callee.property.name))) return null;
+    if (astNode.arguments[0].type === astHelper.StringLiteral) return null; // constant, not user supplied
 
-    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

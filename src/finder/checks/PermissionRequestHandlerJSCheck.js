@@ -12,10 +12,10 @@ export default class PermissionRequestHandlerJSCheck {
     See https://github.com/doyensec/electronegativity/issues/24
   */
 
-  match(data) {
-    if (data.type !== 'CallExpression') return null;
-    if (!(data.callee.property && data.callee.property.name === "setPermissionRequestHandler")) return null;
+  match(astNode){
+    if (astNode.type !== 'CallExpression') return null;
+    if (!(astNode.callee.property && astNode.callee.property.name === "setPermissionRequestHandler")) return null;
 
-    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

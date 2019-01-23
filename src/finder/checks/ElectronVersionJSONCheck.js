@@ -19,9 +19,9 @@ export default class ElectronVersionJSONCheck {
     this.cacheFileName = 'electronegativity_safe_releases.json';
   }
 
-  async match(data) {
-    const electron = data.json.dependencies && 'electron' in data.json.dependencies ? coerce(data.json.dependencies.electron) : undefined;
-    const electronDev = data.json.devDependencies && 'electron' in data.json.devDependencies ? coerce(data.json.devDependencies.electron) : undefined;
+  async match(content){
+    const electron = content.json.dependencies && 'electron' in content.json.dependencies ? coerce(content.json.dependencies.electron) : undefined;
+    const electronDev = content.json.devDependencies && 'electron' in content.json.devDependencies ? coerce(content.json.devDependencies.electron) : undefined;
 
     let location = [];
     if (electron || electronDev) {
@@ -42,8 +42,8 @@ export default class ElectronVersionJSONCheck {
         }
       }
 
-      this.checkVersion(data, location, electron);
-      this.checkVersion(data, location, electronDev);
+      this.checkVersion(content, location, electron);
+      this.checkVersion(content, location, electronDev);
     }
     return location;
   }

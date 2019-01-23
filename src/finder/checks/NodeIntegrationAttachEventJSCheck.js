@@ -7,18 +7,18 @@ export default class NodeIntegrationAttachEventJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (!((data.type === 'CallExpression')
-        && (data.callee.property)
-        && (data.callee.property.name === 'on')
-        && (data.arguments[0])
-        && (data.arguments[0].value === 'will-attach-webview'))) {
+  match(astNode, astHelper){
+    if (!((astNode.type === 'CallExpression')
+        && (astNode.callee.property)
+        && (astNode.callee.property.name === 'on')
+        && (astNode.arguments[0])
+        && (astNode.arguments[0].value === 'will-attach-webview'))) {
       return null;
     }
 
     let loc = [];
-    if (data.arguments.length > 1) {
-      const found_nodes = ast.findNodeByType(data.arguments[1], 'AssignmentExpression', 0, true,
+    if (astNode.arguments.length > 1) {
+      const found_nodes = astHelper.findNodeByType(astNode.arguments[1], 'AssignmentExpression', 0, true,
         node => node.left.type === 'MemberExpression'
                 && node.left.object.name === 'webPreferences'
                 && node.left.property.name === 'nodeIntegration'

@@ -7,11 +7,11 @@ export default class OpenExternalJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'CallExpression') return null;
-    if (!(data.callee.property && data.callee.property.name === "openExternal")) return null;
-    if (data.arguments[0].type === ast.StringLiteral) return null; // constant, not user supplied
+  match(astNode, astHelper){
+    if (astNode.type !== 'CallExpression') return null;
+    if (!(astNode.callee.property && astNode.callee.property.name === "openExternal")) return null;
+    if (astNode.arguments[0].type === astHelper.StringLiteral) return null; // constant, not user supplied
 
-    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

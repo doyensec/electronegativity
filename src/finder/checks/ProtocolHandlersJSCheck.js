@@ -7,7 +7,7 @@ export default class ProtocolHandlerJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
+  match(astNode){
     const methods = [
       'setAsDefaultProtocolClient',
       'registerStandardSchemes',
@@ -18,9 +18,9 @@ export default class ProtocolHandlerJSCheck {
       'registerBufferProtocol',
       'registerStreamProtocol'];
 
-    if (data.type !== 'CallExpression') return null;
-    if (!methods.includes(data.callee.name) && !(data.callee.property && methods.includes(data.callee.property.name))) return null;
+    if (astNode.type !== 'CallExpression') return null;
+    if (!methods.includes(astNode.callee.name) && !(astNode.callee.property && methods.includes(astNode.callee.property.name))) return null;
 
-    return [{ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
   }
 }

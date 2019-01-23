@@ -1,6 +1,6 @@
 import { sourceTypes } from "../../parser/types";
 
-export default class NodeIntegrationJavascriptCheck {
+export default class NodeIntegrationJSCheck {
   constructor() {
     this.id = 'NODE_INTEGRATION_JS_CHECK';
     this.description = `Disable nodeIntegration for untrusted origins`;
@@ -10,31 +10,31 @@ export default class NodeIntegrationJavascriptCheck {
   //nodeIntegration Boolean (optional) - Whether node integration is enabled. Default is true.
   //nodeIntegrationInWorker Boolean (optional) - Whether node integration is enabled in web workers. Default is false
 
-  match(data, ast) {
-    if (data.type !== 'NewExpression') return null;
-    if (data.callee.name !== 'BrowserWindow') return null;
+  match(astNode, astHelper){
+    if (astNode.type !== 'NewExpression') return null;
+    if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let nodeIntegrationFound = false;
     let locations = [];
-    if (data.arguments.length > 0) {
+    if (astNode.arguments.length > 0) {
       let loc = [];
-      nodeIntegrationFound = this.findNode(ast, data.arguments[0], 'nodeIntegration', value => value === false, loc);
+      nodeIntegrationFound = this.findNode(astHelper, astNode.arguments[0], 'nodeIntegration', value => value === false, loc);
       // nodeIntegrationInWorker default value is safe
       // so no check for return value (don't care if it was found)
-      this.findNode(ast, data.arguments[0], 'nodeIntegrationInWorker', value => value !== true, loc);
+      this.findNode(astHelper, astNode.arguments[0], 'nodeIntegrationInWorker', value => value !== true, loc);
 
       let sandboxLoc = [];
-      let sandboxFound = this.findNode(ast, data.arguments[0], 'sandbox', value => value !== true, sandboxLoc);
+      let sandboxFound = this.findNode(astHelper, astNode.arguments[0], 'sandbox', value => value !== true, sandboxLoc);
       if (!sandboxFound || sandboxLoc.length <= 0) // sandbox disables node integration
         locations = locations.concat(loc);
     }
 
     if (!nodeIntegrationFound) {
       let manualReview = false;
-      if (data.arguments.length > 0 && data.arguments[0].type !== "ObjectExpression") {
+      if (astNode.arguments.length > 0 && astNode.arguments[0].type !== "ObjectExpression") {
         manualReview = true;
       }
-      locations.push({ line: data.loc.start.line, column: data.loc.start.column, id: this.id, description: this.description, manualReview });
+      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview });
     }
 
     return locations;
