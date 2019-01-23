@@ -14,10 +14,21 @@ $ node dist/index.js -h
 
 ## Creating new checks
 
-Electronegativity is build in such a way to easily allow the development of new security checks: 
+Electronegativity is build in such a way to easily allow the development of new security checks.
+
+There are three different check types:
+
+* JS (using a combination of [Esprima](http://esprima.org/), [Babel](https://github.com/babel/babel), [TypeScript ESTree](https://github.com/JamesHenry/typescript-estree))
+* HTML (using [Cheerio](https://github.com/cheeriojs/cheerio))
+* JSON (using the native `JSON.parse()`)
+
+Depending on the target file (e.g. evaluating a property in a JavaScript file -> JS), you will need to:
 
 1. Create a new file in `/src/finder/checks`
-2. Create a new class with a `match(data, ast)` function, which should contain the logic of your custom check
+2. Create a new class with a `match()` function, which should contain the logic of your custom check
+   * JS -> `match(astNode, astHelper)`
+   * HTML -> `match(cheerioObj, content)`
+   * JSON -> `match(content)`
 3. Add a constructor that specifies the check details such as name, description, etc. 
 
 For example:
@@ -32,7 +43,7 @@ export default class MyCustomHTMLCheck {
         this.type = sourceTypes.JAVASCRIPT;
     }
 
-    match(data, ast) {
+    match(cheerioObj, content){
         //do magic
         //either return an object with row and col, or null meaning no issues were identified
     }
@@ -40,7 +51,7 @@ export default class MyCustomHTMLCheck {
 
 ```
 
-Take a look at some of the checks in `/src/finder/checks` to get an idea on how things work.
+Take a look at the different checks in `/src/finder/checks` to get an idea on how things work.
 
 ### Naming conventions
 
