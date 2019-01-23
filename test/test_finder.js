@@ -56,7 +56,7 @@ describe('Finder', () => {
         it('Finds ' + num_issues + ' issue(s) in ' + path.basename(file), async () => {
           let result = await finder.find(file, data, type, content);
           result.filter(r => {return r.id === check;}).length.should.equal(num_issues);
-        });
+        }).timeout(8000);
       }
     }
   }
