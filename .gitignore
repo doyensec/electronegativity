@@ -49,6 +49,7 @@ typings/
 
 # Optional eslint cache
 .eslintcache
+.eslintrc.json
 
 # Optional REPL history
 .node_repl_history
@@ -64,3 +65,7 @@ typings/
 
 # Vscode stuff
 .vscode 
+
+# Babel
+.babelrc
+
