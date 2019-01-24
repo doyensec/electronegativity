@@ -15,7 +15,7 @@
     "url": "git+https://github.com/doyensec/electronegativity.git"
   },
   "author": "info@doyensec.com",
-  "license": "Apache2",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/doyensec/electronegativity/issues"
   },
