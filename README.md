@@ -27,7 +27,7 @@ $ electronegativity -h
 |    Option    |                 Description                       |
 |:------------:|:-------------------------------------------------:|
 | -V           | output the version number                         |
-| -i, --input  | input (directory, .js, .htm, .asar)               |
+| -i, --input  | input (directory, .js, .html, .asar)               |
 | -o, --output | save the results to a file in csv or sarif format |
 | -h, --help   | output usage information                          |
 
