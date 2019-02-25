@@ -27,7 +27,7 @@ import WebSecurityHTMLCheck from './WebSecurityHTMLCheck';
 import WebSecurityJSCheck from './WebSecurityJSCheck';
 
 
-const ENABLED_CHECKS = [
+const CHECKS = [
   AllowPopupsHTMLCheck,
   AuxclickHTMLCheck,
   AuxclickJSCheck,
@@ -57,4 +57,4 @@ const ENABLED_CHECKS = [
   WebSecurityJSCheck,
 ];
 
-module.exports.ENABLED_CHECKS = ENABLED_CHECKS;
+module.exports.CHECKS = CHECKS;

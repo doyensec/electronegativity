@@ -1,9 +1,21 @@
-import { ENABLED_CHECKS } from './checks';
+import { CHECKS } from './checks';
 import { sourceTypes } from '../parser/types';
+import chalk from 'chalk';
 
 export class Finder {
-  constructor() {
-    this._enabled_checks = ENABLED_CHECKS;
+  constructor(customScan) {
+    if (customScan && customScan.length > 0) {
+      var checksNames = CHECKS.map(check => check.name.toLowerCase());
+      if (!customScan.some(r => checksNames.includes(r))) {
+        console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
+        process.exit(1);
+      } else {
+      for (var i = CHECKS.length - 1; i >= 0; i--) 
+        if (!customScan.includes(CHECKS[i].name.toLowerCase()))
+          CHECKS.splice(i, 1);
+      }
+    }
+    this._enabled_checks = CHECKS;
     this._checks_by_type = new Map();
     this.init_checks_list();
   }
@@ -20,6 +32,7 @@ export class Finder {
       const checkInstance = new check();
       this._checks_by_type.get(checkInstance.type).push(checkInstance);
     }
+    console.log(chalk.green(`${this._enabled_checks.length} checks successfully loaded.`));
   }
 
   get_sample(fileLines, index) {
