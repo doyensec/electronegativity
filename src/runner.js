@@ -7,7 +7,7 @@ import { Parser } from './parser';
 import { Finder } from './finder';
 import { extension, input_exists, is_directory, writeIssues } from './util';
 
-export default async function run(input, output, isSarif) {
+export default async function run(input, output, isSarif, customScan) {
   if (!input_exists(input)) {
     console.log(chalk.red('Input does not exist!'));
     process.exit(1);
@@ -24,9 +24,13 @@ export default async function run(input, output, isSarif) {
 
   await loader.load(input);
 
-  // Parse
+  if (typeof customScan !== 'undefined' && customScan) {
+    customScan = customScan.split(",").map(check => check.trim().toLowerCase());
+  } else customScan = [];
+
+  // Parser
   const parser = new Parser(false, true);
-  const finder = new Finder();
+  const finder = await new Finder(customScan);
   const filenames = [...loader.list_files];
   let issues = [];
   let errors = [];
@@ -94,6 +98,10 @@ export default async function run(input, output, isSarif) {
     ]);
   }
 
-  table.push(...rows);
-  console.log(table.toString());
+  if (rows.length > 0) {
+    table.push(...rows);
+    console.log(table.toString());
+  }
+  else
+    console.log(chalk.green(`\nNo issues were found.`));
 }
