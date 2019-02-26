@@ -4,7 +4,7 @@
     "description": "A fake app using the latest Electron release",
     "main": "app/index.js",
     "dependencies": {
-      "electron":"4.0.1",
+      "electron":"4.0.4",
       "mkdirp": "^0.5.1",
       "yauzl": "^2.5.0"
     }
