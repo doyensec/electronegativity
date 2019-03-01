@@ -5,22 +5,14 @@ export default class CSPJSCheck {
     this.id = 'CSP_JS_CHECK';
     this.description = `Check for common responseHeaders CSP assignments`;
     this.type = sourceTypes.JAVASCRIPT;
-    this.literalsBeforeCSPString = 2; // needed until a #32 fix
   }
 
   match(astNode, astHelper){
     let location = [];
-    // match e.g. details.responseHeaders["content-security-policy"] = "default-src 'self'";
-    if (this.literalsBeforeCSPString === 0 && astNode.type == 'Literal')
-      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, properties: { "CSPstring": astNode.value}, manualReview: true });
-    if (this.literalsBeforeCSPString === 1 && astNode.type == 'Literal')
-      this.literalsBeforeCSPString--;
-    if (astNode.type == 'MemberExpression') {
-      if (!astNode.computed) return null;
-      if (!astNode.property || !astNode.property.value || astNode.property.value.toString().toLowerCase() !== 'content-security-policy') return null;
-      if (!astNode.object.property || astNode.object.property.name !== 'responseHeaders') return null;
-      this.literalsBeforeCSPString--;
-    } else if (astNode.type == "CallExpression") {
+    // match e.g. details.responseHeaders["content-security-policy"] = "default-src 'self'"; Note that this does not check if the assignment is inside in the responseHeaders object because of #32
+    if (astNode.type === "AssignmentExpression" && astNode.left.property && astNode.left.property.value && astNode.left.property.value.toString().toLowerCase() === "content-security-policy")
+      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, properties: { "CSPstring": astNode.right.value }, manualReview: true });
+    else if (astNode.type == "CallExpression") {
       if (astNode.arguments.length > 0) {
         if (astNode.arguments[0].type !== "ObjectExpression") return null;
         const found_nodes = astHelper.findNodeByType(astNode.arguments[0],
