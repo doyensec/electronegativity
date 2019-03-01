@@ -3,7 +3,7 @@ import * as csp from '@doyensec/csp-evaluator'
 export default class CSPGlobalCheck {
 
     constructor() {
-        this.id = "CSP_CHECK";
+        this.id = "CSP_GLOBAL_CHECK";
         this.description = {  NO_CSP: "No CSP has been detected in the target application",
                               MAYBE_WEAK_CSP: "One or more CSP directives detected seems to be vulnerable",
                               WEAK_CSP: "One or more CSP directives detected are vulnerable" };
