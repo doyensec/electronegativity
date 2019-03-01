@@ -11,6 +11,7 @@ export default class DangerousFunctionsJSCheck {
     const methods = [
       'executeJavascript',
       'eval',
+      'setImmediate',
       'insertCSS'];
 
     if (astNode.type !== 'CallExpression') return null;
