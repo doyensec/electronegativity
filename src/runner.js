@@ -92,8 +92,8 @@ export default async function run(input, output, isSarif, customScan) {
   // Second pass of checks (in "GlobalChecks")
   // Now that we have all the "naive" findings we may analyze them further to sort out false negatives
   // and false positives before presenting them in the final report (e.g. CSP)
-  //const globalChecker = new GlobalChecks(issues);
-  //issues = await globalChecker.getResults();
+  const globalChecker = new GlobalChecks(issues);
+  issues = await globalChecker.getResults();
 
   let rows = [];
   for (const issue of issues) {
