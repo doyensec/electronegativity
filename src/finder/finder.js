@@ -32,7 +32,7 @@ export class Finder {
       const checkInstance = new check();
       this._checks_by_type.get(checkInstance.type).push(checkInstance);
     }
-    console.log(chalk.green(`${this._enabled_checks.length} check(s) successfully loaded.`));
+    console.log(chalk.green(`${this._enabled_checks.length} checks successfully loaded.`));
   }
 
   get_sample(fileLines, index) {
@@ -64,7 +64,7 @@ export class Finder {
               if (matches) {
                 for(const m of matches) {
                   const sample = this.get_sample(fileLines, m.line - 1);
-                  const issue = { file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview };
+                  const issue = { file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, manualReview: m.manualReview };
                   issues.push(issue);
                 }
               }
@@ -79,7 +79,7 @@ export class Finder {
           if(matches){
             for(const m of matches) {
               const sample = this.get_sample(fileLines, m.line - 1);
-              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, manualReview: m.manualReview};
               issues.push(issue);
             }
           }
@@ -91,7 +91,7 @@ export class Finder {
           if (matches) {
             for(const m of matches) {
               const sample = this.get_sample(fileLines, m.line - 1);
-              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, manualReview: m.manualReview};
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, manualReview: m.manualReview};
               issues.push(issue);
             }
           }

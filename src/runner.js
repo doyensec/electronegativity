@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
+import { GlobalChecks } from './finder';
 import { extension, input_exists, is_directory, writeIssues } from './util';
 
 export default async function run(input, output, isSarif, customScan) {
@@ -87,6 +88,12 @@ export default async function run(input, output, isSarif, customScan) {
     else
       console.log(chalk.red(`Error parsing ${error.file} - ${error.message}`));
   }
+
+  // Second pass of checks (in "GlobalChecks")
+  // Now that we have all the "naive" findings we may analyze them further to sort out false negatives
+  // and false positives before presenting them in the final report (e.g. CSP)
+  //const globalChecker = new GlobalChecks(issues);
+  //issues = await globalChecker.getResults();
 
   let rows = [];
   for (const issue of issues) {

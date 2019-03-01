@@ -6,6 +6,8 @@ import BlinkFeaturesJSCheck from './BlinkFeaturesJSCheck';
 import CertificateErrorEventJSCheck from './CertificateErrorEventJSCheck';
 import CertificateVerifyProcJSCheck from './CertificateVerifyProcJSCheck';
 import ContextIsolationJSCheck from './ContextIsolationJSCheck';
+import CSPHTMLCheck from './CSPHTMLCheck';
+import CSPJSCheck from './CSPJSCheck';
 import CustomArgumentsJSCheck from './CustomArgumentsJSCheck';
 import DangerousFunctionsJSCheck from './DangerousFunctionsJSCheck';
 import ElectronVersionJSONCheck from './ElectronVersionJSONCheck';
@@ -36,6 +38,8 @@ const CHECKS = [
   CertificateErrorEventJSCheck,
   CertificateVerifyProcJSCheck,
   ContextIsolationJSCheck,
+  CSPHTMLCheck,
+  CSPJSCheck,
   CustomArgumentsJSCheck,
   DangerousFunctionsJSCheck,
   ElectronVersionJSONCheck, 
