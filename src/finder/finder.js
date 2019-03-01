@@ -32,7 +32,7 @@ export class Finder {
       const checkInstance = new check();
       this._checks_by_type.get(checkInstance.type).push(checkInstance);
     }
-    console.log(chalk.green(`${this._enabled_checks.length} checks successfully loaded.`));
+    console.log(chalk.green(`${this._enabled_checks.length} check(s) successfully loaded.`));
   }
 
   get_sample(fileLines, index) {
