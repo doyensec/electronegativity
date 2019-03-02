@@ -7,6 +7,7 @@ export default class CSPGlobalCheck {
         this.description = {  NO_CSP: "No CSP has been detected in the target application",
                               MAYBE_WEAK_CSP: "One or more CSP directives detected seems to be vulnerable",
                               WEAK_CSP: "One or more CSP directives detected are vulnerable" };
+        this.depends = ["CSPJSCheck", "CSPHTMLCheck"];
     }
 
     async perform(issues) {

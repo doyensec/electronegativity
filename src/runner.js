@@ -31,6 +31,8 @@ export default async function run(input, output, isSarif, customScan) {
 
   // Parser
   const parser = new Parser(false, true);
+  const globalChecker = new GlobalChecks(customScan);
+  if (customScan.length > 0) customScan = customScan.filter(r => !r.includes('globalcheck')).concat(globalChecker.dependencies);
   const finder = await new Finder(customScan);
   const filenames = [...loader.list_files];
   let issues = [];
@@ -39,6 +41,8 @@ export default async function run(input, output, isSarif, customScan) {
     head: ['Check ID', 'Affected File', 'Location', 'Issue Description'],
     wordWrap: true
   });
+
+  console.log(chalk.green(`${globalChecker._enabled_checks.length+finder._enabled_checks.length} check(s) successfully loaded: ${globalChecker._enabled_checks.length} global, ${finder._enabled_checks.length} standard`));
 
   const progress = new cliProgress.Bar({format: '{bar} {percentage}% | {value}/{total}'}, cliProgress.Presets.shades_grey);
   let oldLog = console.log;
@@ -92,8 +96,7 @@ export default async function run(input, output, isSarif, customScan) {
   // Second pass of checks (in "GlobalChecks")
   // Now that we have all the "naive" findings we may analyze them further to sort out false negatives
   // and false positives before presenting them in the final report (e.g. CSP)
-  const globalChecker = new GlobalChecks(issues);
-  issues = await globalChecker.getResults();
+  issues = await globalChecker.getResults(issues);
 
   let rows = [];
   for (const issue of issues) {
