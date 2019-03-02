@@ -35,7 +35,7 @@
   "dependencies": {
     "@babel/parser": "^7.1.2",
     "@babel/traverse": "^7.3.4",
-    "@doyensec/csp-evaluator": "^1.0.2",
+    "@doyensec/csp-evaluator": "^1.0.3",
     "asar": "^1.0.0",
     "chalk": "^2.4.1",
     "cheerio": "^1.0.0-rc.2",

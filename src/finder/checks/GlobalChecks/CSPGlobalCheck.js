@@ -7,16 +7,6 @@ export default class CSPGlobalCheck {
         this.description = {  NO_CSP: "No CSP has been detected in the target application",
                               MAYBE_WEAK_CSP: "One or more CSP directives detected seems to be vulnerable",
                               WEAK_CSP: "One or more CSP directives detected are vulnerable" };
-        this.severities = {
-              HIGH: 10,
-              SYNTAX: 20,
-              MEDIUM: 30,
-              HIGH_MAYBE: 40,
-              STRICT_CSP: 45,
-              MEDIUM_MAYBE: 50,
-              INFO: 60,
-              NONE: 100
-            };
     }
 
     async perform(issues) {
@@ -34,9 +24,9 @@ export default class CSPGlobalCheck {
                 var evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
                 var findings = evaluator.evaluate();
                 for (var finding of findings)
-                    if (finding.severity === this.severities.HIGH || finding.severity === this.severities.MEDIUM)
+                    if (finding.severity === csp.severities.HIGH || finding.severity === csp.severities.MEDIUM)
                         confidence = 2;
-                    else if (finding.severity === this.severities.HIGH_MAYBE || finding.severity === this.severities.MEDIUM_MAYBE)
+                    else if (finding.severity === csp.severities.HIGH_MAYBE || finding.severity === csp.severities.MEDIUM_MAYBE)
                         if (confidence < 2) confidence = 1;
             }
 
