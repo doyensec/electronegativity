@@ -1,4 +1,5 @@
 import { GLOBAL_CHECKS } from './checks/GlobalChecks';
+import chalk from 'chalk';
 
 export class GlobalChecks {
     constructor(customScan) {
@@ -26,7 +27,7 @@ export class GlobalChecks {
         this._constructed_checks.push(checkInstance);
         this.dependencies = [...checkInstance.depends];
         }
-      // useful in case some globalcheck dependencies list has non-lowercase characters
+      // useful in case some globalcheck dependency on the list has non-lowercase characters
       this.dependencies = this.dependencies.map(dependency => dependency.toLowerCase());
     }
 
