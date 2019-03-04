@@ -4,6 +4,7 @@ import logger from 'winston';
 import { LoaderFile } from '../src/loader';
 import { Parser } from '../src/parser';
 import { Finder } from '../src/finder';
+import { GlobalChecks } from '../src/finder';
 
 let chai = require('chai');
 let should = chai.should();
@@ -28,6 +29,7 @@ describe('Finder', () => {
   let loader = new LoaderFile();
   let list = fs.readdirSync(check_tests);
   for (let file of list) {
+    if (file !== "GlobalChecks")
     loader.load(path.join(check_tests, file));
   }
   let filenames = [...loader.list_files];
