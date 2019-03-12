@@ -3,7 +3,7 @@ export default class AffinityGlobalCheck {
 
     constructor() {
         this.id = "AFFINITY_GLOBAL_CHECK";
-        this.description = { AFFINITY_FOUND: "Two or more web pages are running with the same affinity property",
+        this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property",
                              AFFINITY_INCONSISTENT: "The affinity property is set for some web pages, but no page seems to share the same affinity property with others" }; //This should never be the case, but let's warn the user that manual review is required
         this.depends = ["AffinityJSCheck", "AffinityHTMLCheck"];
     }
