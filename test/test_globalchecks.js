@@ -44,32 +44,22 @@ describe('GlobalChecks', async () => {
 
       var issues = [];
 
-      for (let globalCheck of globalChecker._constructed_checks) {
-          // loads the dependencies for the current globalCheck
-          const finder = await new Finder(globalCheck.depends.map(check => check.toLowerCase()));
-          // run the checks required by the globalCheck in order to work
-          for (let file of filenames) {
+      // just take the check of interest
+      var testedCheck = globalChecker._constructed_checks.findIndex(gc => gc.id === check);
+      var globalCheck = globalChecker._constructed_checks[testedCheck];
+
+      // loads the dependencies for the current globalCheck
+      let finder = await new Finder(globalCheck.depends.map(check => check.toLowerCase()));
+      // run the checks required by the globalCheck in order to work
+      for (let file of filenames) {
             const [type, data, content, warnings] = parser.parse(file, loader.load_buffer(file));
             let findings = await finder.find(file, data, type, content);
             if (findings.length > 0) issues = issues.concat(findings);
-          }
-
-          // test the globalCheck
-          let result = await globalChecker.getResults(issues);
-          result.filter(r => {return r.id === globalCheck.id;}).length.should.equal(num_issues);
       }
+      // test the globalCheck
+      let result = await globalCheck.perform(issues);
+      result.filter(r => {return r.id === globalCheck.id;}).length.should.equal(num_issues);
+      await loader.stash();
     }).timeout(8000);
   }
 });
-
-
-// var mochaAsync = (fn) => {
-//     return async (done) => {
-//         try {
-//             await fn();
-//             done();
-//         } catch (err) {
-//             done(err);
-//         }
-//     };
-// };
