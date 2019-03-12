@@ -1,0 +1,7 @@
+.nav-container .toc::after {
+    content: "Welcome to Electronegativity";
+}
+
+p.manual {
+    font-size: 60%;
+}
