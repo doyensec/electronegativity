@@ -1,3 +1,5 @@
+import AffinityHTMLCheck from './AffinityHTMLCheck';
+import AffinityJSCheck from './AffinityJSCheck';
 import AllowPopupsHTMLCheck from './AllowPopupHTMLCheck';
 import AuxclickHTMLCheck from './AuxclickHTMLCheck';
 import AuxclickJSCheck from './AuxclickJSCheck';
@@ -30,6 +32,8 @@ import WebSecurityJSCheck from './WebSecurityJSCheck';
 
 
 const CHECKS = [
+  AffinityHTMLCheck,
+  AffinityJSCheck,
   AllowPopupsHTMLCheck,
   AuxclickHTMLCheck,
   AuxclickJSCheck,

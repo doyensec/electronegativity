@@ -6,7 +6,7 @@ export class GlobalChecks {
         if (customScan && customScan.length > 0) {
           var globalChecksNames = GLOBAL_CHECKS.map(globalCheck => globalCheck.name.toLowerCase());
           var customGlobals = customScan.filter(r => r.includes('globalcheck'));
-          if (customGlobals > 0 && !customGlobals.some(r => globalChecksNames.includes(r))) {
+          if (customGlobals.length > 0 && !customGlobals.some(r => globalChecksNames.includes(r))) {
             console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
             process.exit(1);
           } else {
@@ -25,7 +25,7 @@ export class GlobalChecks {
       for (const check of this._enabled_checks) {
         const checkInstance = new check();
         this._constructed_checks.push(checkInstance);
-        this.dependencies = [...checkInstance.depends];
+        this.dependencies = [...this.dependencies, ...checkInstance.depends];
         }
       // useful in case some globalcheck dependency on the list has non-lowercase characters
       this.dependencies = this.dependencies.map(dependency => dependency.toLowerCase());

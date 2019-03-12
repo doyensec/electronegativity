@@ -4,18 +4,18 @@ import chalk from 'chalk';
 
 export class Finder {
   constructor(customScan) {
+    this._enabled_checks = Object.assign(Object.create(CHECKS), CHECKS);
     if (customScan && customScan.length > 0) {
-      var checksNames = CHECKS.map(check => check.name.toLowerCase());
+      var checksNames = this._enabled_checks.map(check => check.name.toLowerCase());
       if (!customScan.every(r => checksNames.includes(r))) {
         console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
         process.exit(1);
       } else {
-      for (var i = CHECKS.length - 1; i >= 0; i--) 
-        if (!customScan.includes(CHECKS[i].name.toLowerCase()))
-          CHECKS.splice(i, 1);
+      for (var i = this._enabled_checks.length - 1; i >= 0; i--) 
+        if (!customScan.includes(this._enabled_checks[i].name.toLowerCase()))
+          this._enabled_checks.splice(i, 1);
       }
     }
-    this._enabled_checks = CHECKS;
     this._checks_by_type = new Map();
     this.init_checks_list();
   }

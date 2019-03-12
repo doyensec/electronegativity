@@ -14,6 +14,10 @@ export class LoaderDirectory extends Loader {
     }
   }
 
+  async stash() {
+    this._loaded.clear();
+  }
+
   load_buffer(filename) {
     const buffer = read_file(filename);
     return buffer;
