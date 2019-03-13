@@ -42,7 +42,7 @@ export default async function run(input, output, isSarif, customScan) {
     wordWrap: true
   });
 
-  console.log(chalk.green(`${globalChecker._enabled_checks.length+finder._enabled_checks.length} check(s) successfully loaded: ${globalChecker._enabled_checks.length} global, ${finder._enabled_checks.length} standard`));
+  console.log(chalk.green(`${globalChecker._enabled_checks.length+finder._enabled_checks.length} check(s) successfully loaded: ${globalChecker._enabled_checks.length} global, ${finder._enabled_checks.length} atomic`));
 
   const progress = new cliProgress.Bar({format: '{bar} {percentage}% | {value}/{total}'}, cliProgress.Presets.shades_grey);
   let oldLog = console.log;

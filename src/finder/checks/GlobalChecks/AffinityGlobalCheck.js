@@ -3,8 +3,7 @@ export default class AffinityGlobalCheck {
 
     constructor() {
         this.id = "AFFINITY_GLOBAL_CHECK";
-        this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property",
-                             AFFINITY_INCONSISTENT: "The affinity property is set for some web pages, but no page seems to share the same affinity property with others" }; //This should never be the case, but let's warn the user that manual review is required
+        this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property. Manual review is required since we don't check for the webPreferences."};
         this.depends = ["AffinityJSCheck", "AffinityHTMLCheck"];
     }
 
@@ -21,10 +20,7 @@ export default class AffinityGlobalCheck {
             var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
             if (duplicates.length > 0) {
-                otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_FOUND, manualReview: false });
-            }
-            else {
-                otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_INCONSISTENT, manualReview: true });
+                otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_FOUND, manualReview: true });
             }
         }
 
