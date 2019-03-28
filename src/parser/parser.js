@@ -6,7 +6,7 @@ import { load as cheerio_load } from 'cheerio';
 import { extension } from '../util';
 import { sourceTypes, sourceExtensions } from './types';
 
-import { EsprimaAst, BabelAst, ESLintAst, TreeSettings } from '../finder/ast';
+import { EsprimaAst, BabelAst, ESLintAst, TreeSettings, Scope } from '../finder/ast';
 
 export class Parser {
   constructor(babelFirst, typescriptBabelFirst) {
@@ -22,6 +22,7 @@ export class Parser {
   parseEsprima(content) {
     let data = esprima_parse(content, { loc: true, tolerant: true, jsx: true });
     data.astParser = this.esprimaAst;
+    data.Scope = new Scope(data);
     return data;
   }
 
@@ -44,6 +45,7 @@ export class Parser {
     }).program;
 
     data.astParser = this.esprimaAst;
+    data.Scope = new Scope(data);
     return data;
   }
 
@@ -65,6 +67,7 @@ export class Parser {
     });
 
     data.astParser = this.esLintBabelTreeAst;
+    data.Scope = {} //new Scope(data);
     return data;
   }
 
@@ -76,12 +79,13 @@ export class Parser {
       errorOnUnknownASTType: true,
       useJSXTextNode: true,
       ecmaFeatures: {
-        jsx: true
+        jsx: true,
+        modules: true
       }
     });
 
     data.astParser = this.esLintESTreeAst;
-
+    data.Scope = {} //new Scope(data);
     return data;
   }
 

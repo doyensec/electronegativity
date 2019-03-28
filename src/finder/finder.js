@@ -58,8 +58,9 @@ export class Finder {
       case sourceTypes.JAVASCRIPT:
         data.astParser.traverseTree(data, {
           enter: (node) => {
+            if (Object.keys(rootData.Scope).length) rootData.Scope.updateFunctionScope(rootData.astParser.getNode(node), "enter");
             for (const check of checks) {
-              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser);
+              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope);
               if (matches) {
                 for(const m of matches) {
                   const sample = this.get_sample(fileLines, m.line - 1);
@@ -68,6 +69,9 @@ export class Finder {
                 }
               }
             }
+          },
+          leave: (node) => {
+            if (Object.keys(rootData.Scope).length) rootData.Scope.updateFunctionScope(rootData.astParser.getNode(node), "leave");
           }
         });
 

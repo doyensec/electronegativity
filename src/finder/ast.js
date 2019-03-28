@@ -1,6 +1,8 @@
 import traverse from "@babel/traverse";
 import estraverse from 'estraverse-fb';
 import ESLintTraverser from 'eslint/lib/util/traverser';
+import * as escope from 'escope';
+//import * as eslintScope from 'eslint-scope'; // stub for https://eslint.org/docs/developer-guide/scope-manager-interface
 
 class Ast {
   findNodeByType(ast, type, max_depth, stopAtFirst, found) {
@@ -10,6 +12,13 @@ class Ast {
         return true;
       }
     });
+  }
+
+  initScopeManager(ast) {
+    if (/Program/.test(ast.type))
+      return this.initScope(ast);
+    else
+      return false;
   }
 
   constructor(settings) {
@@ -27,6 +36,7 @@ class Ast {
   get PropertyDepth() {
     return this.settings.PropertyDepth;
   }
+
 }
 
 export class TreeSettings {
@@ -35,6 +45,45 @@ export class TreeSettings {
     this.StringLiteral = stringLiteral;
     this.PropertyDepth = propertyDepth;
   }
+}
+
+export class Scope {
+
+  constructor(ast) {
+    if (/Program|File/.test(ast.type)) {
+      var _scopeManager = {};
+      var _globalScope = {};
+      var _functionScope = {};
+      // eslitScope has the same exact syntax as escope
+      try {
+        _scopeManager = escope.analyze(ast);
+      }
+      catch (error) {
+        _scopeManager = escope.analyze(ast, { ecmaVersion: 6, ecmaFeatures: { modules: true } });
+      }
+
+      _globalScope = _scopeManager.acquire(ast);
+      _functionScope = _globalScope;
+
+      this.scopeManager = _scopeManager;
+      this.globalScope = _globalScope;
+      this.functionScope = _functionScope;
+    }
+  }
+
+  updateFunctionScope(ast, action) {
+    if (Object.keys(this.scopeManager).length > 0 && this.scopeManager.acquire(ast) != null) {
+      if (action === 'enter')
+        this.functionScope = this.scopeManager.acquire(ast);
+      else if (this.functionScope.upper != null) //check that functionScope is not globalScope (for code snippet with no func)
+        this.functionScope = this.functionScope.upper;
+    }
+  }
+
+  getVarInScope(varName) {
+    return this.functionScope.variables.find(variable => variable.name === varName);
+  }
+
 }
 
 export class EsprimaAst extends Ast {
