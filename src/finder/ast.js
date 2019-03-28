@@ -95,9 +95,6 @@ export class Scope {
   resolveVarValue(astNode) {
     var target = {};
     if (astNode.arguments[0].type === "Identifier" &&
-        this.functionScope &&
-        this.functionScope.variables &&
-        this.functionScope.variables.length > 0 &&
         this.getVarInScope(astNode.arguments[0].name) != null) {
 
         target = this.getVarInScope(astNode.arguments[0].name);
