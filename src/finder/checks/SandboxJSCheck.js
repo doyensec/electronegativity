@@ -7,14 +7,21 @@ export default class SandboxJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(astNode, astHelper){
+  match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
     if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let wasFound = false;
     let loc = [];
     if (astNode.arguments.length > 0) {
-      const found_nodes = astHelper.findNodeByType(astNode.arguments[0],
+
+      var target = {};
+      if (scope.resolveVarValue)
+        target = scope.resolveVarValue(astNode);
+      else
+        target = astNode.arguments[0];
+
+      const found_nodes = astHelper.findNodeByType(target,
         astHelper.PropertyName,
         astHelper.PropertyDepth,
         false,
