@@ -7,23 +7,26 @@ export default class ContextIsolationJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(astNode, astHelper){
+  match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
     if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let location = [];
     if (astNode.arguments.length > 0) {
-      if (astNode.arguments[0].type !== "ObjectExpression") {
-        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
-      }
-      else {
-        astHelper.findNodeByType(astNode.arguments[0],
+
+      var target = {};
+      if (scope.resolveVarValue)
+        target = scope.resolveVarValue(astNode);
+      else
+        target = astNode.arguments[0];
+
+        astHelper.findNodeByType(target,
           astHelper.PropertyName,
           astHelper.PropertyDepth,
           true, // any preload is enough
           node => (node.key.value === 'preload' || node.key.name === 'preload'));
 
-        const contextIsolation = astHelper.findNodeByType(astNode.arguments[0],
+        const contextIsolation = astHelper.findNodeByType(target,
           astHelper.PropertyName,
           astHelper.PropertyDepth,
           false,
@@ -40,10 +43,10 @@ export default class ContextIsolationJSCheck {
               location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
             }
           }
-        }else {
+        } else {
           location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
-      }
+      
     }else{
       //No webpreferences
       location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
