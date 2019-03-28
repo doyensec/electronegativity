@@ -13,7 +13,7 @@ export default function initialize() {
 
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        allowRunningInsecureContent: 1
+        allowRunningInsecureContent: 0
       }
     });
   }

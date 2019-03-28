@@ -6,6 +6,6 @@ mainWindow = new BrowserWindow({
 
 mainWindow = new BrowserWindow({
   "webPreferences": {
-    allowRunningInsecureContent: 1
+    allowRunningInsecureContent: 0
   }
 });
