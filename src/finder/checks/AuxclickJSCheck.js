@@ -14,19 +14,13 @@ export default class AuxclickJSCheck {
     let location = [];
 
     if (astNode.arguments.length > 0) {
+      
       var target = {};
-      if (astNode.arguments[0].type === "Identifier" &&
-        scope.functionScope &&
-        scope.functionScope.variables &&
-        scope.functionScope.variables.length > 0 &&
-        scope.getVarInScope(astNode.arguments[0].name) != null) {
-
-        target = scope.getVarInScope(astNode.arguments[0].name);
-        target = target.defs[0].node.init;
-
-      } else {
+      if (scope.resolveVarValue)
+        target = scope.resolveVarValue(astNode);
+      else
         target = astNode.arguments[0];
-      }
+
       const found_nodes = astHelper.findNodeByType(target,
         astHelper.PropertyName,
         astHelper.PropertyDepth,

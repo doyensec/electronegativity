@@ -84,6 +84,23 @@ export class Scope {
     return this.functionScope.variables.find(variable => variable.name === varName);
   }
 
+  resolveVarValue(astNode) {
+    var target = {};
+    if (astNode.arguments[0].type === "Identifier" &&
+        this.functionScope &&
+        this.functionScope.variables &&
+        this.functionScope.variables.length > 0 &&
+        this.getVarInScope(astNode.arguments[0].name) != null) {
+
+        target = this.getVarInScope(astNode.arguments[0].name);
+        target = target.defs[0].node.init;
+
+    } else {
+        target = astNode.arguments[0];
+    }
+    return target;
+  }
+
 }
 
 export class EsprimaAst extends Ast {
