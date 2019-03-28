@@ -81,7 +81,15 @@ export class Scope {
   }
 
   getVarInScope(varName) {
-    return this.functionScope.variables.find(variable => variable.name === varName);
+    var res = this.functionScope.variables.find(variable => variable.name === varName);
+    if (res) return res;
+    else {
+      res = this.globalScope.variables.find(variable => variable.name === varName);
+      if (res)
+        return res;
+      else
+        return null;
+    }
   }
 
   resolveVarValue(astNode) {
