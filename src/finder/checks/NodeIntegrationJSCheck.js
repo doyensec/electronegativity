@@ -10,40 +10,44 @@ export default class NodeIntegrationJSCheck {
   //nodeIntegration Boolean (optional) - Whether node integration is enabled. Default is true.
   //nodeIntegrationInWorker Boolean (optional) - Whether node integration is enabled in web workers. Default is false
 
-  match(astNode, astHelper){
+  match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
     if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let nodeIntegrationFound = false;
     let locations = [];
     if (astNode.arguments.length > 0) {
+
+      var target = {};
+      if (scope.resolveVarValue)
+        target = scope.resolveVarValue(astNode);
+      else
+        target = astNode.arguments[0];
+
       let loc = [];
-      nodeIntegrationFound = this.findNode(astHelper, astNode.arguments[0], 'nodeIntegration', value => value === false, loc);
+
+      nodeIntegrationFound = this.findNode(astHelper, target, 'nodeIntegration', value => value === false, loc);
       // nodeIntegrationInWorker default value is safe
       // so no check for return value (don't care if it was found)
-      this.findNode(astHelper, astNode.arguments[0], 'nodeIntegrationInWorker', value => value !== true, loc);
+      this.findNode(astHelper, target, 'nodeIntegrationInWorker', value => value !== true, loc);
 
       let sandboxLoc = [];
-      let sandboxFound = this.findNode(astHelper, astNode.arguments[0], 'sandbox', value => value !== true, sandboxLoc);
+      let sandboxFound = this.findNode(astHelper, target, 'sandbox', value => value !== true, sandboxLoc);
       if (!sandboxFound || sandboxLoc.length <= 0) // sandbox disables node integration
         locations = locations.concat(loc);
     }
 
     if (!nodeIntegrationFound) {
-      let manualReview = false;
-      if (astNode.arguments.length > 0 && astNode.arguments[0].type !== "ObjectExpression") {
-        manualReview = true;
-      }
-      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview });
+      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
     }
 
     return locations;
   }
 
-  findNode(ast, startNode, name, skipCondition, locations) {
+  findNode(astHelper, startNode, name, skipCondition, locations) {
     let found = false;
 
-    const nodes = ast.findNodeByType(startNode, ast.PropertyName, ast.PropertyDepth, false, node => {
+    const nodes = astHelper.findNodeByType(startNode, astHelper.PropertyName, astHelper.PropertyDepth, false, node => {
       return node.key.value === name || node.key.name === name;
     });
 
