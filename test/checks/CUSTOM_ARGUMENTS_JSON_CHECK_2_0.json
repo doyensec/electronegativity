@@ -1,0 +1,22 @@
+
+{
+    "name": "example_desktop_app",
+    "description": "A fake Electron app using insecure flags",
+    "main": "app/index.js",
+    "dependencies": {
+      "electron":"4.0.4",
+      "mkdirp": "^0.5.1",
+      "yauzl": "^2.5.0"
+    },
+    "scripts": {
+      "run": "node dist/index.js",
+      "test": "npm run build && mocha --compilers js:babel-core/register"
+    },
+    "config": {
+    	"launchParameters" : "--disable-http-cache"
+    },
+    "bin": {
+      "electronegativity": "dist/index.js"
+    }
+}
+  
