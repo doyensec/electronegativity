@@ -1,8 +1,4 @@
 import linenumber from 'linenumber';
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
-import got from 'got';
 import chalk from 'chalk';
 
 import { sourceTypes } from '../../parser/types';
