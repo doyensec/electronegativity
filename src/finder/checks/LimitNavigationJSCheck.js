@@ -2,7 +2,7 @@ import { sourceTypes } from "../../parser/types";
 
 export default class LimitNavigationJSCheck {
   constructor() {
-    this.id = 'LIMIT_NAVIGATION_CHECK';
+    this.id = 'LIMIT_NAVIGATION_JS_CHECK';
     this.description = 'Evaluate the implementation of the custom callback in the .on new-window and will-navigate events';
     this.type = sourceTypes.JAVASCRIPT;
   }

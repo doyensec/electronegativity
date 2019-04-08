@@ -8,8 +8,8 @@ export default class LimitNavigationGlobalCheck {
     }
 
     async perform(issues) {
-        var limitNavigationIssues = issues.filter(e => e.id === 'LIMIT_NAVIGATION_CHECK');
-        var otherIssues = issues.filter(e => e.id !== 'LIMIT_NAVIGATION_CHECK');
+        var limitNavigationIssues = issues.filter(e => e.id === 'LIMIT_NAVIGATION_JS_CHECK');
+        var otherIssues = issues.filter(e => e.id !== 'LIMIT_NAVIGATION_JS_CHECK');
 
         if (limitNavigationIssues.length === 0) {
         	otherIssues.push({ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NONE_FOUND, manualReview: false });
