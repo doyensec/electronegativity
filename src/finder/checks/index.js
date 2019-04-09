@@ -19,6 +19,7 @@ import HTTPResourcesHTMLCheck from './HTTPResourcesHTMLCheck';
 import HTTPResourcesJSCheck from './HTTPResourcesJSCheck';
 import InsecureContentHTMLCheck from './InsecureContentHTMLCheck';
 import InsecureContentJSCheck from './InsecureContentJSCheck';
+import LimitNavigationJSCheck from './LimitNavigationJSCheck';
 import NodeIntegrationHTMLCheck from './NodeIntegrationHTMLCheck';
 import NodeIntegrationJSCheck from './NodeIntegrationJSCheck';
 import NodeIntegrationAttachEventJSCheck from './NodeIntegrationAttachEventJSCheck';
@@ -53,6 +54,7 @@ const CHECKS = [
   HTTPResourcesJSCheck,
   InsecureContentHTMLCheck,
   InsecureContentJSCheck,
+  LimitNavigationJSCheck,
   NodeIntegrationHTMLCheck,
   NodeIntegrationJSCheck,
   NodeIntegrationAttachEventJSCheck,

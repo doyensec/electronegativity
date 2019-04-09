@@ -1,10 +1,12 @@
 import AffinityGlobalCheck from './AffinityGlobalCheck';
 import CSPGlobalCheck from './CSPGlobalCheck';
+import LimitNavigationGlobalCheck from './LimitNavigationGlobalCheck';
 import PermissionRequestHandlerGlobalCheck from './PermissionRequestHandlerGlobalCheck';
 
 const GLOBAL_CHECKS = [
-	AffinityGlobalCheck,
-	CSPGlobalCheck,
+  AffinityGlobalCheck,
+  CSPGlobalCheck,
+  LimitNavigationGlobalCheck,
 	PermissionRequestHandlerGlobalCheck
 ];
 
