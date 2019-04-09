@@ -3,9 +3,9 @@ import CSPGlobalCheck from './CSPGlobalCheck';
 import LimitNavigationGlobalCheck from './LimitNavigationGlobalCheck';
 
 const GLOBAL_CHECKS = [
-	AffinityGlobalCheck,
-	CSPGlobalCheck,
-	LimitNavigationGlobalCheck
+  AffinityGlobalCheck,
+  CSPGlobalCheck,
+  LimitNavigationGlobalCheck
 ];
 
 module.exports.GLOBAL_CHECKS = GLOBAL_CHECKS;
