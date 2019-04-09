@@ -11,6 +11,7 @@ import ContextIsolationJSCheck from './ContextIsolationJSCheck';
 import CSPHTMLCheck from './CSPHTMLCheck';
 import CSPJSCheck from './CSPJSCheck';
 import CustomArgumentsJSCheck from './CustomArgumentsJSCheck';
+import CustomArgumentsJSONCheck from './CustomArgumentsJSONCheck';
 import DangerousFunctionsJSCheck from './DangerousFunctionsJSCheck';
 import ElectronVersionJSONCheck from './ElectronVersionJSONCheck';
 import ExperimentalFeaturesHTMLCheck from './ExperimentalFeaturesHTMLCheck';
@@ -45,6 +46,7 @@ const CHECKS = [
   CSPHTMLCheck,
   CSPJSCheck,
   CustomArgumentsJSCheck,
+  CustomArgumentsJSONCheck,
   DangerousFunctionsJSCheck,
   ElectronVersionJSONCheck, 
   ExperimentalFeaturesJSCheck,
