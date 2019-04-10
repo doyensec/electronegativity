@@ -31,7 +31,7 @@ export default class ExperimentalFeaturesJSCheck {
                  node.key.name  === 'experimentalCanvasFeatures'));
 
       for (const node of found_nodes) {
-        if (node.value.value == true) {
+        if (node.value.value === true) {
           location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
         }
       }

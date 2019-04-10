@@ -14,13 +14,6 @@ class Ast {
     });
   }
 
-  initScopeManager(ast) {
-    if (/Program/.test(ast.type))
-      return this.initScope(ast);
-    else
-      return false;
-  }
-
   constructor(settings) {
     this.settings = settings;
   }
@@ -94,14 +87,14 @@ export class Scope {
 
   resolveVarValue(astNode) {
     var target = {};
-    if (astNode.arguments[0].type === "Identifier" &&
-        this.getVarInScope(astNode.arguments[0].name) != null) {
-
+    if (astNode.arguments[0].type === "Identifier") {
+      var resolvedVariable = this.getVarInScope(astNode.arguments[0].name);
+      if (resolvedVariable != null) {
         target = this.getVarInScope(astNode.arguments[0].name);
         target = target.defs[0].node.init;
-
+      }
     } else {
-        target = astNode.arguments[0];
+      target = astNode.arguments[0];
     }
     return target;
   }
