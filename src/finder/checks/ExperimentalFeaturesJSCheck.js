@@ -15,11 +15,7 @@ export default class ExperimentalFeaturesJSCheck {
 
     if (astNode.arguments.length > 0) {
 
-      var target = {};
-      if (scope.resolveVarValue)
-        target = scope.resolveVarValue(astNode);
-      else
-        target = astNode.arguments[0];
+      var target = scope.resolveVarValue(astNode);
 
       const found_nodes = astHelper.findNodeByType(target,
         astHelper.PropertyName,

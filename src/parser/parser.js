@@ -67,7 +67,9 @@ export class Parser {
     });
 
     data.astParser = this.esLintBabelTreeAst;
-    data.Scope = {} //new Scope(data);
+    data.Scope = {}; // new Scope(data);
+    data.Scope.resolveVarValue = (astNode) => astNode.arguments[0];
+    data.Scope.updateFunctionScope = () => {};
     return data;
   }
 
@@ -85,7 +87,9 @@ export class Parser {
     });
 
     data.astParser = this.esLintESTreeAst;
-    data.Scope = {} //new Scope(data);
+    data.Scope = {}; //new Scope(data);
+    data.Scope.resolveVarValue = (astNode) => astNode.arguments[0];
+    data.Scope.updateFunctionScope = () => {};
     return data;
   }
 

@@ -86,17 +86,17 @@ export class Scope {
   }
 
   resolveVarValue(astNode) {
-    var target = {};
-    if (astNode.arguments[0].type === "Identifier") {
-      var resolvedVariable = this.getVarInScope(astNode.arguments[0].name);
-      if (resolvedVariable != null) {
-        target = this.getVarInScope(astNode.arguments[0].name);
+    if (astNode.arguments[0].type !== "Identifier")
+      return astNode.arguments[0];
+    else {
+      var target = this.getVarInScope(astNode.arguments[0].name);
+      if (target != null) {
         target = target.defs[0].node.init;
+        return target;
+      } else {
+        return astNode.arguments[0];
       }
-    } else {
-      target = astNode.arguments[0];
     }
-    return target;
   }
 
 }
