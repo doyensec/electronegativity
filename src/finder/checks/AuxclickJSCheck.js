@@ -7,14 +7,17 @@ export default class AuxclickJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(astNode, astHelper){
+  match(astNode, astHelper, scope) {
     if (astNode.type !== 'NewExpression') return null;
     if (astNode.callee.name !== 'BrowserWindow') return null;
 
     let location = [];
 
     if (astNode.arguments.length > 0) {
-      const found_nodes = astHelper.findNodeByType(astNode.arguments[0],
+      
+      var target = scope.resolveVarValue(astNode);
+
+      const found_nodes = astHelper.findNodeByType(target,
         astHelper.PropertyName,
         astHelper.PropertyDepth,
         false,
@@ -30,6 +33,7 @@ export default class AuxclickJSCheck {
       else {
         location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
       }
+      
     }
 
     return location;

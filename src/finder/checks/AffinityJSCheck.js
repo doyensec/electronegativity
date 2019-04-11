@@ -7,16 +7,19 @@ export default class AffinityJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'NewExpression') return null;
-    if (data.callee.name !== 'BrowserWindow' && data.callee.name !== 'BrowserView') return null;
+  match(astNode, astHelper, scope) {
+    if (astNode.type !== 'NewExpression') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let location = [];
 
-    if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0],
-        ast.PropertyName,
-        ast.PropertyDepth,
+    if (astNode.arguments.length > 0) {
+
+      var target = scope.resolveVarValue(astNode);
+
+      const found_nodes = astHelper.findNodeByType(target,
+        astHelper.PropertyName,
+        astHelper.PropertyDepth,
         false,
         node => (node.key.value  === 'affinity' || node.key.name === 'affinity'));
 

@@ -11,9 +11,9 @@ export class Finder {
         console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
         process.exit(1);
       } else {
-      for (var i = this._enabled_checks.length - 1; i >= 0; i--) 
-        if (!customScan.includes(this._enabled_checks[i].name.toLowerCase()))
-          this._enabled_checks.splice(i, 1);
+        for (var i = this._enabled_checks.length - 1; i >= 0; i--) 
+          if (!customScan.includes(this._enabled_checks[i].name.toLowerCase()))
+            this._enabled_checks.splice(i, 1);
       }
     }
     this._checks_by_type = new Map();
@@ -58,8 +58,9 @@ export class Finder {
       case sourceTypes.JAVASCRIPT:
         data.astParser.traverseTree(data, {
           enter: (node) => {
+            rootData.Scope.updateFunctionScope(rootData.astParser.getNode(node), "enter");
             for (const check of checks) {
-              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser);
+              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope);
               if (matches) {
                 for(const m of matches) {
                   const sample = this.get_sample(fileLines, m.line - 1);
@@ -68,6 +69,9 @@ export class Finder {
                 }
               }
             }
+          },
+          leave: (node) => {
+            rootData.Scope.updateFunctionScope(rootData.astParser.getNode(node), "leave");
           }
         });
 
