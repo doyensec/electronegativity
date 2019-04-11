@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { GlobalChecks } from './finder';
+import { GlobalChecks, severity, confidence } from './finder';
 import { extension, input_exists, is_directory, writeIssues } from './util';
 
 export default async function run(input, output, isSarif, customScan) {
@@ -101,7 +101,7 @@ export default async function run(input, output, isSarif, customScan) {
   let rows = [];
   for (const issue of issues) {
     rows.push([
-      `${issue.id} ${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}`,
+      `${issue.id}${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}\n${issue.severity.format()} | ${issue.confidence.format()}`,
       issue.file,
       `${issue.location.line}:${issue.location.column}`,
       `https://github.com/doyensec/electronegativity/wiki/${issue.id}`

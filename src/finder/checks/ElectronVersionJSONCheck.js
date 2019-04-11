@@ -7,6 +7,7 @@ import got from 'got';
 import chalk from 'chalk';
 
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 let releases;
 
@@ -53,7 +54,7 @@ export default class ElectronVersionJSONCheck {
       let matches = linenumber(data.text, /(?:"electron"|electron)\s*:\s*.*[,}]?/g);
       for (const m of matches) {
         if (m.match.includes(version.raw))
-          location.push({ line: m.line, column: 0, id: this.id, description: this.description, manualReview: false });
+          location.push({ line: m.line, column: 0, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.TENTATIVE, manualReview: false });
       }
     }
   }

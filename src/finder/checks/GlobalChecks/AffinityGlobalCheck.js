@@ -1,29 +1,30 @@
+import { severity, confidence } from '../../attributes';
 
 export default class AffinityGlobalCheck {
 
-    constructor() {
-        this.id = "AFFINITY_GLOBAL_CHECK";
-        this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property. Manual review is required since we don't check for the webPreferences."};
-        this.depends = ["AffinityJSCheck", "AffinityHTMLCheck"];
+  constructor() {
+    this.id = "AFFINITY_GLOBAL_CHECK";
+    this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property. Manual review is required since we don't check for the webPreferences."};
+    this.depends = ["AffinityJSCheck", "AffinityHTMLCheck"];
+  }
+
+  async perform(issues) {
+    var affinityIssues = issues.filter(e => e.id === 'AFFINITY_JS_CHECK' || e.id === 'AFFINITY_HTML_CHECK');
+    var otherIssues = issues.filter(e => e.id !== 'AFFINITY_JS_CHECK' && e.id !== 'AFFINITY_HTML_CHECK');
+    if (affinityIssues.length > 0) {
+      const uniq = affinityIssues.map((issue) => {
+        return {count: 1, value: issue.properties.AffinityString};
+      }).reduce((a, b) => {
+        a[b.value] = (a[b.value] || 0) + b.count;
+        return a;
+      }, {});
+      var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
+
+      if (duplicates.length > 0) {
+        otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_FOUND, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: true });
+      }
     }
 
-    async perform(issues) {
-        var affinityIssues = issues.filter(e => e.id === 'AFFINITY_JS_CHECK' || e.id === 'AFFINITY_HTML_CHECK');
-        var otherIssues = issues.filter(e => e.id !== 'AFFINITY_JS_CHECK' && e.id !== 'AFFINITY_HTML_CHECK');
-        if (affinityIssues.length > 0) {
-            const uniq = affinityIssues.map((issue) => {
-                              return {count: 1, value: issue.properties.AffinityString}
-                            }).reduce((a, b) => {
-                              a[b.value] = (a[b.value] || 0) + b.count
-                              return a
-                            }, {});
-            var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
-
-            if (duplicates.length > 0) {
-                otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_FOUND, manualReview: true });
-            }
-        }
-
-        return otherIssues;
-    }
+    return otherIssues;
+  }
 }

@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 import { parseWebPreferencesFeaturesString } from '../../util';
 
 export default class AffinityHTMLCheck {
@@ -17,7 +18,7 @@ export default class AffinityHTMLCheck {
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['affinity'] !== undefined)
-          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, properties: { "AffinityString": features['affinity']}, manualReview: true });
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, properties: { "AffinityString": features['affinity']}, manualReview: true });
       }
 
     });

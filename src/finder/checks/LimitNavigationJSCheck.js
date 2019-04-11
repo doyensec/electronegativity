@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class LimitNavigationJSCheck {
   constructor() {
@@ -13,7 +14,7 @@ export default class LimitNavigationJSCheck {
       if (astNode.arguments && astNode.arguments.length > 1) {
         var eventValue = astNode.arguments[0].value;
         if (astNode.arguments[0].type === "Literal" && (eventValue === "will-navigate" || eventValue === "new-window")) {
-          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
         }
       }
     }

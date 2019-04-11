@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class AuxclickHTMLCheck {
   constructor() {
@@ -16,7 +17,7 @@ export default class AuxclickHTMLCheck {
       if(dbf && (dbf === "Auxclick")){
         //Nothing to report
       }else{
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
       }
     });
     return loc;

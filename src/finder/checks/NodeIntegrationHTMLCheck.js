@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class NodeIntegrationHTMLCheck {
   constructor() {
@@ -14,7 +15,7 @@ export default class NodeIntegrationHTMLCheck {
     webviews.each(function (i, elem) {
       const nodeintegration = cheerioObj(this).attr('nodeintegration');
       if (nodeintegration !== undefined) {
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
       }
     });
     return loc;

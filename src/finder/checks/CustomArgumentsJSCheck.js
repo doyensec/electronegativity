@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class CustomArgumentsJSCheck {
   constructor() {
@@ -53,7 +54,7 @@ export default class CustomArgumentsJSCheck {
         });
 
         if (res)
-          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
+          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false }];
       }
     }
   }

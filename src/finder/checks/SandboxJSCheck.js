@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class SandboxJSCheck {
   constructor() {
@@ -9,7 +10,7 @@ export default class SandboxJSCheck {
 
   match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
-    if (astNode.callee.name !== 'BrowserWindow') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let wasFound = false;
     let loc = [];
@@ -28,14 +29,14 @@ export default class SandboxJSCheck {
         if (node.value.value === true) {
           continue;
         }
-        loc.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+        loc.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
       }
     }
 
     if (wasFound) {
       return loc;
     } else { // default is false
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false }];
     }
   }
 }

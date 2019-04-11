@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class OpenExternalJSCheck {
   constructor() {
@@ -12,6 +13,6 @@ export default class OpenExternalJSCheck {
     if (!(astNode.callee.property && astNode.callee.property.name === "openExternal")) return null;
     if (astNode.arguments[0].type === astHelper.StringLiteral) return null; // constant, not user supplied
 
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
   }
 }
