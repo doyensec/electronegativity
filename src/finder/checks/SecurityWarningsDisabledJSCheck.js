@@ -21,9 +21,9 @@ export default class SecurityWarningsDisabledJSCheck {
       return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
     } else return null;
 
-      // if (astNode.type !== 'CallExpression') return null;
-      // if (astNode.callee.property && astNode.callee.property.name === "webContents")
-      //   return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
+    // if (astNode.type !== 'CallExpression') return null;
+    // if (astNode.callee.property && astNode.callee.property.name === "webContents")
+    //   return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
   }
 
 }
