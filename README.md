@@ -30,6 +30,8 @@ $ electronegativity -h
 | -i, --input  | input (directory, .js, .html, .asar)               |
 | -o, --output | save the results to a file in csv or sarif format |
 | -c, --checks | only run the specified checks, passed in csv format |
+| -S, --severity | only return findings with the specified level of severity or above |
+| -C, --confidence | only return findings with the specified level of confidence or above |
 | -h, --help   | output usage information                          |
 
 

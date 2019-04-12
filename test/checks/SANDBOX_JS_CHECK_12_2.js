@@ -1,14 +1,11 @@
 // In the main process.
 const { BrowserView, BrowserWindow } = require('electron')
 
-var config = {
-  "webPreferences": {
-    "preload": 'preload.js'
-  }
+var config = { "webPreferences": {
+  sandbox: false }
 };
 
 function start() {
-  mainWindow = new BrowserView(config);
   let win = new BrowserWindow({ width: 800, height: 600 })
   win.on('closed', () => {
     win = null

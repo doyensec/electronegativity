@@ -26,9 +26,9 @@ program
   .version(VER)
   .description('Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications.')
   .option('-i, --input <path>', 'input [directory | .js | .html | .asar]')
-  .option('-c, --checks <checkNames>', 'only run the specified checks, passed in csv format')
-  .option('-S, --severity <severitySet>', 'only return findings above the passed level of severity')
-  .option('-C, --confidence <confidenceSet>', 'only return findings above the passed level of confidence')
+  .option('-c, --checks <checkNames>', 'only run the specified checks list, passed in csv format')
+  .option('-S, --severity <severitySet>', 'only return findings with the specified level of severity or above')
+  .option('-C, --confidence <confidenceSet>', 'only return findings with the specified level of confidence or above')
   .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
   .parse(process.argv);
 

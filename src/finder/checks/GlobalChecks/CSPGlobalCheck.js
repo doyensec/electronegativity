@@ -16,7 +16,7 @@ export default class CSPGlobalCheck {
     var otherIssues = issues.filter(e => e.id !== 'CSP_JS_CHECK' && e.id !== 'CSP_HTML_CHECK');
     if (cspIssues.length === 0) {
       // No CSP detected
-      issues.push({ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NO_CSP, severity: attributes.severity.HIGH, confidence: attributes.confidence.CERTAIN, manualReview: false });
+      issues.push({ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NO_CSP, severity: attributes.severity.MEDIUM, confidence: attributes.confidence.CERTAIN, manualReview: false });
       return issues;
     } else {
       // There is a CSP set
@@ -33,9 +33,9 @@ export default class CSPGlobalCheck {
       }
 
       if (confidence === 2) 
-        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.WEAK_CSP, severity: attributes.severity.MEDIUM, confidence: attributes.confidence.CERTAIN, manualReview: false });
+        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.WEAK_CSP, severity: attributes.severity.LOW, confidence: attributes.confidence.CERTAIN, manualReview: false });
       if (confidence === 1)
-        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.MAYBE_WEAK_CSP, severity: attributes.severity.MEDIUM, confidence: attributes.confidence.FIRM, manualReview: true });
+        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.MAYBE_WEAK_CSP, severity: attributes.severity.LOW, confidence: attributes.confidence.FIRM, manualReview: true });
 
 
       return otherIssues;
