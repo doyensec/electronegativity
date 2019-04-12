@@ -1,0 +1,14 @@
+{
+  "name": "test-app",
+  "version": "0.0.1",
+  "description": "Here is a test program description",
+  "main": "desktop/src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "copyfiles": "ncp package.json ../dist/package.json",
+    "prebuild": "yarn run copyfiles && ln -s $(pwd)/node_modules ../dist/node_modules || true",
+    "build": "../node_modules/.bin/tsc -p .",
+    "start": "yarn run build && cd ../dist && ELECTRON_DISABLE_SECURITY_WARNINGS=true ../desktop/node_modules/.bin/electron .",
+    "postinstall": "install-app-deps"
+  }
+}
