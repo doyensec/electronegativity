@@ -27,6 +27,8 @@ program
   .description('Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications.')
   .option('-i, --input <path>', 'input [directory | .js | .html | .asar]')
   .option('-c, --checks <checkNames>', 'only run the specified checks, passed in csv format')
+  .option('-S, --severity <severitySet>', 'only return findings above the passed level of severity')
+  .option('-C, --confidence <confidenceSet>', 'only return findings above the passed level of confidence')
   .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
   .parse(process.argv);
 
@@ -44,6 +46,10 @@ if(program.output){
   }
 }
 
+if (typeof program.checks !== 'undefined' && program.checks){
+    program.checks = program.checks.split(",").map(check => check.trim().toLowerCase());
+} else program.checks = [];
+
 const input = path.resolve(program.input);
 
-run(input, program.output, program.fileFormat === 'sarif', program.checks);
+run(input, program.output, program.fileFormat === 'sarif', program.checks, program.severity, program.confidence);
