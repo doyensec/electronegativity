@@ -18,7 +18,7 @@ export default class ElectronVersionJSONCheck {
     }
 
     if (electronDev) {
-      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electronDev.raw }, manualReview: false });
+      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electronDev.raw }, manualReview: true });
     }
 
     return location;

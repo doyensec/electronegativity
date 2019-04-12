@@ -33,7 +33,7 @@ export default class AvailableSecurityFixesGlobalCheck {
         if (issue.properties.versionNumber !== latestRelease) {
           var hasSecurityFixAvailable = await this.checkSecurityFixes(issue.properties.versionNumber, releases);
           if (hasSecurityFixAvailable)
-            otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, manualReview: false });
+            otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, manualReview: issue.manualReview });
         }
       }
     }
