@@ -26,7 +26,7 @@ export default class SecurityWarningsDisabledJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmScripts[script]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, manualReview: true });
           }
 
         }
