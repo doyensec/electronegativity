@@ -1,5 +1,6 @@
 import { coerce } from 'semver';
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class ElectronVersionJSONCheck {
   constructor() {
@@ -14,11 +15,11 @@ export default class ElectronVersionJSONCheck {
 
     let location = [];
     if (electron) {
-      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electron.raw }, manualReview: false });
+      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electron.raw }, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: false });
     }
 
     if (electronDev) {
-      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electronDev.raw }, manualReview: true });
+      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electronDev.raw }, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: true });
     }
 
     return location;

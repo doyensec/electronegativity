@@ -2,6 +2,7 @@ import fs from 'fs';
 import { satisfies, major, minor } from 'semver';
 import got from 'got';
 import chalk from 'chalk';
+import { severity, confidence } from '../attributes';
 
 export default class AvailableSecurityFixesGlobalCheck {
 
@@ -32,8 +33,12 @@ export default class AvailableSecurityFixesGlobalCheck {
       for (const issue of versionCheckIssues) {
         if (issue.properties.versionNumber !== latestRelease) {
           var hasSecurityFixAvailable = await this.checkSecurityFixes(issue.properties.versionNumber, releases);
-          if (hasSecurityFixAvailable)
-            otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, manualReview: issue.manualReview });
+          if (hasSecurityFixAvailable) {
+            if (issue.manualReview) // found in devDependencies
+              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
+            else // found in dependencies
+              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
+          }
         }
       }
     }
