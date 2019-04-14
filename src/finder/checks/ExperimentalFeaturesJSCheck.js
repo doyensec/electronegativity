@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class ExperimentalFeaturesJSCheck {
   constructor() {
@@ -9,7 +10,7 @@ export default class ExperimentalFeaturesJSCheck {
 
   match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
-    if (astNode.callee.name !== 'BrowserWindow') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let location = [];
 
@@ -28,7 +29,7 @@ export default class ExperimentalFeaturesJSCheck {
 
       for (const node of found_nodes) {
         if (node.value.value === true) {
-          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: false });
         }
       }
     }

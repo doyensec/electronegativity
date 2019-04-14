@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class NodeIntegrationJSCheck {
   constructor() {
@@ -12,7 +13,7 @@ export default class NodeIntegrationJSCheck {
 
   match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
-    if (astNode.callee.name !== 'BrowserWindow') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let nodeIntegrationFound = false;
     let locations = [];
@@ -34,7 +35,7 @@ export default class NodeIntegrationJSCheck {
     }
 
     if (!nodeIntegrationFound) {
-      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
+      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
     }
 
     return locations;

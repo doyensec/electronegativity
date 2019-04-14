@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 import { parseWebPreferencesFeaturesString } from '../../util';
 
 export default class WebSecurityHTMLCheck {
@@ -22,7 +23,7 @@ export default class WebSecurityHTMLCheck {
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['webSecurity'] === false)
-          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false });
       }
 
     });

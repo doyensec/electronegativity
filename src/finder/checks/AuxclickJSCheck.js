@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class AuxclickJSCheck {
   constructor() {
@@ -9,7 +10,7 @@ export default class AuxclickJSCheck {
 
   match(astNode, astHelper, scope) {
     if (astNode.type !== 'NewExpression') return null;
-    if (astNode.callee.name !== 'BrowserWindow') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let location = [];
 
@@ -26,12 +27,12 @@ export default class AuxclickJSCheck {
       if (found_nodes.length > 0) {
         for (const node of found_nodes) {
           if (node.value.value.indexOf("Auxclick") == -1) {
-            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
           }
         }
       }
       else {
-        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
+        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
       }
       
     }

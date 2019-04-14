@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class AllowPopupsHTMLCheck {
   constructor() {
@@ -14,7 +15,7 @@ export default class AllowPopupsHTMLCheck {
     webviews.each(function (i, elem) {
       const allowpopups = cheerioObj(this).attr('allowpopups');
       if (allowpopups !== undefined) {
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: false });
       }
 
     });

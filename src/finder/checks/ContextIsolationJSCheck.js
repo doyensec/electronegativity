@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class ContextIsolationJSCheck {
   constructor() {
@@ -9,7 +10,7 @@ export default class ContextIsolationJSCheck {
 
   match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
-    if (astNode.callee.name !== 'BrowserWindow') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let location = [];
     if (astNode.arguments.length > 0) {
@@ -36,16 +37,16 @@ export default class ContextIsolationJSCheck {
           // but technically it is an invalid json
           // just to be on the safe side show a warning if any value is insecure
           if(node.value.value !== true) {
-            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: false });
+            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
           }
         }
       } else {
-        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
+        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
       }
       
     } else {
       //No webpreferences
-      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false });
+      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
     }
 
     return location;

@@ -7,7 +7,7 @@ const GLOBAL_CHECKS = [
   AffinityGlobalCheck,
   CSPGlobalCheck,
   LimitNavigationGlobalCheck,
-	PermissionRequestHandlerGlobalCheck
+  PermissionRequestHandlerGlobalCheck
 ];
 
 module.exports.GLOBAL_CHECKS = GLOBAL_CHECKS;
