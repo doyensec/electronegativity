@@ -2,7 +2,7 @@ import fs from 'fs';
 import { satisfies, major, minor } from 'semver';
 import got from 'got';
 import chalk from 'chalk';
-import { severity, confidence } from '../attributes';
+import { severity, confidence } from '../../attributes';
 
 export default class AvailableSecurityFixesGlobalCheck {
 
