@@ -1,5 +1,5 @@
 import linenumber from 'linenumber';
-
+import { severity, confidence } from '../attributes';
 import { sourceTypes } from '../../parser/types';
 
 export default class SecurityWarningsDisabledJSONCheck {
@@ -26,7 +26,7 @@ export default class SecurityWarningsDisabledJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmScripts[script]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, manualReview: true });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: false });
           }
 
         }
@@ -42,7 +42,7 @@ export default class SecurityWarningsDisabledJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmConfig[config]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, manualReview: true });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: false });
           }
 
         }

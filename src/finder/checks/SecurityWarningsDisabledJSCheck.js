@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class SecurityWarningsDisabledJSCheck {
   constructor() {
@@ -13,17 +14,13 @@ export default class SecurityWarningsDisabledJSCheck {
     if (astNode.left.object && astNode.left.object.property) {
       if (astNode.left.object.property.name === "env" || astNode.left.object.property.name === "webContents") {
         if (astNode.left.property && astNode.left.property.value && astNode.left.property.value.toString().toUpperCase() === "ELECTRON_DISABLE_SECURITY_WARNINGS" && astNode.right.value)
-          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
+          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: false }];
       }
     }
 
     if (astNode.left.property && astNode.left.property.name && astNode.left.property.name === "ELECTRON_DISABLE_SECURITY_WARNINGS" && astNode.right.value) {
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.INFORMATIVE, confidence: confidence.CERTAIN, manualReview: false }];
     } else return null;
-
-    // if (astNode.type !== 'CallExpression') return null;
-    // if (astNode.callee.property && astNode.callee.property.name === "webContents")
-    //   return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: false }];
   }
 
 }
