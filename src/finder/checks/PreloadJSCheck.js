@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class PreloadJSCheck {
   constructor() {
@@ -7,21 +8,24 @@ export default class PreloadJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(astNode, astHelper){
+  match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
-    if (astNode.callee.name !== 'BrowserWindow') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let location = [];
 
     if (astNode.arguments.length > 0) {
-      const found_nodes = astHelper.findNodeByType(astNode.arguments[0],
+
+      var target = scope.resolveVarValue(astNode);
+      
+      const found_nodes = astHelper.findNodeByType(target,
         astHelper.PropertyName,
         astHelper.PropertyDepth,
         false,
         node => (node.key.value === 'preload' || node.key.name === 'preload'));
 
       for (const node of found_nodes)
-        location.push ({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, manualReview: true });
+        location.push ({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: true });
     }
 
     return location;

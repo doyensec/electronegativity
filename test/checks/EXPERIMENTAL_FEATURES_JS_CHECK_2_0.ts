@@ -19,13 +19,13 @@ export default function initialize() {
 
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        experimentalCanvasFeatures: 1
+        experimentalCanvasFeatures: 0
       }
     });
 
     mainWindow = new BrowserWindow({
       "webPreferences": {
-        experimentalFeatures: 1
+        experimentalFeatures: 0
       }
     });
   }

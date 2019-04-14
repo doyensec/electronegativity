@@ -1,4 +1,5 @@
-import { sourceTypes } from "../../parser/types";
+import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class AffinityJSCheck {
   constructor() {
@@ -7,22 +8,25 @@ export default class AffinityJSCheck {
     this.type = sourceTypes.JAVASCRIPT;
   }
 
-  match(data, ast) {
-    if (data.type !== 'NewExpression') return null;
-    if (data.callee.name !== 'BrowserWindow' && data.callee.name !== 'BrowserView') return null;
+  match(astNode, astHelper, scope) {
+    if (astNode.type !== 'NewExpression') return null;
+    if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
     let location = [];
 
-    if (data.arguments.length > 0) {
-      const found_nodes = ast.findNodeByType(data.arguments[0],
-        ast.PropertyName,
-        ast.PropertyDepth,
+    if (astNode.arguments.length > 0) {
+
+      var target = scope.resolveVarValue(astNode);
+
+      const found_nodes = astHelper.findNodeByType(target,
+        astHelper.PropertyName,
+        astHelper.PropertyDepth,
         false,
         node => (node.key.value  === 'affinity' || node.key.name === 'affinity'));
 
       for (const node of found_nodes) {
         if (node.value.value) {
-          location.push({ line: node.value.loc.start.line, column: node.value.loc.start.column, id: this.id, description: this.description, properties: { "AffinityString": node.value.value }, manualReview: true });
+          location.push({ line: node.value.loc.start.line, column: node.value.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, properties: { "AffinityString": node.value.value }, manualReview: true });
         }
       }
     }

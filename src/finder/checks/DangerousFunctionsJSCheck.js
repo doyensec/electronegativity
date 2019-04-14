@@ -1,4 +1,5 @@
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class DangerousFunctionsJSCheck {
   constructor() {
@@ -18,6 +19,6 @@ export default class DangerousFunctionsJSCheck {
     if (!methods.includes(astNode.callee.name) && !(astNode.callee.property && methods.includes(astNode.callee.property.name))) return null;
     if (astNode.arguments[0].type === astHelper.StringLiteral) return null; // constant, not user supplied
 
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: true }];
   }
 }

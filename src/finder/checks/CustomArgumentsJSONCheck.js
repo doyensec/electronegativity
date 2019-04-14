@@ -1,6 +1,7 @@
 import linenumber from 'linenumber';
 
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../attributes';
 
 export default class CustomArgumentsJSONCheck {
   constructor() {
@@ -61,7 +62,7 @@ export default class CustomArgumentsJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmScripts[script]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false });
           }
 
         }
@@ -79,7 +80,7 @@ export default class CustomArgumentsJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmConfig[config]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false });
           }
 
         }

@@ -27,6 +27,8 @@ import NodeIntegrationAttachEventJSCheck from './NodeIntegrationAttachEventJSChe
 import OpenExternalJSCheck from './OpenExternalJSCheck';
 import PermissionRequestHandlerJSCheck from './PermissionRequestHandlerJSCheck';
 import SandboxJSCheck from './SandboxJSCheck';
+import SecurityWarningsDisabledJSCheck from './SecurityWarningsDisabledJSCheck';
+import SecurityWarningsDisabledJSONCheck from './SecurityWarningsDisabledJSONCheck';
 import PreloadJSCheck from './PreloadJSCheck';
 import ProtocolHandlersJSCheck from './ProtocolHandlersJSCheck';
 import WebSecurityHTMLCheck from './WebSecurityHTMLCheck';
@@ -63,6 +65,8 @@ const CHECKS = [
   OpenExternalJSCheck,
   PermissionRequestHandlerJSCheck,
   SandboxJSCheck,
+  SecurityWarningsDisabledJSCheck,
+  SecurityWarningsDisabledJSONCheck,
   PreloadJSCheck,
   ProtocolHandlersJSCheck,
   WebSecurityHTMLCheck,

@@ -5,10 +5,10 @@ import chalk from 'chalk';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
-import { GlobalChecks } from './finder';
+import { GlobalChecks, severity, confidence } from './finder';
 import { extension, input_exists, is_directory, writeIssues } from './util';
 
-export default async function run(input, output, isSarif, customScan) {
+export default async function run(input, output, isSarif, customScan, severitySet, confidenceSet) {
   if (!input_exists(input)) {
     console.log(chalk.red('Input does not exist!'));
     process.exit(1);
@@ -25,9 +25,19 @@ export default async function run(input, output, isSarif, customScan) {
 
   await loader.load(input);
 
-  if (typeof customScan !== 'undefined' && customScan) {
-    customScan = customScan.split(",").map(check => check.trim().toLowerCase());
-  } else customScan = [];
+  if (severitySet) {
+    if (!severity.hasOwnProperty(severitySet.toUpperCase())) {
+      console.log(chalk.red('This severity level does not exist!'));
+      process.exit(1);
+    } else severitySet = severity[severitySet.toUpperCase()];
+  } else severitySet = severity["INFORMATIONAL"]; // default to lowest
+
+  if (confidenceSet) {
+    if (!confidence.hasOwnProperty(confidenceSet.toUpperCase())) {
+      console.log(chalk.red('This confidence level does not exist!'));
+      process.exit(1);
+    } else confidenceSet = confidence[confidenceSet.toUpperCase()];
+  } else confidenceSet = confidence["TENTATIVE"]; // default to lowest
 
   // Parser
   const parser = new Parser(false, true);
@@ -100,12 +110,13 @@ export default async function run(input, output, isSarif, customScan) {
 
   let rows = [];
   for (const issue of issues) {
-    rows.push([
-      `${issue.id} ${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}`,
-      issue.file,
-      `${issue.location.line}:${issue.location.column}`,
-      `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
-    ]);
+    if (issue.severity.value >= severitySet.value && issue.confidence.value >= confidenceSet.value)
+      rows.push([
+        `${issue.id}${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}\n${issue.severity.format()} | ${issue.confidence.format()}`,
+        issue.file,
+        `${issue.location.line}:${issue.location.column}`,
+        `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
+      ]);
   }
 
   if (rows.length > 0) {
