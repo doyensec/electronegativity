@@ -69,3 +69,5 @@ typings/
 # Babel
 .babelrc
 
+# Electron releases file
+releases.*

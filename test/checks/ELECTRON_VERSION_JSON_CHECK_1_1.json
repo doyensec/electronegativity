@@ -1,10 +1,10 @@
 
 {
     "name": "example_desktop_app",
-    "description": "A fake app using the latest Electron release",
+    "description": "The latest version available for electron",
     "main": "app/index.js",
     "dependencies": {
-      "electron":"4.0.4",
+      "electron":"4.1.4",
       "mkdirp": "^0.5.1",
       "yauzl": "^2.5.0"
     }

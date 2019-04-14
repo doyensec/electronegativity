@@ -1,10 +1,10 @@
 
 {
     "name": "example_desktop_app",
-    "description": "A fake app using a newer version for an old family release",
+    "description": "A fake app using an old Electron release. Version 4.0.8 includes a security fix.",
     "main": "app/index.js",
     "dependencies": {
-      "electron":"3.1.3",
+      "electron":"4.0.7",
       "mkdirp": "^0.5.1",
       "yauzl": "^2.5.0"
     }
