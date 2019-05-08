@@ -1,4 +1,4 @@
-import { CHECKS } from './checks';
+import { CHECKS } from './checks/AtomicChecks';
 import { sourceTypes } from '../parser/types';
 import chalk from 'chalk';
 

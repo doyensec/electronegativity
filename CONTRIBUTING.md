@@ -7,7 +7,7 @@ Feel free to participate to this project, as much as you can. Even supporting ot
 Clone [electronegativity](git@github.com:doyensec/electronegativity.git) and proceed with the following:
 
 ```
-$ npm ci //So we have a deterministic, repeatable build
+$ npm ci # So we have a deterministic, repeatable build
 $ npm run build
 $ node dist/index.js -h
 ```
@@ -42,7 +42,7 @@ There are three different check types:
 
 Depending on the target file (e.g. evaluating a property in a JavaScript file -> JS), you will need to:
 
-1. Create a new file in `/src/finder/checks`
+1. Create a new file in `/src/finder/checks/AtomicChecks`
 2. Create a new class with a `match()` function, which should contain the logic of your custom check
    * JS -> `match(astNode, astHelper)`
    * HTML -> `match(cheerioObj, content)`
@@ -53,6 +53,7 @@ For example:
 
 ```js
 import { sourceTypes } from '../../parser/types';
+import { severity, confidence } from '../../attributes';
 
 export default class MyCustomHTMLCheck {
     constructor() {
@@ -62,14 +63,23 @@ export default class MyCustomHTMLCheck {
     }
 
     match(cheerioObj, content){
-        //do magic
-        //either return an object with row and col, or null meaning no issues were identified
+        // do magic
+        // either return an object with row and col, or null meaning no issues were identified
+        // also remember to set the following properties in the returned obj: 
+        // - "line" of the file where the issue is found
+        // - "column" of the file where the issue is found
+        // - "id" of the issue (i.e. this.id)
+        // - "description" of the issue (i.e. this.description)
+        // - "properties" object (optional) with internal information about the findings, useful in combination with a GlobalCheck 
+        // - "severity" level from finder/attributes.js (e.g. severity.MEDIUM)
+        // - "confidence" level from finder/attributes.js (e.g. confidence.TENTATIVE)
+        // - "manualReview" boolean flag to indicate if the finding should be manually reviewed
     }
 }
 
 ```
 
-Take a look at the different checks in `/src/finder/checks` to get an idea on how things work.
+Take a look at the different checks in `/src/finder/checks/AtomicChecks` to get an idea on how things work.
 
 ### GlobalChecks
 
@@ -97,7 +107,7 @@ where `TYPE` can be *HTML*, *JSON* or *JS*
 
 ### Atomic checks
 
-Test cases for simple atomic checks unit testing are placed in `test/checks/`.
+Test cases for simple atomic checks unit testing are placed in `test/checks/AtomicChecks`.
 
 Filenames for tests should have the following format: ```<CHECK_NAME_IDENTIFIER>_<test number #>_<number of issues>.<js|htm|html>```
 

@@ -20,7 +20,7 @@ logger.addColors({
 logger.remove(logger.transports.Console);
 logger.add(logger.transports.Console, {colorize : true, level : 'silly'});
 
-let check_tests = "test/checks";
+let check_tests = "test/checks/AtomicChecks";
 
 describe('Finder', () => {
   let finder = new Finder();
@@ -29,7 +29,6 @@ describe('Finder', () => {
   let loader = new LoaderFile();
   let list = fs.readdirSync(check_tests);
   for (let file of list) {
-    if (file !== "GlobalChecks")
     loader.load(path.join(check_tests, file));
   }
   let filenames = [...loader.list_files];

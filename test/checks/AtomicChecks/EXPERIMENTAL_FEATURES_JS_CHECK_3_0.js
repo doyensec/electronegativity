@@ -1,0 +1,4 @@
+mainWindow = new BrowserWindow({
+  "webPreferences": {
+  }
+});
