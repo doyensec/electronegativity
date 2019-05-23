@@ -85,9 +85,6 @@ export default async function run(input, output, isSarif, customScan, severitySe
       }
     }
 
-    if (output)
-      writeIssues(output, issues, isSarif);
-
     progress.stop();
   }
   finally {
@@ -118,6 +115,9 @@ export default async function run(input, output, isSarif, customScan, severitySe
         `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
       ]);
   }
+
+  if (output)
+    writeIssues(output, issues, isSarif);
 
   if (rows.length > 0) {
     table.push(...rows);

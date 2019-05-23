@@ -64,6 +64,8 @@ export default class NodeIntegrationJSCheck {
         column: node.key.loc.start.column,
         id: this.id,
         description: this.description,
+        severity: severity.INFORMATIONAL,
+        confidence: confidence.FIRM,
         manualReview: isIdentifier
       });
     }

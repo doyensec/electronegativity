@@ -103,8 +103,10 @@ export function writeIssues(filename, result, isSarif){
     result.forEach(issue => {
       issues += [
         issue.id,
+        escapeCsv(issue.severity.name),
+        escapeCsv(issue.confidence.name),
         escapeCsv(issue.file),
-        `${issue.location.line}:${issue.location.column}`,
+        escapeCsv(`${issue.location.line}:${issue.location.column}`),
         escapeCsv(issue.sample),
         escapeCsv(issue.description),
         `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
@@ -118,12 +120,12 @@ export function writeIssues(filename, result, isSarif){
   });
 }
 
-function escapeCsv(string) {
-  return '"' + string.replace(/"/g, '""') + '"';
+function escapeCsv(val) {
+  return val != null ? '"' + val.replace(/"/g, '""') + '"' : "N/A";
 }
 
 export function writeCsvHeader(filename){
-  let header = `issue, filename, location, sample, description, url${os.EOL}`;
+  let header = `issue, severity, confidence, filename, location, sample, description, url${os.EOL}`;
 
   fs.writeFile(filename, header, (err) => {
     if(err) throw err;
