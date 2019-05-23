@@ -33,9 +33,9 @@ export default class CSPGlobalCheck {
       }
 
       if (confidence === 2) 
-        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.WEAK_CSP, severity: attributes.severity.LOW, confidence: attributes.confidence.CERTAIN, manualReview: false });
+        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.WEAK_CSP, severity: attributes.severity.LOW, confidence: attributes.confidence.CERTAIN, sample: cspIssue.properties.CSPstring, manualReview: false });
       if (confidence === 1)
-        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.MAYBE_WEAK_CSP, severity: attributes.severity.LOW, confidence: attributes.confidence.FIRM, manualReview: true });
+        otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.MAYBE_WEAK_CSP, severity: attributes.severity.LOW, confidence: attributes.confidence.FIRM, sample: cspIssue.properties.CSPstring, manualReview: true });
 
 
       return otherIssues;
