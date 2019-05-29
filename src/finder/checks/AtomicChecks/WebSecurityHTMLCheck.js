@@ -16,7 +16,7 @@ export default class WebSecurityHTMLCheck {
     webviews.each(function (i, elem) {
       const disablewebsecurity = cheerioObj(this).attr('disablewebsecurity');
       if (disablewebsecurity !== undefined) {
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, manualReview: false });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, severity: severity.MEDIUM, confidence: confidence.CERTAIN, description: self.description, manualReview: false });
       }
 
       let wp = cheerioObj(this).attr('webpreferences');
