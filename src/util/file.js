@@ -1,10 +1,18 @@
 import fs from 'fs';
 import dir from 'node-dir';
 import os from 'os';
+import path from 'path';
 
 export function is_directory(input){
   return fs.statSync(input).isDirectory();
 }
+
+export function getRelativePath(targetFolder, filePath) {
+  if (is_directory(targetFolder))
+    return path.relative(targetFolder, filePath);
+  else //if (extension(targetFolder) === 'asar')
+    return path.relative(path.dirname(targetFolder), filePath);
+} 
 
 export function input_exists(input) {
   try {

@@ -28,10 +28,11 @@ $ electronegativity -h
 |:------------:|:-------------------------------------------------:|
 | -V           | output the version number                         |
 | -i, --input  | input (directory, .js, .html, .asar)               |
-| -o, --output | save the results to a file in csv or sarif format |
 | -l, --checks | only run the specified checks, passed in csv format |
 | -s, --severity | only return findings with the specified level of severity or above |
 | -c, --confidence | only return findings with the specified level of confidence or above |
+| -o, --output <filename[.csv | .sarif]> | save the results to a file in csv or sarif format |
+| -r, --relative | show relative path for files |
 | -h, --help   | output usage information                          |
 
 

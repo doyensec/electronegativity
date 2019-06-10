@@ -30,6 +30,7 @@ program
   .option('-s, --severity <severitySet>', 'only return findings with the specified level of severity or above')
   .option('-c, --confidence <confidenceSet>', 'only return findings with the specified level of confidence or above')
   .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
+  .option('-r, --relative','show relative path for files')
   .parse(process.argv);
 
 if(!program.input){
@@ -47,9 +48,9 @@ if(program.output){
 }
 
 if (typeof program.checks !== 'undefined' && program.checks){
-    program.checks = program.checks.split(",").map(check => check.trim().toLowerCase());
+  program.checks = program.checks.split(",").map(check => check.trim().toLowerCase());
 } else program.checks = [];
 
 const input = path.resolve(program.input);
 
-run(input, program.output, program.fileFormat === 'sarif', program.checks, program.severity, program.confidence);
+run(input, program.output, program.fileFormat === 'sarif', program.checks, program.severity, program.confidence, program.relative);

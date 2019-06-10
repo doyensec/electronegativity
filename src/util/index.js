@@ -1,4 +1,4 @@
-import { input_exists, read_file, extension, is_directory, list_files, writeIssues, writeCsvHeader } from './file';
+import { input_exists, read_file, extension, is_directory, list_files, writeIssues, writeCsvHeader, getRelativePath } from './file';
 import { map_to_string, parseWebPreferencesFeaturesString } from './map';
 
 module.exports.input_exists = input_exists;
@@ -10,4 +10,5 @@ module.exports.parseWebPreferencesFeaturesString = parseWebPreferencesFeaturesSt
 module.exports.list_files = list_files;
 module.exports.writeIssues = writeIssues;
 module.exports.writeCsvHeader = writeCsvHeader;
+module.exports.getRelativePath = getRelativePath;
 
