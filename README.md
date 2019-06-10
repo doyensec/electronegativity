@@ -31,7 +31,7 @@ $ electronegativity -h
 | -l, --checks | only run the specified checks, passed in csv format |
 | -s, --severity | only return findings with the specified level of severity or above |
 | -c, --confidence | only return findings with the specified level of confidence or above |
-| -o, --output <filename[.csv | .sarif]> | save the results to a file in csv or sarif format |
+| -o, --output <filename[.csv or .sarif]> | save the results to a file in csv or sarif format |
 | -r, --relative | show relative path for files |
 | -h, --help   | output usage information                          |
 
