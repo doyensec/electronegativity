@@ -1,6 +1,6 @@
 import { parseModule as esprima_parse } from 'esprima';
 import * as babelParser from "@babel/parser";
-import * as typescriptEstreeParser from 'typescript-estree';
+import * as typescriptEstreeParser from '@typescript-eslint/typescript-estree';
 import { load as cheerio_load } from 'cheerio';
 
 import { extension } from '../util';
