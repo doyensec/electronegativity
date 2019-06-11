@@ -10,6 +10,7 @@ export default class NodeIntegrationJSCheck {
 
   //nodeIntegration Boolean (optional) - Whether node integration is enabled. Default is true.
   //nodeIntegrationInWorker Boolean (optional) - Whether node integration is enabled in web workers. Default is false
+  //nodeIntegrationInSubFrames Boolean (optional) - Whether node integration is enabled in in sub-frames such as iframes. Default is false
 
   match(astNode, astHelper, scope){
     if (astNode.type !== 'NewExpression') return null;
@@ -24,9 +25,10 @@ export default class NodeIntegrationJSCheck {
       let loc = [];
 
       nodeIntegrationFound = this.findNode(astHelper, target, 'nodeIntegration', value => value === false, loc);
-      // nodeIntegrationInWorker default value is safe
+      // nodeIntegrationInWorker default value is safe, as well as nodeIntegrationInSubFrames
       // so no check for return value (don't care if it was found)
       this.findNode(astHelper, target, 'nodeIntegrationInWorker', value => value !== true, loc);
+      this.findNode(astHelper, target, 'nodeIntegrationInSubFrames', value => value !== true, loc);
 
       let sandboxLoc = [];
       let sandboxFound = this.findNode(astHelper, target, 'sandbox', value => value !== true, sandboxLoc);
@@ -43,7 +45,7 @@ export default class NodeIntegrationJSCheck {
 
   findNode(astHelper, startNode, name, skipCondition, locations) {
     let found = false;
-
+    var nodeIntegrationStrings = ["nodeIntegration","nodeIntegrationInWorker","nodeIntegrationInSubFrames"];
     const nodes = astHelper.findNodeByType(startNode, astHelper.PropertyName, astHelper.PropertyDepth, false, node => {
       return node.key.value === name || node.key.name === name;
     });
@@ -56,7 +58,7 @@ export default class NodeIntegrationJSCheck {
       let isIdentifier = (node.value.type === "Identifier")? true : false;
       if (skipCondition(node.value.value)){
         if ((node.key.value === "sandbox" || node.key.name === "sandbox") && isIdentifier) continue;
-        if ((node.key.value === "nodeIntegration" || node.key.name === "nodeIntegration" || node.key.value === "nodeIntegrationInWorker" || node.key.name === "nodeIntegrationInWorker") && !isIdentifier) continue;
+        if ((nodeIntegrationStrings.includes(node.key.value) || nodeIntegrationStrings.includes(node.key.name)) && !isIdentifier) continue;
       }
         
       locations.push({
