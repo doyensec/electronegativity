@@ -10,6 +10,9 @@ Software developers and security auditors can use this tool to detect and mitiga
 
 If you're interested in Electron Security, have a look at our *BlackHat 2017* research [Electronegativity - A Study of Electron Security](https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security.pdf) and keep an eye on the [Doyensec's blog](http://blog.doyensec.com).
 
+![Electronegativity Demo](https://github.com/doyensec/electronegativity/raw/master/docs/resources/img/electrodemo.gif "Electronegativity Demo")
+
+
 ## Installation
 
 Major releases are pushed to NPM and can be simply installed using:
