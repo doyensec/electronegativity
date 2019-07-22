@@ -12,6 +12,7 @@ export default class AvailableSecurityFixesGlobalCheck {
       OUTDATED_VERSION : "A new version of Electron is available" };
     this.depends = ["ElectronVersionJSONCheck"];
     this.releaseNoteSecurityFixRegex = [ /# Security/i, /\[security\]/i ];
+    this.githubEtagRegex = /[0-9a-f]{40}/g;
   }
 
   async perform(issues) {
@@ -82,7 +83,11 @@ export default class AvailableSecurityFixesGlobalCheck {
           return false;
         }
         var rawRemoteEtag = ElectronReleaseData.headers.etag;
-        remoteEtag = rawRemoteEtag.substring(1, rawRemoteEtag.length-1);
+        remoteEtag = rawRemoteEtag.match(this.githubEtagRegex);
+        if (remoteEtag == null) {
+          console.log(chalk.yellow(`Something went wrong while fetching Electron's releases. Etag returned from Github was not recognized.`));
+          return false;
+        } else remoteEtag = remoteEtag[0];
         localEtag = releaseFile[0].split('.')[1];
 
         //check if it corresponds to our local version
@@ -109,7 +114,11 @@ export default class AvailableSecurityFixesGlobalCheck {
       }
       var latest = ElectronReleaseData.body.filter(a => a.npm_dist_tags[0] === "latest")[0].tag_name;
       var rawRemoteEtag = ElectronReleaseData.headers.etag;
-      remoteEtag = rawRemoteEtag.substring(1, rawRemoteEtag.length-1);
+      remoteEtag = rawRemoteEtag.match(this.githubEtagRegex);
+      if (remoteEtag == null) {
+          console.log(chalk.yellow(`Something went wrong while fetching Electron's releases. Etag returned from Github was not recognized.`));
+          return false;
+      } else remoteEtag = remoteEtag[0];
       var outputFileContent = [];
       for (let release of ElectronReleaseData.body) {
         let essentialInfo = {};
