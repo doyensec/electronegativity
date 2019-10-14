@@ -1,6 +1,6 @@
 import traverse from "@babel/traverse";
 import estraverse from 'estraverse-fb';
-import ESLintTraverser from 'eslint/lib/util/traverser';
+import ESLintTraverser from 'eslint/lib/shared/traverser';
 import * as escope from 'escope';
 //import * as eslintScope from 'eslint-scope'; // stub for https://eslint.org/docs/developer-guide/scope-manager-interface
 
@@ -52,7 +52,7 @@ export class Scope {
         _scopeManager = escope.analyze(ast);
       }
       catch (error) {
-        _scopeManager = escope.analyze(ast, { ecmaVersion: 6, ecmaFeatures: { modules: true } });
+        _scopeManager = escope.analyze(ast, { ecmaVersion: 6, sourceType: "module", ecmaFeatures: { modules: true } });
       }
 
       _globalScope = _scopeManager.acquire(ast);

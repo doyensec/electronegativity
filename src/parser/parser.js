@@ -41,7 +41,10 @@ export class Parser {
 
     let data = babelParser.parse(content, {
       sourceType: "module",
-      plugins: plugins
+      plugins: plugins,
+      ecmaFeatures: {
+          modules: true
+      }
     }).program;
 
     data.astParser = this.esprimaAst;
