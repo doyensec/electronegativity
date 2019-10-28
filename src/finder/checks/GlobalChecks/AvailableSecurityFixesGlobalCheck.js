@@ -2,6 +2,7 @@ import fs from 'fs';
 import { satisfies, major, minor } from 'semver';
 import got from 'got';
 import chalk from 'chalk';
+import path from 'path'
 import { severity, confidence } from '../../attributes';
 
 export default class AvailableSecurityFixesGlobalCheck {
@@ -13,6 +14,7 @@ export default class AvailableSecurityFixesGlobalCheck {
     this.depends = ["ElectronVersionJSONCheck"];
     this.releaseNoteSecurityFixRegex = [ /# Security/i, /\[security\]/i ];
     this.githubEtagRegex = /[0-9a-f]{40}/g;
+    this.releasesFilePath = path.resolve(path.dirname(process.argv[1]), '..');
   }
 
   async perform(issues) {
@@ -24,10 +26,10 @@ export default class AvailableSecurityFixesGlobalCheck {
 
     var releases;
     var latestRelease;
-    var releasesFileName = fs.readdirSync('.').filter(fn => fn.startsWith('releases.'));
+    var releasesFileName = fs.readdirSync(this.releasesFilePath).filter(fn => fn.startsWith('releases.'));
 
     if (versionCheckIssues.length > 0 && releasesFileName.length > 0) {
-      var rawReleasesFile = fs.readFileSync(releasesFileName[0]);
+      var rawReleasesFile = fs.readFileSync(path.resolve(this.releasesFilePath, releasesFileName[0]));
       releases = JSON.parse(rawReleasesFile);
       latestRelease = releases.filter(a => a.npm_dist_tags[0] === "latest")[0].version;
 
@@ -74,7 +76,7 @@ export default class AvailableSecurityFixesGlobalCheck {
 
 
     if (!shouldUpdate) {
-      var releaseFile = fs.readdirSync('.').filter(fn => fn.startsWith('releases.'));
+      var releaseFile = fs.readdirSync(this.releasesFilePath).filter(fn => fn.startsWith('releases.'));
       if (releaseFile.length > 0) { // file exists, we should check the etag
         try {
           ElectronReleaseData = await got.head('https://raw.githubusercontent.com/electron/releases/master/index.json');
@@ -128,7 +130,7 @@ export default class AvailableSecurityFixesGlobalCheck {
         essentialInfo.npm_dist_tags = release.npm_dist_tags;
         outputFileContent.push(essentialInfo);
       }
-      fs.writeFileSync('releases.'+remoteEtag+'.json', JSON.stringify(outputFileContent, null, 1));
+      fs.writeFileSync(path.resolve(this.releasesFilePath, 'releases.'+remoteEtag+'.json'), JSON.stringify(outputFileContent, null, 1));
       console.log(chalk.green(`Updated releases list to ${latest}!`));
       return true;
     } else {
