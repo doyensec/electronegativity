@@ -8,6 +8,8 @@ export function is_directory(input){
 }
 
 export function getRelativePath(targetFolder, filePath) {
+  if (filePath === "N/A")
+    return filePath;
   if (is_directory(targetFolder))
     return path.relative(targetFolder, filePath);
   else //if (extension(targetFolder) === 'asar')
