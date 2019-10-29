@@ -36,6 +36,7 @@ $ electronegativity -h
 | -c, --confidence | only return findings with the specified level of confidence or above |
 | -o, --output <filename[.csv or .sarif]> | save the results to a file in csv or sarif format |
 | -r, --relative | show relative path for files |
+| -v, --verbose | show the description for the findings |
 | -h, --help   | output usage information                          |
 
 
