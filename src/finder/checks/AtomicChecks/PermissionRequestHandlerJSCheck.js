@@ -6,12 +6,13 @@ export default class PermissionRequestHandlerJSCheck {
     this.id = 'PERMISSION_REQUEST_HANDLER_JS_CHECK';
     this.description = 'Evaluate the implementation of the custom callback in setPermissionRequestHandler';
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMR";
   }
 
   match(astNode){
     if (astNode.type !== 'CallExpression') return null;
     if (astNode.callee.property && astNode.callee.property.name === "setPermissionRequestHandler")
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
   }
 
 }

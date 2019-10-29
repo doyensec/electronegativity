@@ -7,6 +7,7 @@ export default class InsecureContentHTMLCheck {
     this.id = 'INSECURE_CONTENT_HTML_CHECK';
     this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.HTML;
+    this.shortenedURL = "https://git.io/JeuMq";
   }
 
   match(cheerioObj, content) {
@@ -18,7 +19,7 @@ export default class InsecureContentHTMLCheck {
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['allowRunningInsecureContent'] === true)
-          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false });
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false });
       }
 
     });

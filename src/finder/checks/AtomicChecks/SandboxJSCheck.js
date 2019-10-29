@@ -6,6 +6,7 @@ export default class SandboxJSCheck {
     this.id = 'SANDBOX_JS_CHECK';
     this.description = `Use sandbox for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuM2";
   }
 
   match(astNode, astHelper, scope){
@@ -29,14 +30,14 @@ export default class SandboxJSCheck {
         if (node.value.value === true) {
           continue;
         }
-        loc.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
+        loc.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
       }
     }
 
     if (wasFound) {
       return loc;
     } else { // default is false
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false }];
     }
   }
 }

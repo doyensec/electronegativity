@@ -6,6 +6,7 @@ export default class InsecureContentJSCheck {
     this.id = 'INSECURE_CONTENT_JS_CHECK';
     this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMm";
   }
 
   match(astNode, astHelper, scope){
@@ -26,7 +27,7 @@ export default class InsecureContentJSCheck {
 
       for (const node of found_nodes) {
         if (node.value.value === true) {
-          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false });
+          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false });
         }
       }
     }

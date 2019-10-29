@@ -6,6 +6,7 @@ export default class OpenExternalJSCheck {
     this.id = 'OPEN_EXTERNAL_JS_CHECK';
     this.description = `Review the use of openExternal`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMC";
   }
 
   match(astNode, astHelper){
@@ -13,6 +14,6 @@ export default class OpenExternalJSCheck {
     if (!(astNode.callee.property && astNode.callee.property.name === "openExternal")) return null;
     if (astNode.arguments[0].type === astHelper.StringLiteral) return null; // constant, not user supplied
 
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
   }
 }

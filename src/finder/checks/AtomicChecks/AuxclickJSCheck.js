@@ -6,6 +6,7 @@ export default class AuxclickJSCheck {
     this.id = 'AUXCLICK_JS_CHECK';
     this.description = `Limit navigation flows to untrusted origins. Middle-click may cause Electron to open a link within a new window`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/Jeu1K";
   }
 
   match(astNode, astHelper, scope) {
@@ -27,12 +28,12 @@ export default class AuxclickJSCheck {
       if (found_nodes.length > 0) {
         for (const node of found_nodes) {
           if (node.value.value.indexOf("Auxclick") == -1) {
-            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
+            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
           }
         }
       }
       else {
-        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
+        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: false });
       }
       
     }

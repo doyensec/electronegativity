@@ -7,6 +7,7 @@ export default class SecurityWarningsDisabledJSONCheck {
     this.id = 'SECURITY_WARNINGS_DISABLED_JSON_CHECK';
     this.description = `Warns about flags disabling security warnings in the package.json file.`;
     this.type = sourceTypes.JSON;
+    this.shortenedURL = "https://git.io/JeuMw";
     this.dangerousFlag = "ELECTRON_DISABLE_SECURITY_WARNINGS";
   }
 
@@ -26,7 +27,7 @@ export default class SecurityWarningsDisabledJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmScripts[script]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: false });
           }
 
         }
@@ -42,7 +43,7 @@ export default class SecurityWarningsDisabledJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmConfig[config]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: false });
           }
 
         }

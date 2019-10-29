@@ -6,6 +6,7 @@ export default class CSPJSCheck {
     this.id = 'CSP_JS_CHECK';
     this.description = `Check for common responseHeaders CSP assignments`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMe";
   }
 
   match(astNode, astHelper){
@@ -27,7 +28,7 @@ export default class CSPJSCheck {
           if (node.value.properties) {
             for (const property of node.value.properties)
               if (property.key && property.key.value && property.key.value.toLowerCase() === "content-security-policy")
-                location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description,severity: severity.INFORMATIONAL, confidence: confidence.TENTATIVE, properties: { "CSPstring": property.value.elements[0].value }, manualReview: true });
+                location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.TENTATIVE, properties: { "CSPstring": property.value.elements[0].value }, manualReview: true });
           } // match callback({ responseHeaders: Object.assign({"Content-Security-Policy": [ "default-src 'self'" ]}, details.responseHeaders)}); as a popular stackoverflow answer suggests https://stackoverflow.com/questions/51969512/define-csp-http-header-in-electron-app
           else if (node.value.type === 'CallExpression') {
             if (node.value.arguments.length > 0) {
@@ -35,7 +36,7 @@ export default class CSPJSCheck {
                 if (argument.type === 'ObjectExpression')
                   for (const property of argument.properties)
                     if (property.key && property.key.value === 'Content-Security-Policy')
-                      location.push({ line: node.value.loc.start.line, column: node.value.loc.start.column, id: this.id, description: this.description,severity: severity.INFORMATIONAL, confidence: confidence.TENTATIVE, properties: { "CSPstring": property.value.elements[0].value}, manualReview: true });  
+                      location.push({ line: node.value.loc.start.line, column: node.value.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.TENTATIVE, properties: { "CSPstring": property.value.elements[0].value}, manualReview: true });  
             }
           }
         }

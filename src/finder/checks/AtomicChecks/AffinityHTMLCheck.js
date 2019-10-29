@@ -7,6 +7,7 @@ export default class AffinityHTMLCheck {
     this.id = 'AFFINITY_HTML_CHECK';
     this.description = `Review the use of affinity property`;
     this.type = sourceTypes.HTML;
+    this.shortenedURL = "https://git.io/Jeu1z";
   }
 
   match(cheerioObj, content) {
@@ -18,7 +19,7 @@ export default class AffinityHTMLCheck {
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['affinity'] !== undefined)
-          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, properties: { "AffinityString": features['affinity']}, manualReview: true });
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, properties: { "AffinityString": features['affinity']}, manualReview: true });
       }
 
     });

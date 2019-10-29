@@ -6,6 +6,7 @@ export default class NodeIntegrationHTMLCheck {
     this.id = 'NODE_INTEGRATION_HTML_CHECK';
     this.description = `Disable nodeIntegration for untrusted origins`;
     this.type = sourceTypes.HTML;
+    this.shortenedURL = "https://git.io/JeuMG";
   }
 
   match(cheerioObj, content) {
@@ -17,7 +18,7 @@ export default class NodeIntegrationHTMLCheck {
       const nodeintegrationInSubframes = cheerioObj(this).attr('nodeintegrationinsubframes');
 
       if (nodeintegration !== undefined || nodeintegrationInSubframes !== undefined) {
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
       }
     });
     return loc;

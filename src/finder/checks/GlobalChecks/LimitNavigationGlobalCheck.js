@@ -6,6 +6,7 @@ export default class LimitNavigationGlobalCheck {
     this.id = "LIMIT_NAVIGATION_GLOBAL_CHECK";
     this.description = { NONE_FOUND: "Missing navigation limits using .on new-window and will-navigate events" };
     this.depends = ["LimitNavigationJSCheck"];
+    this.shortenedURL = "https://git.io/JeuMs";
   }
 
   async perform(issues) {
@@ -13,7 +14,7 @@ export default class LimitNavigationGlobalCheck {
     var otherIssues = issues.filter(e => e.id !== 'LIMIT_NAVIGATION_JS_CHECK');
 
     if (limitNavigationIssues.length === 0) {
-      otherIssues.push({ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NONE_FOUND,severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: false });
+      otherIssues.push({ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NONE_FOUND, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: false });
       return otherIssues;
     } else {
       return issues;

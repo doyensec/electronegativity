@@ -8,6 +8,7 @@ export default class CustomArgumentsJSONCheck {
     this.id = 'CUSTOM_ARGUMENTS_JSON_CHECK';
     this.description = `Search for dangerous runtime flags in the package.json file.`;
     this.type = sourceTypes.JSON;
+    this.shortenedURL = "https://git.io/Jeu1j";
     this.dangerousArguments = [
       "--ignore-certificate-errors",
       "--ignore-certificate-errors-spki-list",
@@ -62,7 +63,7 @@ export default class CustomArgumentsJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmScripts[script]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false });
           }
 
         }
@@ -80,7 +81,7 @@ export default class CustomArgumentsJSONCheck {
 
           if (res) {
             let ln = linenumber(content.text, npmConfig[config]);
-            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false });
+            location.push({ line: ln[0].line, column: 0, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false });
           }
 
         }

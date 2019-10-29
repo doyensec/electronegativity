@@ -6,6 +6,7 @@ export default class PreloadJSCheck {
     this.id = 'PRELOAD_JS_CHECK';
     this.description = `Review the use of preload scripts`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMu";
   }
 
   match(astNode, astHelper, scope){
@@ -25,7 +26,7 @@ export default class PreloadJSCheck {
         node => (node.key.value === 'preload' || node.key.name === 'preload'));
 
       for (const node of found_nodes)
-        location.push ({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: true });
+        location.push ({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.FIRM, manualReview: true });
     }
 
     return location;

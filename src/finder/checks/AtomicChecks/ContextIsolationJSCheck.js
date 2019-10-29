@@ -6,6 +6,7 @@ export default class ContextIsolationJSCheck {
     this.id = 'CONTEXT_ISOLATION_JS_CHECK';
     this.description = `Review the use of the contextIsolation option`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/Jeu1p";
   }
 
   match(astNode, astHelper, scope){
@@ -37,16 +38,16 @@ export default class ContextIsolationJSCheck {
           // but technically it is an invalid json
           // just to be on the safe side show a warning if any value is insecure
           if(node.value.value !== true) {
-            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+            location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
           }
         }
       } else {
-        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+        location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
       }
       
     } else {
       //No webpreferences
-      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+      location.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
     }
 
     return location;

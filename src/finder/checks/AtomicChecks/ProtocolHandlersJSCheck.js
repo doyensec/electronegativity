@@ -6,6 +6,7 @@ export default class ProtocolHandlerJSCheck {
     this.id = 'PROTOCOL_HANDLER_JS_CHECK';
     this.description = `Review the use of custom protocol handlers`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMz";
   }
 
   match(astNode){
@@ -22,6 +23,6 @@ export default class ProtocolHandlerJSCheck {
     if (astNode.type !== 'CallExpression') return null;
     if (!methods.includes(astNode.callee.name) && !(astNode.callee.property && methods.includes(astNode.callee.property.name))) return null;
 
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
   }
 }

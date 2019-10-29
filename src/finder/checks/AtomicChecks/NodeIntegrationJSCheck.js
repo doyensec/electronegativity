@@ -6,6 +6,7 @@ export default class NodeIntegrationJSCheck {
     this.id = 'NODE_INTEGRATION_JS_CHECK';
     this.description = `Disable nodeIntegration for untrusted origins`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMn";
   }
 
   //nodeIntegration Boolean (optional) - Whether node integration is enabled. Default is true.
@@ -37,7 +38,7 @@ export default class NodeIntegrationJSCheck {
     }
 
     if (!nodeIntegrationFound) {
-      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description,  shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
     }
 
     return locations;

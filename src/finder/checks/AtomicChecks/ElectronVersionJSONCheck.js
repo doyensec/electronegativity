@@ -7,6 +7,7 @@ export default class ElectronVersionJSONCheck {
     this.id = 'ELECTRON_VERSION_JSON_CHECK';
     this.description = `Gets the electron version used by inspecting the package.json file.`;
     this.type = sourceTypes.JSON;
+    this.shortenedURL = "https://git.io/JeuMf";
   }
 
   async match(content){
@@ -15,11 +16,11 @@ export default class ElectronVersionJSONCheck {
 
     let location = [];
     if (electron) {
-      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electron.raw }, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: false });
+      location.push({ line: 1, column: 0, id: this.id, description: this.description, shortenedURL: this.shortenedURL, properties: { "versionNumber": electron.raw }, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: false });
     }
 
     if (electronDev) {
-      location.push({ line: 1, column: 0, id: this.id, description: this.description, properties: { "versionNumber": electronDev.raw }, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: true });
+      location.push({ line: 1, column: 0, id: this.id, description: this.description, shortenedURL: this.shortenedURL, properties: { "versionNumber": electronDev.raw }, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: true });
     }
 
     return location;

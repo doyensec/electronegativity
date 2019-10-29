@@ -6,6 +6,7 @@ export default class CertificateVerifyProcJSCheck {
     this.id = 'CERTIFICATE_VERIFY_PROC_JS_CHECK';
     this.description = `Do not allow insecure connections, by explicitly opting-out from TLS validation or importing untrusted certificates`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/Jeu1A";
   }
 
   match(astNode){
@@ -14,12 +15,12 @@ export default class CertificateVerifyProcJSCheck {
 
     if (astNode.callee.property && astNode.callee.property.name === "setCertificateVerifyProc") {
       const description = 'Verify that the application does not explicitly opt-out from TLS validation';
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
     }
 
     if (astNode.callee.property && astNode.callee.property.name === "importCertificate") {
       const description = 'Verify custom TLS certificates imported into the platform certificate store';
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
     }
   }
 }

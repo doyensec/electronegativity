@@ -6,6 +6,7 @@ export default class AffinityGlobalCheck {
     this.id = "AFFINITY_GLOBAL_CHECK";
     this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property. Manual review is required since we don't check for the webPreferences."};
     this.depends = ["AffinityJSCheck", "AffinityHTMLCheck"];
+    this.shortenedURL = "https://git.io/Jeu1z";
   }
 
   async perform(issues) {
@@ -21,7 +22,7 @@ export default class AffinityGlobalCheck {
       var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
       if (duplicates.length > 0) {
-        otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_FOUND, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: true });
+        otherIssues.push({ file: affinityIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.AFFINITY_FOUND, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: true });
       }
     }
 

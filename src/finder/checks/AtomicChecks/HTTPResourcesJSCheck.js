@@ -6,6 +6,7 @@ export default class HTTPResourcesJavascriptCheck {
     this.id = 'HTTP_RESOURCES_JS_CHECK';
     this.description = `Do not allow insecure HTTP connections`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuML";
   }
 
   match(astNode, astHelper){
@@ -27,6 +28,6 @@ export default class HTTPResourcesJavascriptCheck {
         return undefined;
     }
 
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false }];
   }
 }

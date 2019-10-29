@@ -6,6 +6,7 @@ export default class BlinkFeaturesHTMLCheck {
     this.id = 'BLINK_FEATURES_HTML_CHECK';
     this.description = `Do not use Chromium's experimental features`;
     this.type = sourceTypes.HTML;
+    this.shortenedURL = "https://git.io/Jeu19";
   }
 
   match(cheerioObj, content) {
@@ -15,7 +16,7 @@ export default class BlinkFeaturesHTMLCheck {
     webviews.each(function (i, elem) {
       let wp = cheerioObj(this).attr('enableblinkfeatures');
       if(wp){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: true });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: true });
       }
 
       // search for both names for now
@@ -23,7 +24,7 @@ export default class BlinkFeaturesHTMLCheck {
       // https://github.com/electron/electron/blob/master/docs/api/breaking-changes.md#browserwindow
       wp = cheerioObj(this).attr('blinkfeatures');
       if(wp){
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: true });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: true });
       }
     });
     return loc;

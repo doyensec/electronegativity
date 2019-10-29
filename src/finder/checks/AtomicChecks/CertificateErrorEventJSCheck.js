@@ -6,6 +6,7 @@ export default class CertificateErrorEventJSCheck {
     this.id = 'CERTIFICATE_ERROR_EVENT_JS_CHECK';
     this.description = `Do not allow insecure connections, by explicitly opting-out from TLS validation`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/Jeu1N";
   }
 
   match(astNode){
@@ -17,6 +18,6 @@ export default class CertificateErrorEventJSCheck {
       return null;
     }
 
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
   }
 }

@@ -6,6 +6,7 @@ export default class DangerousFunctionsJSCheck {
     this.id = 'DANGEROUS_FUNCTIONS_JS_CHECK';
     this.description = `Do not use insertCSS, executeJavaScript, eval, Function, setTimeout, setInterval, setImmediate with user-supplied content`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/Jeug9";
   }
 
   match(astNode, astHelper, scope){
@@ -52,6 +53,6 @@ export default class DangerousFunctionsJSCheck {
     }
 
     if (shouldReport)
-      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: true }];
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: true }];
   }
 }

@@ -6,6 +6,7 @@ export default class ExperimentalFeaturesJSCheck {
     this.id = 'EXPERIMENTAL_FEATURES_JS_CHECK';
     this.description = `Do not use Chromium's experimental features`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMI";
   }
 
   match(astNode, astHelper, scope){
@@ -29,7 +30,7 @@ export default class ExperimentalFeaturesJSCheck {
 
       for (const node of found_nodes) {
         if (node.value.value === true) {
-          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: false });
+          location.push({ line: node.key.loc.start.line, column: node.key.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: false });
         }
       }
     }

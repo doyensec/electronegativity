@@ -7,6 +7,7 @@ export default class ExperimentalFeaturesHTMLCheck {
     this.id = 'EXPERIMENTAL_FEATURES_HTML_CHECK';
     this.description = `Do not use Chromium's experimental features`;
     this.type = sourceTypes.HTML;
+    this.shortenedURL = "https://git.io/JeuMJ";
   }
 
   match(cheerioObj, content) {
@@ -18,7 +19,7 @@ export default class ExperimentalFeaturesHTMLCheck {
       if (wp) {
         let features = parseWebPreferencesFeaturesString(wp);
         if (features['experimentalFeatures'] === true || features['experimentalCanvasFeatures'] === true)
-          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: false });
+          loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.LOW, confidence: confidence.CERTAIN, manualReview: false });
       }
 
     });

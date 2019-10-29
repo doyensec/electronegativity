@@ -1,5 +1,5 @@
 import cliProgress from 'cli-progress';
-import Table from 'cli-table2';
+import Table from 'cli-table3';
 import chalk from 'chalk';
 
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
@@ -8,7 +8,7 @@ import { Finder } from './finder';
 import { GlobalChecks, severity, confidence } from './finder';
 import { extension, input_exists, is_directory, writeIssues, getRelativePath } from './util';
 
-export default async function run(input, output, isSarif, customScan, severitySet, confidenceSet, isRelative) {
+export default async function run(input, output, isSarif, customScan, severitySet, confidenceSet, isRelative, isVerbose) {
   if (!input_exists(input)) {
     console.log(chalk.red('Input does not exist!'));
     process.exit(1);
@@ -49,6 +49,7 @@ export default async function run(input, output, isSarif, customScan, severitySe
   let errors = [];
   let table = new Table({
     head: ['Check ID', 'Affected File', 'Location', 'Issue Description'],
+    colWidths:[undefined, undefined, undefined, 50], // necessary for wordWrap
     wordWrap: true
   });
 
@@ -104,7 +105,7 @@ export default async function run(input, output, isSarif, customScan, severitySe
   // Now that we have all the "naive" findings we may analyze them further to sort out false negatives
   // and false positives before presenting them in the final report (e.g. CSP)
   issues = await globalChecker.getResults(issues);
-
+  
 
   // adjust to Relative or Absolute path
   if (isRelative)
@@ -119,7 +120,7 @@ export default async function run(input, output, isSarif, customScan, severitySe
         `${issue.id}${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}\n${issue.severity.format()} | ${issue.confidence.format()}`,
         issue.file,
         `${issue.location.line}:${issue.location.column}`,
-        `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
+        `${ isVerbose ? issue.description + '\n' + issue.shortenedURL : issue.shortenedURL}`
       ]);
   }
 

@@ -6,6 +6,7 @@ export default class NodeIntegrationAttachEventJSCheck {
     this.id = 'NODE_INTEGRATION_ATTACH_EVENT_JS_CHECK';
     this.description = 'Disable nodeIntegration for untrusted origins';
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/JeuMZ";
   }
 
   match(astNode, astHelper){
@@ -25,7 +26,7 @@ export default class NodeIntegrationAttachEventJSCheck {
                 && node.left.property.name === 'nodeIntegration'
                 && node.right.value === true);
       if (found_nodes.length > 0) {
-        loc.push({ line: found_nodes[0].loc.start.line, column: found_nodes[0].loc.start.column, id: this.id, description: this.description, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+        loc.push({ line: found_nodes[0].loc.start.line, column: found_nodes[0].loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
       }
     }
 

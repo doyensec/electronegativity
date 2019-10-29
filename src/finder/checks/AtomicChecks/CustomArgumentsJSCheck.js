@@ -6,6 +6,7 @@ export default class CustomArgumentsJSCheck {
     this.id = 'CUSTOM_ARGUMENTS_JS_CHECK';
     this.description = `Review the use of custom command line arguments`;
     this.type = sourceTypes.JAVASCRIPT;
+    this.shortenedURL = "https://git.io/Jeu1h";
     this.dangerousArguments = [
       "ignore-certificate-errors",
       "ignore-certificate-errors-spki-list",
@@ -54,7 +55,7 @@ export default class CustomArgumentsJSCheck {
         });
 
         if (res)
-          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false }];
+          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: false }];
       }
     }
   }

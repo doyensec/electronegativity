@@ -6,6 +6,7 @@ export default class CSPHTMLCheck {
     this.id = 'CSP_HTML_CHECK';
     this.description = `A CSP is set for this page using a meta tag`;
     this.type = sourceTypes.HTML;
+    this.shortenedURL = "https://git.io/JeuMe";
   }
 
   match(cheerioObj, content) {
@@ -16,7 +17,7 @@ export default class CSPHTMLCheck {
       const httpEquiv = cheerioObj(this).attr('http-equiv');
       const cspContent = cheerioObj(this).attr('content');
       if (httpEquiv && httpEquiv.toLowerCase() === "Content-Security-Policy".toLowerCase()) {
-        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, severity: severity.INFORMATIONAL, confidence: confidence.TENTATIVE, properties: { "CSPstring": cspContent }, manualReview: true });
+        loc.push({ line: content.substr(0, elem.startIndex).split('\n').length, column: 0, id: self.id, description: self.description, shortenedURL: self.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.TENTATIVE, properties: { "CSPstring": cspContent }, manualReview: true });
       }
     });
     return loc;

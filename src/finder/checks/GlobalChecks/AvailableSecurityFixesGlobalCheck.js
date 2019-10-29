@@ -12,6 +12,7 @@ export default class AvailableSecurityFixesGlobalCheck {
     this.description = { SECURITY_ISSUES : "Check if there are security patches applied in between the Electron version used and the latest",
       OUTDATED_VERSION : "A new version of Electron is available" };
     this.depends = ["ElectronVersionJSONCheck"];
+    this.shortenedURL = "https://git.io/Jeu1X";
     this.releaseNoteSecurityFixRegex = [ /# Security/i, /\[security\]/i ];
     this.githubEtagRegex = /[0-9a-f]{40}/g;
     this.releasesFilePath = path.resolve(path.dirname(process.argv[1]), '..');
@@ -38,9 +39,9 @@ export default class AvailableSecurityFixesGlobalCheck {
           var hasSecurityFixAvailable = await this.checkSecurityFixes(issue.properties.versionNumber, releases);
           if (hasSecurityFixAvailable) {
             if (issue.manualReview) // found in devDependencies
-              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
+              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
             else // found in dependencies
-              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
+              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
           }
         }
       }
