@@ -60,9 +60,11 @@ If you're thinking about contributing to this project, please take a look at our
 
 ## Credits
 
-Electronegativity was made possible thanks to the work of [Claudio Merloni](https://github.com/p4p3r), [Ibram Marzouk](https://github.com/0xibram), [Jaroslav Lobačevski](https://github.com/JarLob) and many other [contributors](https://github.com/doyensec/electronegativity/graphs/contributors).
+Electronegativity was made possible thanks to the work of many [contributors](https://github.com/doyensec/electronegativity/graphs/contributors).
 
-This work has been sponsored by [Doyensec LLC](https://www.doyensec.com).
+This project has been sponsored by [Doyensec LLC](https://www.doyensec.com). 
 
 ![alt text](https://doyensec.com/images/logo.svg "Doyensec Logo")
+
+[Engage us to break](https://doyensec.com/auditing.html) your Electron.js application!
 
