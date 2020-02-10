@@ -26,6 +26,7 @@ import NodeIntegrationJSCheck from './NodeIntegrationJSCheck';
 import NodeIntegrationAttachEventJSCheck from './NodeIntegrationAttachEventJSCheck';
 import OpenExternalJSCheck from './OpenExternalJSCheck';
 import PermissionRequestHandlerJSCheck from './PermissionRequestHandlerJSCheck';
+import RemoteModuleJSCheck from './RemoteModuleJSCheck';
 import SandboxJSCheck from './SandboxJSCheck';
 import SecurityWarningsDisabledJSCheck from './SecurityWarningsDisabledJSCheck';
 import SecurityWarningsDisabledJSONCheck from './SecurityWarningsDisabledJSONCheck';
@@ -64,6 +65,7 @@ const CHECKS = [
   NodeIntegrationAttachEventJSCheck,
   OpenExternalJSCheck,
   PermissionRequestHandlerJSCheck,
+  RemoteModuleJSCheck,
   SandboxJSCheck,
   SecurityWarningsDisabledJSCheck,
   SecurityWarningsDisabledJSONCheck,
