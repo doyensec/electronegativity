@@ -8,8 +8,8 @@ import { Finder } from './finder';
 import { GlobalChecks, severity, confidence } from './finder';
 import { extension, input_exists, is_directory, writeIssues, getRelativePath } from './util';
 
-export default async function run(input, output, isSarif, customScan, severitySet, confidenceSet, isRelative, isVerbose) {
-  if (!input_exists(input)) {
+export default async function run(options) {
+  if (!input_exists(options.input)) {
     console.log(chalk.red('Input does not exist!'));
     process.exit(1);
   }
@@ -17,33 +17,33 @@ export default async function run(input, output, isSarif, customScan, severitySe
   // Load
   let loader;
 
-  if(is_directory(input)){
+  if(is_directory(options.input)){
     loader = new LoaderDirectory();
   }else{
-    loader = (extension(input) === 'asar') ? new LoaderAsar() : new LoaderFile();
+    loader = (extension(options.input) === 'asar') ? new LoaderAsar() : new LoaderFile();
   }
 
-  await loader.load(input);
+  await loader.load(options.input);
 
-  if (severitySet) {
-    if (!severity.hasOwnProperty(severitySet.toUpperCase())) {
+  if (options.severitySet) {
+    if (!severity.hasOwnProperty(options.severitySet.toUpperCase())) {
       console.log(chalk.red('This severity level does not exist!'));
       process.exit(1);
-    } else severitySet = severity[severitySet.toUpperCase()];
-  } else severitySet = severity["INFORMATIONAL"]; // default to lowest
+    } else options.severitySet = severity[options.severitySet.toUpperCase()];
+  } else options.severitySet = severity["INFORMATIONAL"]; // default to lowest
 
-  if (confidenceSet) {
-    if (!confidence.hasOwnProperty(confidenceSet.toUpperCase())) {
+  if (options.confidenceSet) {
+    if (!confidence.hasOwnProperty(options.confidenceSet.toUpperCase())) {
       console.log(chalk.red('This confidence level does not exist!'));
       process.exit(1);
-    } else confidenceSet = confidence[confidenceSet.toUpperCase()];
-  } else confidenceSet = confidence["TENTATIVE"]; // default to lowest
+    } else options.confidenceSet = confidence[options.confidenceSet.toUpperCase()];
+  } else options.confidenceSet = confidence["TENTATIVE"]; // default to lowest
 
   // Parser
   const parser = new Parser(false, true);
-  const globalChecker = new GlobalChecks(customScan);
-  if (customScan.length > 0) customScan = customScan.filter(r => !r.includes('globalcheck')).concat(globalChecker.dependencies);
-  const finder = await new Finder(customScan);
+  const globalChecker = new GlobalChecks(options.customScan, options.electronUpgrade);
+  if (options.customScan.length > 0) options.customScan = options.customScan.filter(r => !r.includes('globalcheck')).concat(globalChecker.dependencies);
+  const finder = await new Finder(options.customScan, options.electronUpgrade);
   const filenames = [...loader.list_files];
   let issues = [];
   let errors = [];
@@ -108,24 +108,24 @@ export default async function run(input, output, isSarif, customScan, severitySe
   
 
   // adjust to Relative or Absolute path
-  if (isRelative)
+  if (options.isRelative)
     issues.forEach(function(issue, i, issues) {
-      issues[i].file = getRelativePath(input, issue.file);
+      issues[i].file = getRelativePath(options.input, issue.file);
     });
 
   let rows = [];
   for (const issue of issues) {
-    if (issue.severity.value >= severitySet.value && issue.confidence.value >= confidenceSet.value)
+    if (issue.severity.value >= options.severitySet.value && issue.confidence.value >= options.confidenceSet.value)
       rows.push([
         `${issue.id}${issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``}\n${issue.severity.format()} | ${issue.confidence.format()}`,
         issue.file,
         `${issue.location.line}:${issue.location.column}`,
-        `${ isVerbose ? issue.description + '\n' + issue.shortenedURL : issue.shortenedURL}`
+        `${ options.isVerbose ? issue.description + '\n' + issue.shortenedURL : issue.shortenedURL}`
       ]);
   }
 
-  if (output)
-    writeIssues(output, issues, isSarif);
+  if (options.output)
+    writeIssues(options.output, issues, options.isSarif);
 
   if (rows.length > 0) {
     table.push(...rows);

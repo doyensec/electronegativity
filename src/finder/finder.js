@@ -1,10 +1,25 @@
 import { CHECKS } from './checks/AtomicChecks';
 import { sourceTypes } from '../parser/types';
+import { ELECTRON_ATOMIC_UPGRADE_CHECKS } from './checks/AtomicChecks/ElectronAtomicUpgradeChecks';
 import chalk from 'chalk';
 
 export class Finder {
-  constructor(customScan) {
-    this._enabled_checks = Object.assign(Object.create(CHECKS), CHECKS);
+  constructor(customScan, electronUpgrade) {
+    let candidateChecks = Array.from(CHECKS) 
+    if (electronUpgrade) {
+      const [currentVersion, targetVersion] = electronUpgrade.split('..');
+      if (currentVersion && targetVersion) {
+        Object.keys(ELECTRON_ATOMIC_UPGRADE_CHECKS).forEach(versionToCheck => {
+          if (versionToCheck > currentVersion && versionToCheck <= targetVersion) {            
+            candidateChecks = candidateChecks.concat(ELECTRON_ATOMIC_UPGRADE_CHECKS[versionToCheck]);
+          }
+        })
+      } else {
+        console.log(chalk.red(`When specifying the upgrade options please specify your current version and target version like this: x..y (eg 7..8)`));
+        process.exit(1);
+      }
+    }
+    this._enabled_checks = Object.assign(Object.create(candidateChecks), candidateChecks);
     if (customScan && customScan.length > 0) {
       var checksNames = this._enabled_checks.map(check => check.name.toLowerCase());
       if (!customScan.every(r => checksNames.includes(r))) {
