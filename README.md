@@ -3,9 +3,9 @@
 ## What's Electronegativity?
 
 **Electronegativity** is a tool to identify misconfigurations and security anti-patterns in [Electron](https://electronjs.org/)-based applications.
-
-<img src="https://github.com/doyensec/electronegativity/raw/master/docs/resources/img/electronegalogo.png" width="150" height="150">
-
+<p align="center">
+	<img src="https://github.com/doyensec/electronegativity/raw/master/docs/resources/img/electronegalogo.png" width="150" height="150">
+</p>
 It leverages AST and DOM parsing to look for security-relevant configurations, as described in the ["Electron Security Checklist - A Guide for Developers and Auditors"](https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security-wp.pdf) whitepaper.
 
 Software developers and security auditors can use this tool to detect and mitigate potential weaknesses and implementation bugs when developing applications using Electron. A good understanding of Electron (in)security is still required when using Electronegativity, as some of the potential issues detected by the tool require manual investigation.
