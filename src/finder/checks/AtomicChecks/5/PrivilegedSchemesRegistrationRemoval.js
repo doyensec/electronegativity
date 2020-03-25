@@ -12,7 +12,7 @@ export default class PrivilegedSchemesRegistrationRemoval {
   match(astNode, astHelper, scope){
     if (astNode.type !== 'CallExpression') return null;
     if (!astNode.callee.property ||  
-        (astNode.callee.property.name !== 'setRegisterURLSchemeAsPrivileged' &&
+        (astNode.callee.property.name !== 'registerURLSchemeAsPrivileged' &&
         astNode.callee.property.name !== 'registerURLSchemeAsBypassingCSP' &&
         astNode.callee.property.name !== 'registerStandardSchemes')) {
       return null;

@@ -9,12 +9,23 @@ export default class RequireElectronScreen {
     this.shortenedURL = 'https://git.io/JvalC';
   }
 
-  match(astNode, astHelper, scope){
-    if (astNode.type !== 'MemberExpression') return null;
-    if (!astNode.object || astNode.object.type !== 'CallExpression') return null;
-    if (!astNode.object.callee || astNode.object.callee.name !== 'require') return null;
-    if (!astNode.object.arguments || astNode.object.arguments[0].value !== 'electron') return null;
-    if (!astNode.property || astNode.property.name !== 'screen') return null;
-    return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+  match(astNode, astHelper, scope){    
+    if (astNode.type !== 'VariableDeclarator') return null;    
+    if (!astNode.init || (astNode.init.type !== 'MemberExpression' && astNode.init.type !== 'CallExpression')) return null;
+    if (astNode.init.type === 'MemberExpression') {      
+      if (!astNode.init.object.callee || astNode.init.object.callee.name !== 'require') return null;
+      if (!astNode.init.object.arguments || astNode.init.object.arguments[0].value !== 'electron') return null;
+      if (!astNode.init.property || astNode.init.property.name !== 'screen') return null;
+      return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+    } else {
+      if (!astNode.init.callee || astNode.init.callee.name !== 'require') return null;
+      if (!astNode.init.arguments || astNode.init.arguments[0].value !== 'electron') return null;
+      if (!astNode.id || astNode.id.type !== 'ObjectPattern') return null;
+      for (const property of astNode.id.properties) {
+        if (property.key && property.key.name && property.key.name === 'screen') {
+          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
+        }
+      }
+    }
   }
 }

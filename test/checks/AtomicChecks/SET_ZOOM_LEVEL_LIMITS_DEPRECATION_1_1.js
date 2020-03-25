@@ -1,0 +1,1 @@
+webFrame.setLayoutZoomLevelLimits(1, 3);

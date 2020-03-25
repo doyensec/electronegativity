@@ -12,11 +12,10 @@ export default class RequireSandboxedRenderers {
   }
 
   match(astNode, astHelper, scope){
-    if (astNode.type !== 'ExpressionStatement') return null;
-    if (!astNode.expression || astNode.expression.type !== 'CallExpression') return null;
-    if (!astNode.expression.callee || astNode.expression.callee.name !== 'require') return null;
-    if (!astNode.expression.arguments || astNode.expression.arguments[0].type !== astHelper.StringLiteral) return null;
-    if (DEPRECATED_REQUIRES.indexOf(astNode.expression.arguments[0].value) === -1) return null;
+    if (astNode.type !== 'CallExpression') return null;
+    if (!astNode.callee || astNode.callee.name !== 'require') return null;
+    if (!astNode.arguments || astNode.arguments[0].type !== astHelper.StringLiteral) return null;
+    if (DEPRECATED_REQUIRES.indexOf(astNode.arguments[0].value) === -1) return null;
     return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
   }
 }

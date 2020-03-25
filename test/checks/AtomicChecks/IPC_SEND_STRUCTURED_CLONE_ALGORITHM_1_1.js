@@ -1,0 +1,1 @@
+ipcRenderer.send('channel', { timeStamp: new Date() });
