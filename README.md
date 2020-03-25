@@ -39,6 +39,7 @@ $ electronegativity -h
 | -o, --output <filename[.csv or .sarif]> | save the results to a file in csv or sarif format |
 | -r, --relative | show relative path for files |
 | -v, --verbose | show the description for the findings |
+| -u, --upgrade <current version..target version> | run Electron upgrade checks, eg -u 7..8 to check upgrade from Electron 7 to 8 |
 | -h, --help   | output usage information                          |
 
 
@@ -50,6 +51,11 @@ $ electronegativity -i /path/to/electron/app
 Using electronegativity to look for issues in an `asar` archive and saving the results in a csv file:
 ```
 $ electronegativity -i /path/to/asar/archive -o result.csv
+```
+
+Using electronegativity when upgrading from one version of Electron to another to find breaking changes:
+```
+$ electronegativity -i /path/to/electron/app -v -u 7..8
 ```
 
 Note: if you're running into the Fatal Error "JavaScript heap out of memory", you can run node using ```node --max-old-space-size=4096 electronegativity -i /path/to/asar/archive -o result.csv```

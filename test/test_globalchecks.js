@@ -23,7 +23,8 @@ logger.add(logger.transports.Console, {colorize : true, level : 'silly'});
 let globalcheck_tests = "test/checks/GlobalChecks";
 
 describe('GlobalChecks', async () => {
-  const globalChecker = new GlobalChecks();
+  const electronVersions = '4..8';
+  const globalChecker = new GlobalChecks(null, electronVersions);
   // Load all test file
   let loader = new LoaderDirectory();
   let directories = fs.readdirSync(globalcheck_tests);
@@ -49,7 +50,7 @@ describe('GlobalChecks', async () => {
       var globalCheck = globalChecker._constructed_checks[testedCheck];
 
       // loads the dependencies for the current globalCheck
-      let finder = await new Finder(globalCheck.depends.map(check => check.toLowerCase()));
+      let finder = await new Finder(globalCheck.depends.map(check => check.toLowerCase()), electronVersions);
       // run the checks required by the globalCheck in order to work
       for (let file of filenames) {
             const [type, data, content, warnings] = parser.parse(file, loader.load_buffer(file));

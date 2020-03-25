@@ -1,10 +1,27 @@
+import { ELECTRON_GLOBAL_UPGRADE_CHECKS } from './checks/GlobalChecks/ElectronGlobalUpgradeChecks';
 import { GLOBAL_CHECKS } from './checks/GlobalChecks';
 import chalk from 'chalk';
 
 export class GlobalChecks {
-    constructor(customScan) {
+    constructor(customScan, electronUpgrade) {
+        let candidateChecks = Array.from(GLOBAL_CHECKS);
+        if (electronUpgrade) {
+          const [currentVersion, targetVersion] = electronUpgrade.split('..');
+          if (currentVersion && targetVersion) {
+            this._enabled_checks = [];
+            Object.keys(ELECTRON_GLOBAL_UPGRADE_CHECKS).forEach(versionToCheck => {
+              if (versionToCheck > currentVersion && versionToCheck <= targetVersion) {
+                candidateChecks = candidateChecks.concat(ELECTRON_GLOBAL_UPGRADE_CHECKS[versionToCheck]);
+              }
+            })
+          } else {
+            console.log(chalk.red(`When specifying the upgrade options please specify your current version and target version like this: x..y (eg 7..8)`));
+            process.exit(1);
+          }
+        }
+        this._enabled_checks = candidateChecks;
         if (customScan && customScan.length > 0) {
-          var globalChecksNames = GLOBAL_CHECKS.map(globalCheck => globalCheck.name.toLowerCase());
+          var globalChecksNames = this._enabled_checks.map(globalCheck => globalCheck.name.toLowerCase());
           var customGlobals = customScan.filter(r => r.includes('globalcheck'));
           if (customGlobals.length > 0 && !customGlobals.some(r => globalChecksNames.includes(r))) {
             console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
@@ -12,10 +29,9 @@ export class GlobalChecks {
           } else {
           for (var i = globalChecksNames.length - 1; i >= 0; i--) 
             if (!customGlobals.includes(globalChecksNames[i]))
-              GLOBAL_CHECKS.splice(i, 1);
+            this._enabled_checks.splice(i, 1);
           }
         }
-        this._enabled_checks = GLOBAL_CHECKS;
         this._constructed_checks = [];
         this.dependencies = [];
         this.init_checks_list();

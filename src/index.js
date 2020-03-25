@@ -32,6 +32,7 @@ program
   .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
   .option('-r, --relative', 'show relative path for files')
   .option('-v, --verbose', 'show the description for the findings')
+  .option('-u, --upgrade <current version..target version>', 'run Electron upgrade checks, eg -u 7..8')
   .parse(process.argv);
 
 if(!program.input){
@@ -59,4 +60,14 @@ else
 
 const input = path.resolve(program.input);
 
-run(input, program.output, program.fileFormat === 'sarif', program.checks, program.severity, program.confidence, program.relative, program.verbose);
+run({
+  input,
+  output: program.output, 
+  isSarif: program.fileFormat === 'sarif',
+  customScan: program.checks,
+  severitySet: program.severity, 
+  confidenceSet: program.confidence,
+  isRelative: program.relative,
+  isVerbose: program.verbose,
+  electronUpgrade: program.upgrade
+});
