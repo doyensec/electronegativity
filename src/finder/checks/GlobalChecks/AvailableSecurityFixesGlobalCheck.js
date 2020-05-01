@@ -3,6 +3,7 @@ import { satisfies, major, minor } from 'semver';
 import got from 'got';
 import chalk from 'chalk';
 import path from 'path'
+import tempDirectory from 'temp-dir';
 import { severity, confidence } from '../../attributes';
 
 export default class AvailableSecurityFixesGlobalCheck {
@@ -15,7 +16,7 @@ export default class AvailableSecurityFixesGlobalCheck {
     this.shortenedURL = "https://git.io/Jeu1X";
     this.releaseNoteSecurityFixRegex = [ /# Security/i, /\[security\]/i ];
     this.githubEtagRegex = /[0-9a-f]{40}/g;
-    this.releasesFilePath = path.resolve(path.dirname(process.argv[1]), '..');
+    this.releasesFilePath = require('temp-dir');
   }
 
   async perform(issues) {
@@ -99,7 +100,11 @@ export default class AvailableSecurityFixesGlobalCheck {
         else {
           shouldUpdate = true;    
           //remove the old releases.json file
-          fs.unlinkSync(releaseFile[0]);
+          try { 
+            fs.unlinkSync(releaseFile[0]);
+          } catch (e) {
+            console.log(chalk.yellow(`Something went wrong while trying to delete Electron's releases.`));
+          }
         }
         
       } else {
