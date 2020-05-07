@@ -70,4 +70,4 @@ run({
   isRelative: program.relative,
   isVerbose: program.verbose,
   electronUpgrade: program.upgrade
-});
+}, true);
