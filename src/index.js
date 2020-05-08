@@ -59,6 +59,7 @@ else
   program.verbose = false;
 
 const input = path.resolve(program.input);
+const forCli = true;
 
 run({
   input,
@@ -70,4 +71,4 @@ run({
   isRelative: program.relative,
   isVerbose: program.verbose,
   electronUpgrade: program.upgrade
-}, true);
+}, forCli);

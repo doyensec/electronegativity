@@ -64,7 +64,7 @@ Note: if you're running into the Fatal Error "JavaScript heap out of memory", yo
 
 ### Programmatically
 
-You can also use electronegativity programatically, using similar options as for the CLI:
+You can also use electronegativity programmatically, using similar options as for the CLI:
 
 ```js
 const run = require('@doyensec/electronegativity')
@@ -92,7 +92,7 @@ run({
     .catch(err => console.error(err));
 ```
 
-The result contain the number of global and atomic checks, any errors encountered while parsing and an array of the issues found, like this:
+The result contains the number of global and atomic checks, any errors encountered while parsing and an array of the issues found, like this:
 
 ```json
 {
