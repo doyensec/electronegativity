@@ -74,7 +74,7 @@ run({
   // input (directory, .js, .html, .asar)
   input: '/path/to/electron/app',
   // save the results to a file in csv or sarif format (optional)
-  output: '/path/for/output/file,
+  output: '/path/for/output/file',
   // true to save output as sarif, false to save as csv (optional)
   isSarif: false,
   // only run the specified checks
