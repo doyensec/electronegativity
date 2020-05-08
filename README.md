@@ -94,7 +94,7 @@ run({
 
 The result contains the number of global and atomic checks, any errors encountered while parsing and an array of the issues found, like this:
 
-```json
+```js
 {
   globalChecks: 6,
   atomicChecks: 36,
