@@ -37,12 +37,12 @@ export default class AvailableSecurityFixesGlobalCheck {
 
       for (const issue of versionCheckIssues) {
         if (issue.properties.versionNumber !== latestRelease) {
-          var hasSecurityFixAvailable = await this.checkSecurityFixes(issue.properties.versionNumber, releases);
-          if (hasSecurityFixAvailable) {
+          var confidenceIfSecurityFixAvailable = await this.checkSecurityFixes(issue.properties.versionNumber, releases);
+          if (confidenceIfSecurityFixAvailable) {
             if (issue.manualReview) // found in devDependencies
-              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
+              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, shortenedURL: this.shortenedURL, severity: severity.INFORMATIONAL, confidence: confidenceIfSecurityFixAvailable, manualReview: issue.manualReview });
             else // found in dependencies
-              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: issue.manualReview });
+              otherIssues.push({ file: versionCheckIssues[0].file, location: {line: 0, column: 0}, id: this.id, description: this.description.SECURITY_ISSUES, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidenceIfSecurityFixAvailable, manualReview: issue.manualReview });
           }
         }
       }
@@ -56,6 +56,10 @@ export default class AvailableSecurityFixesGlobalCheck {
     const family = `${majorVersion}.${minorVersion}.x`;
 
     var latestRelease = releases.filter(release => satisfies(release.version, family))[0];
+    if(!latestRelease) {
+      console.log(chalk.yellow(`Unknown Electron release "${family}", please check manually for available security fixes.`));
+      return confidence.TENTATIVE;
+    }
 
     const semverTarget = `>${version} <=${latestRelease.version}`;
     var followingReleases = releases.filter(release => satisfies(release.version, semverTarget));
@@ -63,7 +67,7 @@ export default class AvailableSecurityFixesGlobalCheck {
     for (let release of followingReleases) {
       for (let regex of this.releaseNoteSecurityFixRegex)
         if (regex.test(release.body))
-          securityFixes = true;
+          securityFixes = confidence.CERTAIN;
     }
     return securityFixes;
   }
@@ -98,15 +102,17 @@ export default class AvailableSecurityFixesGlobalCheck {
         if (localEtag === remoteEtag)
           shouldUpdate = false;
         else {
-          shouldUpdate = true;    
-          //remove the old releases.json file
-          try { 
-            fs.unlinkSync(releaseFile[0]);
+          shouldUpdate = true;
+          //remove the old releases.json file(s)
+          try {
+            for (let file of releaseFile.values())
+              fs.unlinkSync(path.join(this.releasesFilePath, file));
           } catch (e) {
             console.log(chalk.yellow(`Something went wrong while trying to delete Electron's releases.`));
+            console.log(e)
           }
         }
-        
+
       } else {
         shouldUpdate = true;
       }
