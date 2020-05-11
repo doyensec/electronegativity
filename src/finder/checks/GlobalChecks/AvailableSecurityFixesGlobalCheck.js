@@ -103,11 +103,13 @@ export default class AvailableSecurityFixesGlobalCheck {
           shouldUpdate = false;
         else {
           shouldUpdate = true;
-          //remove the old releases.json file
+          //remove the old releases.json file(s)
           try {
-            fs.unlinkSync(releaseFile[0]);
+            for (let file of releaseFile.values())
+              fs.unlinkSync(path.join(this.releasesFilePath, file));
           } catch (e) {
             console.log(chalk.yellow(`Something went wrong while trying to delete Electron's releases.`));
+            console.log(e)
           }
         }
 
