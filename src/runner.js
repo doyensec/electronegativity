@@ -1,6 +1,7 @@
 import cliProgress from 'cli-progress';
 import Table from 'cli-table3';
 import chalk from 'chalk';
+import logger from 'winston';
 
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
@@ -28,6 +29,8 @@ export default async function run(options, forCli = false) {
   }
 
   await loader.load(options.input);
+  if (!loader.electron_version)
+    logger.warn("Couldn't detect Electron version, assuming v0.1.0. Defaults have probably changed for your actual version, please check manually.");
 
   if (options.severitySet) {
     if (!severity.hasOwnProperty(options.severitySet.toUpperCase())) {

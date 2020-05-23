@@ -59,6 +59,10 @@ export class Finder {
   }
 
   async find(file, data, type, content, use_only_checks = null, electron_version = null) {
+    // If the loader didn't detect the Electron version, assume the first one. Not knowing the version, we have to assume the worst (i.e.
+    // all options defaulting to insecure values). By always setting the version here, the code in the checkers is simplified as they now
+    // don't have to handle the case of unknown versions.
+    if (!electron_version) electron_version = '0.1.0';
     const checks = this._checks_by_type.get(type).filter((check) => {
       if (use_only_checks && !use_only_checks.includes(check.id)) {
         return false;
