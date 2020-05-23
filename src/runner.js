@@ -93,7 +93,7 @@ export default async function run(options, forCli = false) {
           }
         }
 
-        const result = await finder.find(file, data, type, content);
+        const result = await finder.find(file, data, type, content, null, loader.electron_version);
         issues.push(...result);
       } catch (error) {
         errors.push({ file: file, message: error.message, tolerable: false });

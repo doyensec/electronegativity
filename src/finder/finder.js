@@ -58,7 +58,7 @@ export class Finder {
     return sample;
   }
 
-  async find(file, data, type, content, use_only_checks = null) {
+  async find(file, data, type, content, use_only_checks = null, electron_version = null) {
     const checks = this._checks_by_type.get(type).filter((check) => {
       if (use_only_checks && !use_only_checks.includes(check.id)) {
         return false;
@@ -75,7 +75,7 @@ export class Finder {
           enter: (node) => {
             rootData.Scope.updateFunctionScope(rootData.astParser.getNode(node), "enter");
             for (const check of checks) {
-              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope);
+              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope, electron_version);
               if (matches) {
                 for(const m of matches) {
                   const sample = this.get_sample(fileLines, m.line - 1);
@@ -93,7 +93,7 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         for (const check of checks) {
-          const matches = check.match(data, content);
+          const matches = check.match(data, content, electron_version);
           if(matches){
             for(const m of matches) {
               const sample = this.get_sample(fileLines, m.line - 1);
@@ -105,7 +105,7 @@ export class Finder {
         break;
       case sourceTypes.JSON:
         for (const check of checks) {
-          const matches = await check.match(data);
+          const matches = await check.match(data, electron_version);
           if (matches) {
             for(const m of matches) {
               const sample = this.get_sample(fileLines, m.line - 1);
