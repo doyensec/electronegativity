@@ -8,11 +8,11 @@ import run from './runner.js';
 const VER = require('../package.json').version;
 
 console.log(`
-▄▄▄ ▄▄▌ ▄▄▄ .▄▄·▄▄▄▄▄▄▄               
-▀▄.▀██• ▀▄.▀▐█ ▌•██ ▀▄ █▪             
-▐▀▀▪██▪ ▐▀▀▪██ ▄▄▐█.▐▀▀▄ ▄█▀▄         
-▐█▄▄▐█▌▐▐█▄▄▐███▌▐█▌▐█•█▐█▌.▐▌        
- ▀▀▀.▀▀▀ ▀▀▀·▀▀▀ ▀▀▀.▀  ▀▀█▄▀▪        
+▄▄▄ ▄▄▌ ▄▄▄ .▄▄·▄▄▄▄▄▄▄
+▀▄.▀██• ▀▄.▀▐█ ▌•██ ▀▄ █▪
+▐▀▀▪██▪ ▐▀▀▪██ ▄▄▐█.▐▀▀▄ ▄█▀▄
+▐█▄▄▐█▌▐▐█▄▄▐███▌▐█▌▐█•█▐█▌.▐▌
+ ▀▀▀.▀▀▀ ▀▀▀·▀▀▀ ▀▀▀.▀  ▀▀█▄▀▪
  ▐ ▄▄▄▄ .▄▄ • ▄▄▄▄▄▄▄▪  ▌ ▐▪▄▄▄▄▄▄· ▄▌
 •█▌▐▀▄.▀▐█ ▀ ▐█ ▀•██ ██▪█·██•██ ▐█▪██▌
 ▐█▐▐▐▀▀▪▄█ ▀█▄█▀▀█▐█.▐█▐█▐█▐█▐█.▐█▌▐█▪
@@ -33,6 +33,7 @@ program
   .option('-r, --relative', 'show relative path for files')
   .option('-v, --verbose', 'show the description for the findings')
   .option('-u, --upgrade <current version..target version>', 'run Electron upgrade checks, eg -u 7..8')
+  .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0')
   .parse(process.argv);
 
 if(!program.input){
@@ -63,12 +64,13 @@ const forCli = true;
 
 run({
   input,
-  output: program.output, 
+  output: program.output,
   isSarif: program.fileFormat === 'sarif',
   customScan: program.checks,
-  severitySet: program.severity, 
+  severitySet: program.severity,
   confidenceSet: program.confidence,
   isRelative: program.relative,
   isVerbose: program.verbose,
-  electronUpgrade: program.upgrade
+  electronUpgrade: program.upgrade,
+  electronVersionOverride: program.electronVersion
 }, forCli);
