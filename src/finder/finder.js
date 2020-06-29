@@ -2,15 +2,16 @@ import { CHECKS } from './checks/AtomicChecks';
 import { sourceTypes } from '../parser/types';
 import { ELECTRON_ATOMIC_UPGRADE_CHECKS } from './checks/AtomicChecks/ElectronAtomicUpgradeChecks';
 import chalk from 'chalk';
+import { gte } from 'semver';
 
 export class Finder {
   constructor(customScan, electronUpgrade) {
-    let candidateChecks = Array.from(CHECKS) 
+    let candidateChecks = Array.from(CHECKS)
     if (electronUpgrade) {
       const [currentVersion, targetVersion] = electronUpgrade.split('..');
       if (currentVersion && targetVersion) {
         Object.keys(ELECTRON_ATOMIC_UPGRADE_CHECKS).forEach(versionToCheck => {
-          if (versionToCheck > currentVersion && versionToCheck <= targetVersion) {            
+          if (versionToCheck > currentVersion && versionToCheck <= targetVersion) {
             candidateChecks = candidateChecks.concat(ELECTRON_ATOMIC_UPGRADE_CHECKS[versionToCheck]);
           }
         })
@@ -26,7 +27,7 @@ export class Finder {
         console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
         process.exit(1);
       } else {
-        for (var i = this._enabled_checks.length - 1; i >= 0; i--) 
+        for (var i = this._enabled_checks.length - 1; i >= 0; i--)
           if (!customScan.includes(this._enabled_checks[i].name.toLowerCase()))
             this._enabled_checks.splice(i, 1);
       }
@@ -63,6 +64,11 @@ export class Finder {
     // all options defaulting to insecure values). By always setting the version here, the code in the checkers is simplified as they now
     // don't have to handle the case of unknown versions.
     if (!electron_version) electron_version = '0.1.0';
+
+    const all_defaults = require('../../defaults.json');
+    const version_of_last_default_change = Object.keys(all_defaults).sort().reverse().find(current_version => gte(electron_version, current_version));
+    const defaults = all_defaults[version_of_last_default_change];
+
     const checks = this._checks_by_type.get(type).filter((check) => {
       if (use_only_checks && !use_only_checks.includes(check.id)) {
         return false;
@@ -79,7 +85,7 @@ export class Finder {
           enter: (node) => {
             rootData.Scope.updateFunctionScope(rootData.astParser.getNode(node), "enter");
             for (const check of checks) {
-              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope, electron_version);
+              const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope, defaults, electron_version);
               if (matches) {
                 for(const m of matches) {
                   const sample = this.get_sample(fileLines, m.line - 1);
@@ -97,7 +103,7 @@ export class Finder {
         break;
       case sourceTypes.HTML:
         for (const check of checks) {
-          const matches = check.match(data, content, electron_version);
+          const matches = check.match(data, content, defaults, electron_version);
           if(matches){
             for(const m of matches) {
               const sample = this.get_sample(fileLines, m.line - 1);
@@ -109,7 +115,7 @@ export class Finder {
         break;
       case sourceTypes.JSON:
         for (const check of checks) {
-          const matches = await check.match(data, electron_version);
+          const matches = await check.match(data, defaults, electron_version);
           if (matches) {
             for(const m of matches) {
               const sample = this.get_sample(fileLines, m.line - 1);

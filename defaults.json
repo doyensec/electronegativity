@@ -1,0 +1,37 @@
+{
+    "0.1.0": {
+        "allowRunningInsecureContent": false,
+        "contextIsolation": false,
+        "experimentalFeatures": false,
+        "images": true,
+        "javascript": true,
+        "nativeWindowOpen": false,
+        "nodeIntegration": true,
+        "nodeIntegrationInWorker": false,
+        "offscreen": false,
+        "plugins": false,
+        "sandbox": false,
+        "textAreasAreResizable": true,
+        "webSecurity": true,
+        "webgl": true,
+        "webviewTag": true
+    },
+    "5.0.0": {
+        "allowRunningInsecureContent": false,
+        "contextIsolation": false,
+        "experimentalFeatures": false,
+        "images": true,
+        "javascript": true,
+        "nativeWindowOpen": false,
+        "nodeIntegration": false,
+        "nodeIntegrationInSubFrames": false,
+        "nodeIntegrationInWorker": false,
+        "offscreen": false,
+        "plugins": false,
+        "sandbox": false,
+        "textAreasAreResizable": true,
+        "webSecurity": true,
+        "webgl": true,
+        "webviewTag": false
+    }
+}
