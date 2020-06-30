@@ -1,7 +1,6 @@
-import logger from 'winston';
-
 import { read_file, list_files } from '../util';
 import { Loader } from './loader_interface';
+import { findOldestElectronVersion } from "../util/electron_version";
 
 export class LoaderDirectory extends Loader {
   constructor() {
@@ -13,16 +12,26 @@ export class LoaderDirectory extends Loader {
 
     for (const file of files) {
       this._loaded.add(file);
-      if (file.endsWith('package.json')) {
-        try {
-          const pjson_data = JSON.parse(this.load_buffer(file));
-          const dependencies = Object.assign({}, pjson_data.devDependencies, pjson_data.dependencies);
-          if (dependencies.electron) this._electronVersion = dependencies.electron;
-        } catch (e) {
-          logger.warn(`Couldn't read package.json data in: ${file}`);
-        }
-      }
     }
+
+    const readAndOptionallyParse = (filename, shouldParse) => {
+      try {
+        const file = files.find(f => f.endsWith(filename));
+        if (!file) return undefined;
+        if (!shouldParse) return this.load_buffer(file);
+        return JSON.parse(this.load_buffer(file));
+      } catch (e) {
+        return undefined;
+      }
+    };
+
+    const electronVersion = await findOldestElectronVersion({
+      pjsonData: readAndOptionallyParse('package.json', true),
+      rootPath: dir,
+      plockData: readAndOptionallyParse('package-lock.json', true),
+      yarnLockData: readAndOptionallyParse('yarn.lock', false),
+    });
+    if (electronVersion) this._electronVersion = electronVersion;
   }
 
   async stash() {
