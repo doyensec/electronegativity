@@ -42,7 +42,7 @@ describe('Loader classes', () => {
 
     it('finds Electron version number in package.json', () => {
       loader.load(test_files.get('asar'));
-      loader.electron_version.should.equal('6.1.11');
+      loader.electronVersion.should.equal('6.1.11');
     });
   }),
 

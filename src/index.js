@@ -33,7 +33,7 @@ program
   .option('-r, --relative', 'show relative path for files')
   .option('-v, --verbose', 'show the description for the findings')
   .option('-u, --upgrade <current version..target version>', 'run Electron upgrade checks, eg -u 7..8')
-  .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0')
+  .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7')
   .parse(process.argv);
 
 if(!program.input){

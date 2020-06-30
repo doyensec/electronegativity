@@ -29,8 +29,8 @@ export default async function run(options, forCli = false) {
   }
 
   await loader.load(options.input);
-  const electron_version = options.electronVersionOverride || loader.electron_version;
-  if (!electron_version)
+  const electronVersion = options.electronVersionOverride || loader.electronVersion;
+  if (!electronVersion)
     logger.warn("Couldn't detect Electron version, assuming v0.1.0. Defaults have probably changed for your actual version, please check manually.");
 
   if (options.severitySet) {
@@ -97,7 +97,7 @@ export default async function run(options, forCli = false) {
           }
         }
 
-        const result = await finder.find(file, data, type, content, null, electron_version);
+        const result = await finder.find(file, data, type, content, null, electronVersion);
         issues.push(...result);
       } catch (error) {
         errors.push({ file: file, message: error.message, tolerable: false });

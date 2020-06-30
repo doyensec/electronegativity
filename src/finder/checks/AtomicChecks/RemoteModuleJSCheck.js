@@ -9,7 +9,7 @@ export default class RemoteModuleJSCheck {
     this.shortenedURL = "https://git.io/JvqrQ";
   }
 
-  match(astNode, astHelper, scope){
+  match(astNode, astHelper, scope, defaults){
     if (astNode.type !== 'NewExpression') return null;
     if (astNode.callee.name !== 'BrowserWindow' && astNode.callee.name !== 'BrowserView') return null;
 
@@ -36,7 +36,7 @@ export default class RemoteModuleJSCheck {
 
     if (wasFound) {
       return loc;
-    } else { // default is module 'remote' enabled (assuming nodeIntegration:true), which is a misconfiguration
+    } else if (defaults.enableRemoteModule) { // in earlier versions, 'remote' is enabled by default (assuming nodeIntegration:true), which is a misconfiguration
       return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.TENTATIVE, manualReview: true }];
     }
   }

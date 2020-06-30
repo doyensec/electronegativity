@@ -17,7 +17,7 @@ export class LoaderDirectory extends Loader {
         try {
           const pjson_data = JSON.parse(this.load_buffer(file));
           const dependencies = Object.assign({}, pjson_data.devDependencies, pjson_data.dependencies);
-          if (dependencies.electron) this._electron_version = dependencies.electron;
+          if (dependencies.electron) this._electronVersion = dependencies.electron;
         } catch (e) {
           logger.warn(`Couldn't read package.json data in: ${file}`);
         }

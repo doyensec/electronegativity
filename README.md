@@ -42,7 +42,7 @@ $ electronegativity -h
 | -r, --relative | show relative path for files |
 | -v, --verbose | show the description for the findings |
 | -u, --upgrade <current version..target version> | run Electron upgrade checks, eg -u 7..8 to check upgrade from Electron 7 to 8 |
-| -e, --electron-version <version> | assume the set Electron version, overriding the detected one, eg -e 7.0.0 |
+| -e, --electron-version <version> | assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7 |
 | -h, --help   | output usage information                          |
 
 
