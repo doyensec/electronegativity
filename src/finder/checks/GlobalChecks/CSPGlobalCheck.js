@@ -1,5 +1,6 @@
 import * as attributes from '../../attributes';
 import * as csp from '@doyensec/csp-evaluator';
+import logger from 'winston';
 
 export default class CSPGlobalCheck {
 
@@ -7,7 +8,8 @@ export default class CSPGlobalCheck {
     this.id = "CSP_GLOBAL_CHECK";
     this.description = {  NO_CSP: "No CSP has been detected in the target application",
       MAYBE_WEAK_CSP: "One or more CSP directives detected seems to be vulnerable",
-      WEAK_CSP: "One or more CSP directives detected are vulnerable" };
+      WEAK_CSP: "One or more CSP directives detected are vulnerable",
+      INVALID_CSP: "Failed to parse CSP, it may not be valid." };
     this.depends = ["CSPJSCheck", "CSPHTMLCheck"];
     this.shortenedURL = "https://git.io/JeuMe";
   }
@@ -23,9 +25,16 @@ export default class CSPGlobalCheck {
       // There is a CSP set
       var confidence = 0; 
       for (var cspIssue of cspIssues) {
-        var parser = new csp.CspParser(cspIssue.properties.CSPstring);
-        var evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
-        var findings = evaluator.evaluate();
+        var findings;
+        try {
+          var parser = new csp.CspParser(cspIssue.properties.CSPstring);
+          var evaluator = new csp.CspEvaluator(parser.csp, csp.Version.CSP3);
+          findings = evaluator.evaluate();
+        }
+        catch (e) {
+          otherIssues.push({ file: cspIssues[0].file, location: cspIssues[0].location, id: this.id, description: this.description.INVALID_CSP, shortenedURL: this.shortenedURL, severity: attributes.severity.LOW, confidence: attributes.confidence.TENTATIVE, sample: cspIssue.properties.CSPstring, manualReview: true });
+          continue;
+        }
         for (var finding of findings)
           if (finding.severity === csp.severities.HIGH || finding.severity === csp.severities.MEDIUM)
             confidence = 2;
