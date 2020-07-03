@@ -29,19 +29,19 @@ describe('Loader classes', () => {
       loader = new LoaderAsar();
     });
 
-    it('fails if archive does not exist', () => {
-      (() => {
-        loader.load('FOO');
-      }).should.throw();
+    it('fails if archive does not exist', async () => {
+      (async () => {
+        await loader.load('FOO').should.throw();
+      });
     });
 
-    it('extracts file from ASAR', () => {
-      loader.load(test_files.get('asar'));
+    it('extracts file from ASAR', async () => {
+      await loader.load(test_files.get('asar'));
       loader.list_files.size.should.equal(61);
     });
 
-    it('finds Electron version number in package.json', () => {
-      loader.load(test_files.get('asar'));
+    it('finds Electron version number in package.json', async () => {
+      await loader.load(test_files.get('asar'));
       loader.electronVersion.should.equal('6.1.11');
     });
   }),
