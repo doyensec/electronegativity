@@ -1,6 +1,7 @@
 import cliProgress from 'cli-progress';
 import Table from 'cli-table3';
 import chalk from 'chalk';
+import logger from 'winston';
 
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
@@ -28,6 +29,9 @@ export default async function run(options, forCli = false) {
   }
 
   await loader.load(options.input);
+  const electronVersion = options.electronVersionOverride || loader.electronVersion;
+  if (!electronVersion)
+    logger.warn("Couldn't detect Electron version, assuming v0.1.0. Defaults have probably changed for your actual version, please check manually.");
 
   if (options.severitySet) {
     if (!severity.hasOwnProperty(options.severitySet.toUpperCase())) {
@@ -93,7 +97,7 @@ export default async function run(options, forCli = false) {
           }
         }
 
-        const result = await finder.find(file, data, type, content);
+        const result = await finder.find(file, data, type, content, null, electronVersion);
         issues.push(...result);
       } catch (error) {
         errors.push({ file: file, message: error.message, tolerable: false });

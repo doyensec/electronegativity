@@ -12,6 +12,8 @@ export class LoaderAsar extends Loader {
 
   // returns map filename -> content
   load(archive) {
+    this.archive = archive;
+
     const archived_files = asar.listPackage(archive);
     logger.debug(`Files in ASAR archive: ${archived_files}`);
 
@@ -23,6 +25,15 @@ export class LoaderAsar extends Loader {
         case 'json':
           if (f.toLowerCase().indexOf('package.json') < 0)
             continue;
+          else {
+            try {
+              const pjson_data = JSON.parse(this.load_buffer(f));
+              const dependencies = Object.assign({}, pjson_data.devDependencies, pjson_data.dependencies);
+              if (dependencies.electron) this._electronVersion = dependencies.electron;
+            } catch (e) {
+              logger.warn(`Couldn't read package.json data in: ${f}`);
+            }
+          }
         // eslint-disable-next-line no-fallthrough
         case 'js':
         case 'jsx':
@@ -39,7 +50,6 @@ export class LoaderAsar extends Loader {
     }
 
     logger.debug(`Discovered ${this.list_files.size} files`);
-    this.archive = archive;
   }
 
   load_buffer(filename) {

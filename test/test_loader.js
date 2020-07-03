@@ -37,7 +37,12 @@ describe('Loader classes', () => {
 
     it('extracts file from ASAR', () => {
       loader.load(test_files.get('asar'));
-      loader.list_files.size.should.equal(60);
+      loader.list_files.size.should.equal(61);
+    });
+
+    it('finds Electron version number in package.json', () => {
+      loader.load(test_files.get('asar'));
+      loader.electronVersion.should.equal('6.1.11');
     });
   }),
 
