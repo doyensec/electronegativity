@@ -1,0 +1,12 @@
+# dependabot.yml file with updates
+version: 2
+updates:
+  # Configuration for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    # Overwrite any ignores created using `@dependabot ignore` commands
+    ignore:
+      # Ignore updates for 'electron' 
+      - dependency-name: "electron"
