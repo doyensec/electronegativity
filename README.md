@@ -77,7 +77,7 @@ run({
   output: '/path/for/output/file',
   // true to save output as sarif, false to save as csv (optional)
   isSarif: false,
-  // only run the specified checks
+  // only run the specified checks (optional)
   customScan: ['dangerousfunctionsjscheck', 'remotemodulejscheck'],
   // only return findings with the specified level of severity or above (optional)
   severitySet: 'high',

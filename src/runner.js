@@ -49,6 +49,8 @@ export default async function run(options, forCli = false) {
     } else options.confidenceSet = confidence[options.confidenceSet.toUpperCase()];
   } else options.confidenceSet = confidence["TENTATIVE"]; // default to lowest
 
+  options.customScan = (options.customScan || []).map(c => c.toLowerCase());
+
   // Parser
   const parser = new Parser(false, true);
   const globalChecker = new GlobalChecks(options.customScan, options.electronUpgrade);
