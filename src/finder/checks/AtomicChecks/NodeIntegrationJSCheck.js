@@ -38,7 +38,7 @@ export default class NodeIntegrationJSCheck {
     }
 
     if (!nodeIntegrationFound && defaults.nodeIntegration) {
-      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description,  shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
+      locations.push({ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.FIRM, manualReview: false });
     }
 
     return locations;
@@ -56,10 +56,26 @@ export default class NodeIntegrationJSCheck {
       // but technically it is an invalid json
       // just to be on the safe side show a warning if any value is insecure
       found = true;
-      let isIdentifier = (node.value.type === "Identifier")? true : false;
+      let needsManualReview;
+
+      
+      if (node.value.type === "Identifier") // it's a variable, needs manual review since it's probably a custom webpreferences object
+        needsManualReview = true;
+      else if (node.value.type === "UnaryExpression")  {// it's a !0 || !1 unary expression. 
+        if (node.value.operator == "!" && typeof node.value.argument.value === "number") // if it's more complicated (e.g. !!!1), report for manual review and treat as insecure
+          if (eval(node.value.operator+node.value.argument.value))
+            needsManualReview = false; // it's truthy, so it's enabled
+          else
+            continue; //it's falsy, so it's disabled
+        else
+          needsManualReview = true;
+      }
+      else
+        needsManualReview = false;
+
       if (skipCondition(node.value.value)){
-        if ((node.key.value === "sandbox" || node.key.name === "sandbox") && isIdentifier) continue;
-        if ((nodeIntegrationStrings.includes(node.key.value) || nodeIntegrationStrings.includes(node.key.name)) && !isIdentifier) continue;
+        if ((node.key.value === "sandbox" || node.key.name === "sandbox") && needsManualReview) continue;
+        if ((nodeIntegrationStrings.includes(node.key.value) || nodeIntegrationStrings.includes(node.key.name)) && !needsManualReview) continue;
       }
 
       locations.push({
@@ -67,9 +83,10 @@ export default class NodeIntegrationJSCheck {
         column: node.key.loc.start.column,
         id: this.id,
         description: this.description,
+        shortenedURL: this.shortenedURL,
         severity: severity.INFORMATIONAL,
         confidence: confidence.FIRM,
-        manualReview: isIdentifier
+        manualReview: needsManualReview,
       });
     }
 
