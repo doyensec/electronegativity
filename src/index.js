@@ -34,6 +34,7 @@ program
   .option('-v, --verbose', 'show the description for the findings')
   .option('-u, --upgrade <current version..target version>', 'run Electron upgrade checks, eg -u 7..8')
   .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7')
+  .option('-p, --parser-plugins <plugins>', 'specify additional parser plugins to use separated by commas, e.g. -p optionalChaining')
   .parse(process.argv);
 
 if(!program.input){
@@ -59,6 +60,12 @@ if (typeof program.verbose !== 'undefined' && program.verbose)
 else
   program.verbose = false;
 
+if (typeof program.parserPlugins !== 'undefined' && program.parserPlugins)
+  program.parserPlugins = program.parserPlugins.split(",").map(p => p.trim());
+else
+  program.parserPlugins = [];
+
+
 const input = path.resolve(program.input);
 const forCli = true;
 
@@ -72,5 +79,6 @@ run({
   isRelative: program.relative,
   isVerbose: program.verbose,
   electronUpgrade: program.upgrade,
-  electronVersionOverride: program.electronVersion
+  electronVersionOverride: program.electronVersion,
+  parserPlugins: program.parserPlugins
 }, forCli);
