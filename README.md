@@ -43,6 +43,7 @@ $ electronegativity -h
 | -v, --verbose | show the description for the findings |
 | -u, --upgrade <current version..target version> | run Electron upgrade checks, eg -u 7..8 to check upgrade from Electron 7 to 8 |
 | -e, --electron-version <version> | assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7 |
+| -p, --parser-plugins <plugins> | specify additional parser plugins to use separated by commas, e.g. -p optionalChaining |
 | -h, --help   | output usage information                          |
 
 
@@ -89,7 +90,9 @@ run({
   // run Electron upgrade checks, eg -u 7..8 to check upgrade from Electron 7 to 8 (optional)
   electronUpgrade: '7..8',
   // assume the set Electron version, overriding the detected one
-  electronVersion: '5.0.0'
+  electronVersion: '5.0.0',
+  // use additional parser plugins
+  parserPlugins: ['optionalChaining']
 })
     .then(result => console.log(result))
     .catch(err => console.error(err));
