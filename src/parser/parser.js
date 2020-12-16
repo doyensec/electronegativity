@@ -17,6 +17,33 @@ export class Parser {
 
     this.babelFirst = babelFirst;
     this.typescriptBabelFirst = typescriptBabelFirst;
+    this.babelPlugins = [
+      "jsx",
+      "objectRestSpread",
+      "classProperties",
+      "optionalCatchBinding",
+      "asyncGenerators",
+      "decorators-legacy",
+      "flow",
+      "dynamicImport",
+      "estree",
+    ]
+
+    this.tsPlugins = [
+      "jsx",
+      "objectRestSpread",
+      "classProperties",
+      "optionalCatchBinding",
+      "asyncGenerators",
+      "decorators-legacy",
+      "typescript",
+      "dynamicImport",
+    ]
+  }
+
+  addPlugin(plugin) {
+    this.tsPlugins.push(plugin)
+    this.babelPlugins.push(plugin)
   }
 
   parseEsprima(content) {
@@ -27,21 +54,9 @@ export class Parser {
   }
 
   parseBabel(content) {
-    let plugins = [
-      "jsx",
-      "objectRestSpread",
-      "classProperties",
-      "optionalCatchBinding",
-      "asyncGenerators",
-      "decorators-legacy",
-      "flow",
-      "dynamicImport",
-      "estree",
-    ];
-
     let data = babelParser.parse(content, {
       sourceType: "module",
-      plugins: plugins,
+      plugins: this.babelPlugins,
       ecmaFeatures: {
           modules: true
       }
@@ -53,20 +68,9 @@ export class Parser {
   }
 
   parseTypeScript(content) {
-    let plugins = [
-      "jsx",
-      "objectRestSpread",
-      "classProperties",
-      "optionalCatchBinding",
-      "asyncGenerators",
-      "decorators-legacy",
-      "typescript",
-      "dynamicImport"
-    ];
-
     let data = babelParser.parse(content, {
       sourceType: "module",
-      plugins: plugins
+      plugins: this.tsPlugins
     });
 
     data.astParser = this.esLintBabelTreeAst;

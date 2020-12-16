@@ -57,6 +57,7 @@ export default async function run(options, forCli = false) {
 
   // Parser
   const parser = new Parser(false, true);
+  options.parserPlugins.forEach(plugin => parser.addPlugin(plugin)) 
   const globalChecker = new GlobalChecks(options.customScan, options.electronUpgrade);
   if (options.customScan.length > 0) options.customScan = options.customScan.filter(r => !r.includes('globalcheck')).concat(globalChecker.dependencies);
   const finder = await new Finder(options.customScan, options.electronUpgrade);
