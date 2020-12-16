@@ -9,12 +9,13 @@ export default class LimitNavigationJSCheck {
     this.shortenedURL = "https://git.io/JeuM3";
   }
 
-  match(astNode){
+  match(astNode, astHelper){
+
     if (astNode.type !== 'CallExpression') return null;
     if (astNode.callee.property && astNode.callee.property.name === "on") {
       if (astNode.arguments && astNode.arguments.length > 1) {
         var eventValue = astNode.arguments[0].value;
-        if (astNode.arguments[0].type === "Literal" && (eventValue === "will-navigate" || eventValue === "new-window")) {
+        if (astNode.arguments[0].type === astHelper.StringLiteral && (eventValue === "will-navigate" || eventValue === "new-window")) {
           return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.TENTATIVE, manualReview: true }];
         }
       }

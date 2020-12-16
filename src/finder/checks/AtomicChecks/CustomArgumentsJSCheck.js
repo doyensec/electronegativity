@@ -44,12 +44,12 @@ export default class CustomArgumentsJSCheck {
     ];
   }
 
-  match(astNode) {
+  match(astNode, astHelper) {
     const methods = ['appendArgument', 'appendSwitch'];
 
     if (astNode.type !== 'CallExpression') return null;
     if ((astNode.callee.name && methods.includes(astNode.callee.name)) || (astNode.callee.property && methods.includes(astNode.callee.property.name))) {
-      if (astNode.arguments && astNode.arguments.length > 0 && (astNode.arguments[0].type === "Literal" || astNode.arguments[0].type === "StringLiteral") && astNode.arguments[0].value) {
+      if (astNode.arguments && astNode.arguments.length > 0 && astNode.arguments[0].type === astHelper.StringLiteral && astNode.arguments[0].value) {
         var res = this.dangerousArguments.some(function(arg) {
           return astNode.arguments[0].value.includes(arg);
         });
