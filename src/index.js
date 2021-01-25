@@ -27,6 +27,7 @@ program
   .description('Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications.')
   .option('-i, --input <path>', 'input [directory | .js | .html | .asar]')
   .option('-l, --checks <checkNames>', 'only run the specified checks list, passed in csv format')
+  .option('-x, --exclude-checks <excludedCheckNames>', 'skip the specified checks list, passed in csv format')
   .option('-s, --severity <severitySet>', 'only return findings with the specified level of severity or above')
   .option('-c, --confidence <confidenceSet>', 'only return findings with the specified level of confidence or above')
   .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
@@ -51,15 +52,13 @@ if(program.output){
   }
 }
 
-if (typeof program.checks !== 'undefined' && typeof program.excludeChecks !== 'undefined') {
-  console.log(chalk.red('Use either -x or -l options, not both.'));
-  program.outputHelp();
-  process.exit(1);
-}
-
 if (typeof program.checks !== 'undefined' && program.checks){
   program.checks = program.checks.split(",").map(check => check.trim().toLowerCase());
 } else program.checks = [];
+
+if (typeof program.excludeChecks !== 'undefined' && program.excludeChecks){
+  program.excludeChecks = program.excludeChecks.split(",").map(check => check.trim().toLowerCase());
+} else program.excludeChecks = [];
 
 if (typeof program.verbose !== 'undefined' && program.verbose)
   program.verbose = true;
@@ -80,6 +79,7 @@ run({
   output: program.output,
   isSarif: program.fileFormat === 'sarif',
   customScan: program.checks,
+  excludeFromScan: program.excludeChecks,
   severitySet: program.severity,
   confidenceSet: program.confidence,
   isRelative: program.relative,

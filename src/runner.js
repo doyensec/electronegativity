@@ -53,15 +53,27 @@ export default async function run(options, forCli = false) {
     } else options.confidenceSet = confidence[options.confidenceSet.toUpperCase()];
   } else options.confidenceSet = confidence["TENTATIVE"]; // default to lowest
 
+  // Normalize the user-provided list. They should be already normalized if coming from the index.js,
+  // but this is not granted in case Electronegativity is used programmatically
   options.customScan = (options.customScan || []).map(c => c.toLowerCase());
+  options.excludeFromScan = (options.excludeFromScan || []).map(c => c.toLowerCase());
 
-  // Parser
+  // Parser options initialization
   const parser = new Parser(false, true);
   options.parserPlugins.forEach(plugin => parser.addPlugin(plugin)) 
-  const globalChecker = new GlobalChecks(options.customScan, options.electronUpgrade);
+
+  // Global Checker initialization
+  const globalChecker = new GlobalChecks(options.customScan, options.excludeFromScan, options.electronUpgrade);
+
+  // Custom/Exclusion Scans initialization
   if (options.customScan.length > 0) options.customScan = options.customScan.filter(r => !r.includes('globalcheck')).concat(globalChecker.dependencies);
-  const finder = await new Finder(options.customScan, options.electronUpgrade);
+  if (options.excludeFromScan.length > 0) options.excludeFromScan = options.excludeFromScan.filter(r => !r.includes('globalcheck'));
+
+  // Finder initialization
+  const finder = await new Finder(options.customScan, options.excludeFromScan, options.electronUpgrade);
   const filenames = [...loader.list_files];
+
+  // Results' table initialization
   let issues = [];
   let errors = [];
   let table = new Table({

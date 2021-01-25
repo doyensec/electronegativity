@@ -6,8 +6,10 @@ import chalk from 'chalk';
 import { gte, compare } from 'semver';
 
 export class Finder {
-  constructor(customScan, electronUpgrade) {
+  constructor(customScan, excludeFromScan, electronUpgrade) {
     let candidateChecks = Array.from(CHECKS)
+
+    // init electron-upgrade specific checks given user-provided version numbers
     if (electronUpgrade) {
       const [currentVersion, targetVersion] = electronUpgrade.split('..');
       if (currentVersion && targetVersion) {
@@ -21,6 +23,8 @@ export class Finder {
         process.exit(1);
       }
     }
+
+    // if the user is trying to start a custom check scan, we first load all the available checks (candidateChecks) and then we splice those who don't match the user-provided list
     this._enabled_checks = Object.assign(Object.create(candidateChecks), candidateChecks);
     if (customScan && customScan.length > 0) {
       var checksNames = this._enabled_checks.map(check => check.name.toLowerCase());
@@ -33,6 +37,20 @@ export class Finder {
             this._enabled_checks.splice(i, 1);
       }
     }
+
+    // the exclusion list has the last word over the list of loaded checks
+    if (excludeFromScan && excludeFromScan.length > 0) {
+      var checksNames = this._enabled_checks.map(check => check.name.toLowerCase());
+      if (!excludeFromScan.every(r => checksNames.includes(r))) {
+        console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
+        process.exit(1);
+      } else {
+        for (var i = this._enabled_checks.length - 1; i >= 0; i--)
+          if (excludeFromScan.includes(this._enabled_checks[i].name.toLowerCase()))
+            this._enabled_checks.splice(i, 1);
+      }
+    }
+
     this._checks_by_type = new Map();
     this.init_checks_list();
   }

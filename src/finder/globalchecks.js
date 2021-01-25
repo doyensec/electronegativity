@@ -3,8 +3,10 @@ import { GLOBAL_CHECKS } from './checks/GlobalChecks';
 import chalk from 'chalk';
 
 export class GlobalChecks {
-    constructor(customScan, electronUpgrade) {
+    constructor(customScan, excludeFromScan, electronUpgrade) {
         let candidateChecks = Array.from(GLOBAL_CHECKS);
+
+        // init electron-upgrade specific checks given user-provided version numbers
         if (electronUpgrade) {
           const [currentVersion, targetVersion] = electronUpgrade.split('..');
           if (currentVersion && targetVersion) {
@@ -19,6 +21,8 @@ export class GlobalChecks {
             process.exit(1);
           }
         }
+
+        // if the user is trying to start a custom check scan, we first load all the available checks (candidateChecks) and then we splice those who don't match the user-provided list
         this._enabled_checks = candidateChecks;
         if (customScan && customScan.length > 0) {
           var globalChecksNames = this._enabled_checks.map(globalCheck => globalCheck.name.toLowerCase());
@@ -29,6 +33,20 @@ export class GlobalChecks {
           } else {
           for (var i = globalChecksNames.length - 1; i >= 0; i--) 
             if (!customGlobals.includes(globalChecksNames[i]))
+            this._enabled_checks.splice(i, 1);
+          }
+        }
+
+        // the exclusion list has the last word over the list of loaded checks
+        if (excludeFromScan && excludeFromScan.length > 0) {
+          var globalChecksNames = this._enabled_checks.map(globalCheck => globalCheck.name.toLowerCase());
+          var customGlobals = excludeFromScan.filter(r => r.includes('globalcheck'));
+          if (customGlobals.length > 0 && !customGlobals.some(r => globalChecksNames.includes(r))) {
+            console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
+            process.exit(1);
+          } else {
+          for (var i = globalChecksNames.length - 1; i >= 0; i--) 
+            if (customGlobals.includes(globalChecksNames[i]))
             this._enabled_checks.splice(i, 1);
           }
         }
