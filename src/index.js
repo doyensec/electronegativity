@@ -51,6 +51,12 @@ if(program.output){
   }
 }
 
+if (typeof program.checks !== 'undefined' && typeof program.excludeChecks !== 'undefined') {
+  console.log(chalk.red('Use either -x or -l options, not both.'));
+  program.outputHelp();
+  process.exit(1);
+}
+
 if (typeof program.checks !== 'undefined' && program.checks){
   program.checks = program.checks.split(",").map(check => check.trim().toLowerCase());
 } else program.checks = [];

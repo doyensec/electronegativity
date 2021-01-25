@@ -1,6 +1,7 @@
 import { CHECKS } from './checks/AtomicChecks';
 import { sourceTypes } from '../parser/types';
 import { ELECTRON_ATOMIC_UPGRADE_CHECKS } from './checks/AtomicChecks/ElectronAtomicUpgradeChecks';
+import { isDisabledByInlineComment } from "../util/exceptions";
 import chalk from 'chalk';
 import { gte, compare } from 'semver';
 
@@ -88,9 +89,12 @@ export class Finder {
               const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope, defaults, electronVersion);
               if (matches) {
                 for(const m of matches) {
-                  const sample = this.get_sample(fileLines, m.line - 1);
-                  const issue = { file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
-                  issues.push(issue);
+                  const firstLineSample = this.get_sample(fileLines, 0);
+                  const matchedLineSample = this.get_sample(fileLines, m.line - 1);
+                  if (!isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.JAVASCRIPT)) {
+                    const issue = { file, matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
+                    issues.push(issue);
+                  }
                 }
               }
             }
@@ -106,9 +110,13 @@ export class Finder {
           const matches = check.match(data, content, defaults, electronVersion);
           if(matches){
             for(const m of matches) {
-              const sample = this.get_sample(fileLines, m.line - 1);
-              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
-              issues.push(issue);
+              const firstLineSample = this.get_sample(fileLines, 0);
+              const matchedLineSample = this.get_sample(fileLines, m.line - 1);
+
+              if (!isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.HTML)) {
+                const issue = {file, matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
+                issues.push(issue);
+              }
             }
           }
         }
