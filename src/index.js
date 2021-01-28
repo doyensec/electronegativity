@@ -6,7 +6,7 @@ import chalk from 'chalk';
 import run from './runner.js';
 
 const VER = require('../package.json').version;
-
+const falsyStrings = ["false", "FALSE", "off", "0", "no", "disable", "disabled"];
 console.log(`
 ▄▄▄ ▄▄▌ ▄▄▄ .▄▄·▄▄▄▄▄▄▄
 ▀▄.▀██• ▀▄.▀▐█ ▌•██ ▀▄ █▪
@@ -32,7 +32,7 @@ program
   .option('-c, --confidence <confidenceSet>', 'only return findings with the specified level of confidence or above')
   .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
   .option('-r, --relative', 'show relative path for files')
-  .option('-v, --verbose', 'show the description for the findings')
+  .option('-v, --verbose <bool>', 'show the description for the findings, defaults to true')
   .option('-u, --upgrade <current version..target version>', 'run Electron upgrade checks, eg -u 7..8')
   .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7')
   .option('-p, --parser-plugins <plugins>', 'specify additional parser plugins to use separated by commas, e.g. -p optionalChaining')
@@ -60,10 +60,10 @@ if (typeof program.excludeChecks !== 'undefined' && program.excludeChecks){
   program.excludeChecks = program.excludeChecks.split(",").map(check => check.trim().toLowerCase());
 } else program.excludeChecks = [];
 
-if (typeof program.verbose !== 'undefined' && program.verbose)
-  program.verbose = true;
-else
+if (typeof program.verbose !== 'undefined' && (falsyStrings.includes(program.verbose)))
   program.verbose = false;
+else
+  program.verbose = true;
 
 if (typeof program.parserPlugins !== 'undefined' && program.parserPlugins)
   program.parserPlugins = program.parserPlugins.split(",").map(p => p.trim());

@@ -41,7 +41,7 @@ $ electronegativity -h
 | -c, --confidence | only return findings with the specified level of confidence or above |
 | -o, --output <filename[.csv or .sarif]> | save the results to a file in csv or sarif format |
 | -r, --relative | show relative path for files |
-| -v, --verbose | show the description for the findings |
+| -v, --verbose <bool> | show the description for the findings, defaults to true |
 | -u, --upgrade <current version..target version> | run Electron upgrade checks, eg -u 7..8 to check upgrade from Electron 7 to 8 |
 | -e, --electron-version <version> | assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7 |
 | -p, --parser-plugins <plugins> | specify additional parser plugins to use separated by commas, e.g. -p optionalChaining |
