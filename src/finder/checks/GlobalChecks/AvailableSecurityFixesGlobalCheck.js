@@ -19,9 +19,9 @@ export default class AvailableSecurityFixesGlobalCheck {
     this.releasesFilePath = require('temp-dir');
   }
 
-  async perform(issues) {
+  async perform(issues, output) {
 
-    await this.updateReleasesList();
+    await this.updateReleasesList(output);
 
     var versionCheckIssues = issues.filter(e => e.id === 'ELECTRON_VERSION_JSON_CHECK');
     var otherIssues = issues.filter(e => e.id !== 'ELECTRON_VERSION_JSON_CHECK');
@@ -73,7 +73,7 @@ export default class AvailableSecurityFixesGlobalCheck {
   }
 
 
-  async updateReleasesList() {
+  async updateReleasesList(output) {
 
     var shouldUpdate = false;
     var ElectronReleaseData;
@@ -143,10 +143,12 @@ export default class AvailableSecurityFixesGlobalCheck {
         outputFileContent.push(essentialInfo);
       }
       fs.writeFileSync(path.resolve(this.releasesFilePath, 'releases.'+remoteEtag+'.json'), JSON.stringify(outputFileContent, null, 1));
-      console.log(chalk.green(`Updated releases list to ${latest}!`));
+      if (!output)
+        console.log(chalk.green(`Updated releases list to ${latest}!`));
       return true;
     } else {
-      console.log(chalk.green(`Releases list is up to date.`));
+      if (!output)
+        console.log(chalk.green(`Releases list is up to date.`));
     }
   }
 

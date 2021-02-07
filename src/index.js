@@ -7,20 +7,6 @@ import run from './runner.js';
 
 const VER = require('../package.json').version;
 const falsyStrings = ["false", "FALSE", "off", "0", "no", "disable", "disabled"];
-console.log(`
-▄▄▄ ▄▄▌ ▄▄▄ .▄▄·▄▄▄▄▄▄▄
-▀▄.▀██• ▀▄.▀▐█ ▌•██ ▀▄ █▪
-▐▀▀▪██▪ ▐▀▀▪██ ▄▄▐█.▐▀▀▄ ▄█▀▄
-▐█▄▄▐█▌▐▐█▄▄▐███▌▐█▌▐█•█▐█▌.▐▌
- ▀▀▀.▀▀▀ ▀▀▀·▀▀▀ ▀▀▀.▀  ▀▀█▄▀▪
- ▐ ▄▄▄▄ .▄▄ • ▄▄▄▄▄▄▄▪  ▌ ▐▪▄▄▄▄▄▄· ▄▌
-•█▌▐▀▄.▀▐█ ▀ ▐█ ▀•██ ██▪█·██•██ ▐█▪██▌
-▐█▐▐▐▀▀▪▄█ ▀█▄█▀▀█▐█.▐█▐█▐█▐█▐█.▐█▌▐█▪
-██▐█▐█▄▄▐█▄▪▐▐█ ▪▐▐█▌▐█▌███▐█▐█▌·▐█▀·.
-▀▀ █▪▀▀▀·▀▀▀▀ ▀  ▀▀▀▀▀▀. ▀ ▀▀▀▀▀  ▀ •
-     v`+VER+`  https://doyensec.com/
-`);
-console.log("Scan Status:");
 
 program
   .version(VER)
@@ -37,6 +23,25 @@ program
   .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7')
   .option('-p, --parser-plugins <plugins>', 'specify additional parser plugins to use separated by commas, e.g. -p optionalChaining')
   .parse(process.argv);
+
+const forCli = !program.output;
+
+if (forCli) {
+  console.log(`
+▄▄▄ ▄▄▌ ▄▄▄ .▄▄·▄▄▄▄▄▄▄
+▀▄.▀██• ▀▄.▀▐█ ▌•██ ▀▄ █▪
+▐▀▀▪██▪ ▐▀▀▪██ ▄▄▐█.▐▀▀▄ ▄█▀▄
+▐█▄▄▐█▌▐▐█▄▄▐███▌▐█▌▐█•█▐█▌.▐▌
+  ▀▀▀.▀▀▀ ▀▀▀·▀▀▀ ▀▀▀.▀  ▀▀█▄▀▪
+  ▐ ▄▄▄▄ .▄▄ • ▄▄▄▄▄▄▄▪  ▌ ▐▪▄▄▄▄▄▄· ▄▌
+•█▌▐▀▄.▀▐█ ▀ ▐█ ▀•██ ██▪█·██•██ ▐█▪██▌
+▐█▐▐▐▀▀▪▄█ ▀█▄█▀▀█▐█.▐█▐█▐█▐█▐█.▐█▌▐█▪
+██▐█▐█▄▄▐█▄▪▐▐█ ▪▐▐█▌▐█▌███▐█▐█▌·▐█▀·.
+▀▀ █▪▀▀▀·▀▀▀▀ ▀  ▀▀▀▀▀▀. ▀ ▀▀▀▀▀  ▀ •
+      v`+VER+`  https://doyensec.com/
+  `);
+  console.log("Scan Status:");
+}
 
 if(!program.input){
   program.outputHelp();
@@ -72,7 +77,6 @@ else
 
 
 const input = path.resolve(program.input);
-const forCli = true;
 
 run({
   input,

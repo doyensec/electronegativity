@@ -65,9 +65,9 @@ export class GlobalChecks {
       this.dependencies = this.dependencies.map(dependency => dependency.toLowerCase());
     }
 
-    async getResults(issues) {
+    async getResults(issues, output) {
         for (const check of this._constructed_checks) {
-          issues = await check.perform(issues);
+          issues = await check.perform(issues, output);
         }
         return issues;
     }
