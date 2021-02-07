@@ -110,7 +110,7 @@ export class Finder {
                   const firstLineSample = this.get_sample(fileLines, 0);
                   const matchedLineSample = this.get_sample(fileLines, m.line - 1);
                   if (!isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.JAVASCRIPT)) {
-                    const issue = { file, matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
+                    const issue = { file, sample: matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
                     issues.push(issue);
                   }
                 }
@@ -132,7 +132,7 @@ export class Finder {
               const matchedLineSample = this.get_sample(fileLines, m.line - 1);
 
               if (!isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.HTML)) {
-                const issue = {file, matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
+                const issue = {file, sample: matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
                 issues.push(issue);
               }
             }
