@@ -19,7 +19,7 @@ export class Finder {
           }
         })
       } else {
-        console.log(chalk.red(`When specifying the upgrade options please specify your current version and target version like this: x..y (eg 7..8)`));
+        console.error(chalk.red(`When specifying the upgrade options please specify your current version and target version like this: x..y (eg 7..8)`));
         process.exit(1);
       }
     }
@@ -29,7 +29,7 @@ export class Finder {
     if (customScan && customScan.length > 0) {
       var checksNames = this._enabled_checks.map(check => check.name.toLowerCase());
       if (!customScan.every(r => checksNames.includes(r))) {
-        console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
+        console.error(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
         process.exit(1);
       } else {
         for (var i = this._enabled_checks.length - 1; i >= 0; i--)
@@ -42,7 +42,7 @@ export class Finder {
     if (excludeFromScan && excludeFromScan.length > 0) {
       var checksNames = this._enabled_checks.map(check => check.name.toLowerCase());
       if (!excludeFromScan.every(r => checksNames.includes(r))) {
-        console.log(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
+        console.error(chalk.red(`You have an error in your custom checks list. Maybe you misspelt some check names?`));
         process.exit(1);
       } else {
         for (var i = this._enabled_checks.length - 1; i >= 0; i--)

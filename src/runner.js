@@ -13,7 +13,7 @@ export default async function run(options, forCli = false) {
   if (!input_exists(options.input)) {
     const err = 'Input does not exist!';
     if (forCli) {
-      console.log(chalk.red(err));
+      console.error(chalk.red(err));
       process.exit(1);
     }
     else throw new Error(err);
@@ -37,7 +37,7 @@ export default async function run(options, forCli = false) {
     if (!severity.hasOwnProperty(options.severitySet.toUpperCase())) {
       const err = 'This severity level does not exist!';
       if (forCli) {
-        console.log(chalk.red(err));
+        console.error(chalk.red(err));
         process.exit(1);
       } else throw new Error(err);
     } else options.severitySet = severity[options.severitySet.toUpperCase()];
@@ -47,7 +47,7 @@ export default async function run(options, forCli = false) {
     if (!confidence.hasOwnProperty(options.confidenceSet.toUpperCase())) {
       const err = 'This confidence level does not exist!';
       if (forCli) {
-        console.log(chalk.red(err));
+        console.error(chalk.red(err));
         process.exit(1);
       } else throw new Error(err);
     } else options.confidenceSet = confidence[options.confidenceSet.toUpperCase()];
@@ -132,7 +132,7 @@ export default async function run(options, forCli = false) {
   if (forCli) {
     for (const error of errors) {
       if (error.tolerable) console.log(chalk.yellow(`Tolerable error parsing ${error.file} - ${error.message}`));
-      else console.log(chalk.red(`Error parsing ${error.file} - ${error.message}`));
+      else console.error(chalk.red(`Error parsing ${error.file} - ${error.message}`));
     }
   }
 
