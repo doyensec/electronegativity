@@ -119,7 +119,8 @@ export default class AvailableSecurityFixesGlobalCheck {
     }
 
     if (shouldUpdate) {
-      console.log(chalk.green(`Fetching Electron's new releases, this may take a while...`));
+      if (!output)
+        console.log(chalk.green(`Fetching Electron's new releases, this may take a while...`));
       try {
         ElectronReleaseData = await got('https://raw.githubusercontent.com/electron/releases/master/index.json', { json: true });
       } catch (e) {
