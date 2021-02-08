@@ -113,9 +113,9 @@ export function writeIssues(root, isRelative, filename, result, isSarif){
               uri: issue.file !== "N/A" ? issue.file : "file:///"
             },
             region: {
-              startLine: issue.file !== "N/A" ? issue.location.line : 1,
-              startColumn: issue.file !== "N/A" ? issue.location.column + 1 : 1, // sarif columns start from 1
-              charLength: issue.file !== "N/A" ? issue.sample.length : 0
+              startLine: issue.location.line,
+              startColumn: issue.location.column + 1, // sarif columns start from 1
+              charLength: issue.sample ? issue.sample.length : 0
             }
           }
         }
