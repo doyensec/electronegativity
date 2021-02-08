@@ -113,7 +113,7 @@ export function writeIssues(root, isRelative, filename, result, isSarif){
               uri: issue.file !== "N/A" ? issue.file : "file:///"
             },
             region: {
-              startLine: issue.location.line,
+              startLine: issue.location.line === 0 ? 1 : issue.location.line, // This is odd, VS and VS Code highlight the line correctly, but min value is 1
               startColumn: issue.location.column + 1, // sarif columns start from 1
               charLength: issue.sample ? issue.sample.length : 0
             }
