@@ -139,7 +139,7 @@ export default async function run(options, forCli = false) {
   // Second pass of checks (in "GlobalChecks")
   // Now that we have all the "naive" findings we may analyze them further to sort out false negatives
   // and false positives before presenting them in the final report (e.g. CSP)
-  issues = await globalChecker.getResults(issues);
+  issues = await globalChecker.getResults(issues, options.output);
 
 
   // adjust to Relative or Absolute path
