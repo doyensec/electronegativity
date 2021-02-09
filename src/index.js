@@ -51,7 +51,7 @@ if(!program.input){
 if(program.output){
   program.fileFormat = program.output.split('.').pop();
   if(program.fileFormat !== 'csv' && program.fileFormat !== 'sarif'){
-    console.log(chalk.red('Please specify file format extension.'));
+    console.error(chalk.red('Please specify file format extension.'));
     program.outputHelp();
     process.exit(1);
   }
@@ -91,4 +91,7 @@ run({
   electronUpgrade: program.upgrade,
   electronVersionOverride: program.electronVersion,
   parserPlugins: program.parserPlugins
-}, forCli);
+}, forCli).catch(error => {
+  console.error(chalk.red(error.stack));
+  process.exit(1);
+});
