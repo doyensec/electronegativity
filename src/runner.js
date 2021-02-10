@@ -167,7 +167,7 @@ export default async function run(options, forCli = false) {
   }
 
   if (options.output)
-    writeIssues(options.output, issues, options.isSarif);
+    writeIssues(options.input, options.isRelative, options.output, issues, options.isSarif);
 
   if (forCli) {
     if (rows.length > 0) {

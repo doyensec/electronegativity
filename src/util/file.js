@@ -2,6 +2,7 @@ import fs from 'fs';
 import dir from 'node-dir';
 import os from 'os';
 import path from 'path';
+const VER = require('../../package.json').version;
 
 export function is_directory(input){
   return fs.statSync(input).isDirectory();
@@ -43,75 +44,93 @@ export function list_files(input){
     .catch(console.error);
 }
 
-export function writeIssues(filename, result, isSarif){
-  let issues = '';
+export function writeIssues(root, isRelative, filename, result, isSarif){
+  let output = '';
   let fileFlag = 'w';
 
   if (isSarif) {
-    issues =
-      {
-        $schema: "http://json.schemastore.org/sarif-2.0.0",
-        version: "2.0.0",
-        runs: [
-          {
-            tool: {
+    let issues =
+    {
+      $schema: "http://json.schemastore.org/sarif-2.1.0",
+      version: "2.1.0",
+      runs: [
+        {
+          tool: {
+            driver: {
+              version: `${VER}`,
+              informationUri: "https://github.com/doyensec/electronegativity",
               name: "Electronegativity",
-              fullName: "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications"
-            },
-            results: [],
-            resources: {
-              rules: {
-              }
+              fullName: "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
+              rules: []
             }
-          }
-        ]
-      };
+          },
+          results: []
+        }
+      ]
+    };
+
+    if (isRelative) {
+      issues.runs[0].invocations = [
+        {
+          workingDirectory: {
+            uri: `file:///${root}`
+          },
+          executionSuccessful: true
+        },
+      ];
+    }
 
     result.forEach(issue => {
-      if (issues.runs[0].resources.rules[issue.id] === undefined) {
-        issues.runs[0].resources.rules[issue.id] = {
+      if (issues.runs[0].tool.driver.rules[issue.id] === undefined) {
+        issues.runs[0].tool.driver.rules.push({
           id: issue.id,
-          name: {
-            text: issue.description
-          },
           fullDescription: {
             text: issue.description
           },
-          configuration: {
-            defaultLevel: `${issue.manualReview ? 'warning' : 'error'}`
+          properties: {
+            category: "Security"
           },
-          helpUri: `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
-        };
+          helpUri: `https://github.com/doyensec/electronegativity/wiki/${issue.id}`,
+          help: {
+            text: `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
+          }
+        });
+        issues.runs[0].tool.driver.rules[issue.id] = true;
       }
-      issues.runs[0].results.push({
+
+      let result = {
         ruleId: issue.id,
+        level: `${issue.manualReview ? 'note' : 'warning'}`,
         message: {
           text: issue.description
-        },
-        locations: [
-          {
-            physicalLocation: {
-              fileLocation: {
-                uri: issue.file
-              },
-              region: {
-                startLine: issue.location.line,
-                startColumn: issue.location.column,
-                charLength: issue.sample.length
-              }
+        }
+      };
+
+      result.locations = [
+        {
+          physicalLocation: {
+            artifactLocation: {
+              uri: issue.file !== "N/A" ? issue.file : "file:///"
+            },
+            region: {
+              startLine: issue.location && issue.location.line !== undefined ? (issue.location.line === 0 ? 1 : issue.location.line) : 1, // This is odd, VS and VS Code highlight the line correctly, but min value is 1
+              startColumn: issue.location && issue.location.column !== undefined ? issue.location.column + 1 : 1, // sarif columns start from 1
+              charLength: issue.sample ? issue.sample.length : 0
             }
           }
-        ]
-      });
+        }
+      ];
+
+      issues.runs[0].results.push(result);
     });
 
-    issues = JSON.stringify(issues, null, 2);
+    output = JSON.stringify(issues, null, 2);
   }
   else{
     writeCsvHeader(filename);
     fileFlag = 'a';
     result.forEach(issue => {
-      issues += [
+      output += [
         issue.id,
         escapeCsv(issue.severity.name),
         escapeCsv(issue.confidence.name),
@@ -121,11 +140,11 @@ export function writeIssues(filename, result, isSarif){
         escapeCsv(issue.description),
         `https://github.com/doyensec/electronegativity/wiki/${issue.id}`
       ].toString();
-      issues += os.EOL;
+      output += os.EOL;
     });
   }
 
-  fs.writeFile(filename, issues, { flag: fileFlag }, (err) => {
+  fs.writeFile(filename, output, { flag: fileFlag }, (err) => {
     if(err) throw err;
   });
 }
