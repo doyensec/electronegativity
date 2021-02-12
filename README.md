@@ -85,6 +85,12 @@ shell.openExternal(eval(safeVar)); /* eng-disable OPEN_EXTERNAL_JS_CHECK DANGERO
 
 If you put an `eng-disable` directive before any code at the top of a `.js` or `.html` file, that will disable the passed checks for the *entire* file. Global Checks can't be disabled using code annotations, since they work on the first pass of Atomic Checks (i.e. making decisions over these). Use `-x` to disable Global Checks instead.
 
+### CI/CD
+
+[Electronegativity Action](https://github.com/marketplace/actions/electronegativity) may run as part of your GitHub CI/CD pipeline to get "Code scanning alerts":
+
+![Code scanning alerts](https://github.com/doyensec/electronegativity/raw/master/docs/resources/img/codescanningalerts.png "Code scanning alerts")
+
 ### Programmatically
 
 You can also use electronegativity programmatically, using similar options as for the CLI:
