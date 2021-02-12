@@ -83,7 +83,7 @@ Any `eng-disable` inline comment (`// eng-disable`, `/* eng-disable */`, `<!-- e
 shell.openExternal(eval(safeVar)); /* eng-disable OPEN_EXTERNAL_JS_CHECK DANGEROUS_FUNCTIONS_JS_CHECK */
 ```
 
-If you put an `eng-disable` directive before any code at the top of a `.js` or `.html` file, that will disable the passed checks for the *entire* file.
+If you put an `eng-disable` directive before any code at the top of a `.js` or `.html` file, that will disable the passed checks for the *entire* file. Global Checks can't be disabled using code annotations, since they work on the first pass of Atomic Checks (i.e. making decisions over these). Use `-x` to disable Global Checks instead.
 
 ### Programmatically
 
