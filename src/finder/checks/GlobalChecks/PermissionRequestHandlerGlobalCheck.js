@@ -10,13 +10,11 @@ export default class PermissionRequestHandlerGlobalCheck {
   }
 
   async perform(issues) {
-    var permissionRequestHandlerIssues = issues.filter(e => e.id === 'PERMISSION_REQUEST_HANDLER_JS_CHECK');
-    var otherIssues = issues.filter(e => e.id !== 'PERMISSION_REQUEST_HANDLER_JS_CHECK');
 
-    if (permissionRequestHandlerIssues.length === 0) {
-      otherIssues.push({ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NONE_FOUND, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false });
-      return otherIssues;
+    if (issues.length === 0) {
+      return [{ file: "N/A", location: {line: 0, column: 0}, id: this.id, description: this.description.NONE_FOUND, shortenedURL: this.shortenedURL, severity: severity.MEDIUM, confidence: confidence.CERTAIN, manualReview: false }];
     } else {
+      issues.forEach(e => e.visibility.globalCheckDisabled = true)
       return issues;
     }
   }

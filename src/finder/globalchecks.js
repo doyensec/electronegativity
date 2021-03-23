@@ -67,11 +67,23 @@ export class GlobalChecks {
 
     async getResults(issues, output) {
       var result = [];
+      // we use the `processed` flag to track down which issues will be left untouched by the global checks (i.e. non-dependencies)
+      issues.forEach(issue => issue.processed = false);
+
       for (const check of this._constructed_checks) {
-        var targetedIssues = issues.filter(issue => check.depends.includes(issue.constructorName))
-        var returnedIssues = await check.perform(targetedIssues, output);
-        result = [...result, ...returnedIssues];
+
+        issues.forEach(issue => {
+          if (check.depends.includes(issue.constructorName))
+            issue.processed = true
+        });
+
+        var targetedIssues = issues.filter(issue => check.depends.includes(issue.constructorName));
+
+        result = [...result, ...await check.perform(targetedIssues, output)];
       }
-        return result;
+
+      // in the end we merge the results of the global checks with the other untouched checks
+      return [...result, ...issues.filter(issue => !issue.processed)];
     }
+
 }
