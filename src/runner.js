@@ -141,6 +141,8 @@ export default async function run(options, forCli = false) {
   // and false positives before presenting them in the final report (e.g. CSP)
   issues = await globalChecker.getResults(issues, options.output);
 
+  // Adjust visibility
+  issues = issues.filter(i => !i.hasOwnProperty('visibility') || (!i.visibility.inlineDisabled && !i.visibility.globalCheckDisabled));
 
   // adjust to Relative or Absolute path
   if (options.isRelative)

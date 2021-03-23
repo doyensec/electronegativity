@@ -60,15 +60,18 @@ export class GlobalChecks {
         const checkInstance = new check();
         this._constructed_checks.push(checkInstance);
         this.dependencies = [...this.dependencies, ...checkInstance.depends];
-        }
+      }
       // useful in case some globalcheck dependency on the list has non-lowercase characters
       this.dependencies = this.dependencies.map(dependency => dependency.toLowerCase());
     }
 
     async getResults(issues, output) {
-        for (const check of this._constructed_checks) {
-          issues = await check.perform(issues, output);
-        }
-        return issues;
+      var result = [];
+      for (const check of this._constructed_checks) {
+        var targetedIssues = issues.filter(issue => check.depends.includes(issue.constructorName))
+        var returnedIssues = await check.perform(targetedIssues, output);
+        result = [...result, ...returnedIssues];
+      }
+        return result;
     }
 }

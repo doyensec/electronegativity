@@ -56,6 +56,10 @@ describe('Finder', () => {
       for (let [file, type, data, num_issues, content] of testcases.get(check)) {
         it('Finds ' + num_issues + ' issue(s) in ' + path.basename(file), async () => {
           let result = await finder.find(file, data, type, content);
+          
+          // Adjust visibility
+          result = result.filter(i => !i.hasOwnProperty('visibility') || (!i.visibility.inlineDisabled && !i.visibility.globalCheckDisabled));
+          
           result.filter(r => {return r.id === check;}).length.should.equal(num_issues);
         }).timeout(8000);
       }

@@ -1,12 +1,17 @@
 import { sourceTypes } from '../parser/types';
 
 export function isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceType) {
-    var result = false;
+
+    var result = {
+      excludesGlobal: [],
+      inlineDisabled: false,
+      globalCheckDisabled: false
+    };
 
      // comments in JSON are not supported (unless of https://firebase.google.com/docs/cloud-messaging/js/client#configure_the_browser_to_receive_messages)
     const regex = [
                    /(?:\/\*|\/\/)[ \t]*eng-disable[ \t]+([\w \t]+)/is, // JS
-                   /<!--[ \t]*eng-disable[ \t]+([\w \t]+)-->/is       // HTML
+                   /<!--[ \t]*eng-disable[ \t]+([\w \t]+)-->/is        // HTML
                   ][sourceType];
 
     var entireFileRulesList = firstLineSample.match(regex);
@@ -26,7 +31,15 @@ export function isDisabledByInlineComment(firstLineSample, matchedLineSample, ch
     for (var directive of mergedRules) {
         if (directive.toLowerCase() === check.constructor.name.toLowerCase() ||
             directive.toUpperCase() === check.id.toUpperCase()) {
-            result = true;
+            result.inlineDisabled = true;
+            break;
+        }
+    }
+
+    for (var directive of mergedRules) {
+        if (directive.toLowerCase() === check.constructor.name.toLowerCase().replace(/_(js|html|json)_check/,"_global_check") ||
+            directive.toUpperCase() === check.id.toUpperCase().replace(/_(JS|HTML|JSON)_CHECK/,"_GLOBAL_CHECK")) {
+            result.excludesGlobal.push(directive.toUpperCase())
             break;
         }
     }

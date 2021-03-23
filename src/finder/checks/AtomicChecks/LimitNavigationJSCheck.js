@@ -16,7 +16,7 @@ export default class LimitNavigationJSCheck {
       if (astNode.arguments && astNode.arguments.length > 1) {
         var eventValue = astNode.arguments[0].value;
         if (astNode.arguments[0].type === astHelper.StringLiteral && (eventValue === "will-navigate" || eventValue === "new-window")) {
-          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.TENTATIVE, manualReview: true }];
+          return [{ line: astNode.loc.start.line, column: astNode.loc.start.column, id: this.id, description: this.description, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.TENTATIVE, properties: { "event" : eventValue }, manualReview: true }];
         }
       }
     }

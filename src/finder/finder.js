@@ -2,6 +2,7 @@ import { CHECKS } from './checks/AtomicChecks';
 import { sourceTypes } from '../parser/types';
 import { ELECTRON_ATOMIC_UPGRADE_CHECKS } from './checks/AtomicChecks/ElectronAtomicUpgradeChecks';
 import { isDisabledByInlineComment } from "../util/exceptions";
+import { getSample } from "../util/file"
 import chalk from 'chalk';
 import { gte, compare } from 'semver';
 
@@ -69,15 +70,6 @@ export class Finder {
     }
   }
 
-  get_sample(fileLines, index) {
-    let sample = fileLines[index];
-    // Also removes the \r leftover from split('\n') on Windows
-    // Using split('\n') in checkers however is OK, because file ending depends on Git settings and *may* be just '\n' even on Windows
-    sample = sample.trim();
-
-    return sample;
-  }
-
   async find(file, data, type, content, use_only_checks = null, electronVersion = null) {
     // If the loader didn't detect the Electron version, assume the first one. Not knowing the version, we have to assume the worst (i.e.
     // all options defaulting to insecure values). By always setting the version here, the code in the checkers is simplified as they now
@@ -107,12 +99,11 @@ export class Finder {
               const matches = check.match(rootData.astParser.getNode(node), rootData.astParser, rootData.Scope, defaults, electronVersion);
               if (matches) {
                 for(const m of matches) {
-                  const firstLineSample = this.get_sample(fileLines, 0);
-                  const matchedLineSample = this.get_sample(fileLines, m.line - 1);
-                  if (!isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.JAVASCRIPT)) {
-                    const issue = { file, sample: matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
-                    issues.push(issue);
-                  }
+                  const firstLineSample = getSample(fileLines, 0);
+                  const matchedLineSample = getSample(fileLines, m.line - 1);
+                  const visibility = isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.JAVASCRIPT);
+                  const issue = { file, sample: matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL, visibility: visibility, constructorName: check.constructor.name };
+                  issues.push(issue);
                 }
               }
             }
@@ -128,13 +119,11 @@ export class Finder {
           const matches = check.match(data, content, defaults, electronVersion);
           if(matches){
             for(const m of matches) {
-              const firstLineSample = this.get_sample(fileLines, 0);
-              const matchedLineSample = this.get_sample(fileLines, m.line - 1);
-
-              if (!isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.HTML)) {
-                const issue = {file, sample: matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
-                issues.push(issue);
-              }
+              const firstLineSample = getSample(fileLines, 0);
+              const matchedLineSample = getSample(fileLines, m.line - 1);
+              const visibility = isDisabledByInlineComment(firstLineSample, matchedLineSample, check, sourceTypes.HTML);
+              const issue = {file, sample: matchedLineSample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL, visibility: visibility, constructorName: check.constructor.name };
+              issues.push(issue);
             }
           }
         }
@@ -144,8 +133,8 @@ export class Finder {
           const matches = await check.match(data, defaults, electronVersion);
           if (matches) {
             for(const m of matches) {
-              const sample = this.get_sample(fileLines, m.line - 1);
-              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL };
+              const sample = getSample(fileLines, m.line - 1);
+              const issue = {file, sample, location: {line: m.line, column: m.column}, id: m.id, description: m.description, properties: m.properties, severity: m.severity, confidence: m.confidence, manualReview: m.manualReview, shortenedURL: m.shortenedURL, visibility: { excludesGlobal: [], inlineDisabled: false, globalDisabled: false, globalCheckDisabled: false }, constructorName: check.constructor.name };
               issues.push(issue);
             }
           }
