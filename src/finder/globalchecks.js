@@ -77,7 +77,7 @@ export class GlobalChecks {
             issue.processed = true
         });
 
-        var targetedIssues = issues.filter(issue => check.depends.includes(issue.constructorName));
+        var targetedIssues = issues.filter(issue => check.depends.includes(issue.constructorName) && !issue.visibility.inlineDisabled);
 
         result = [...result, ...await check.perform(targetedIssues, output)];
       }
