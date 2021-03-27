@@ -122,7 +122,7 @@ export default class AvailableSecurityFixesGlobalCheck {
       if (!output)
         console.log(chalk.green(`Fetching Electron's new releases, this may take a while...`));
       try {
-        ElectronReleaseData = await got('https://raw.githubusercontent.com/electron/releases/master/index.json', { json: true });
+        ElectronReleaseData = await got('https://raw.githubusercontent.com/electron/releases/master/index.json', { responseType: 'json' });
       } catch (e) {
         console.log(chalk.yellow(`Something went wrong while fetching Electron's releases. No connectivity?`));
         return false;
