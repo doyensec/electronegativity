@@ -83,7 +83,10 @@ Any `eng-disable` inline comment (`// eng-disable`, `/* eng-disable */`, `<!-- e
 shell.openExternal(eval(safeVar)); /* eng-disable OPEN_EXTERNAL_JS_CHECK DANGEROUS_FUNCTIONS_JS_CHECK */
 ```
 
-If you put an `eng-disable` directive before any code at the top of a `.js` or `.html` file, that will disable the passed checks for the *entire* file. Global Checks can't be disabled using code annotations, since they work on the first pass of Atomic Checks (i.e. making decisions over these). Use `-x` to disable Global Checks instead.
+If you put an `eng-disable` directive before any code at the top of a `.js` or `.html` file, that will disable the passed checks for the *entire* file.
+#### Note on Global Checks and `eng-disable` annotations
+Before v1.9.0 Global Checks couldn't be disabled using code annotations. If you are still using an old version, use `-x` CLI argument to manually disable a list of checks instead (e.g. `-x LimitNavigationJsCheck,PermissionRequestHandlerJsCheck,CSPGlobalCheck`).
+Note that using annotations may not be applicable for some higher-level checks such as `CSP_GLOBAL_CHECK` or `AVAILABLE_SECURITY_FIXES_GLOBAL_CHECK`. For those cases, you might want to use the `-x` flag to exclude specific checks from your scan.
 
 ### CI/CD
 
