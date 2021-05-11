@@ -58,7 +58,7 @@ export default class CustomArgumentsJSONCheck {
         if (npmScripts.hasOwnProperty(script)) {
 
           var res = this.dangerousArguments.some(function(arg) {
-            return npmScripts[script].includes(arg);
+            return JSON.stringify(npmScripts[script]).toLowerCase().includes(arg);
           });
 
           if (res) {
@@ -76,7 +76,7 @@ export default class CustomArgumentsJSONCheck {
         if (npmConfig.hasOwnProperty(config)) {
 
           var res = this.dangerousArguments.some(function(arg) {
-            return npmConfig[config].includes(arg);
+            return JSON.stringify(npmConfig[config]).toLowerCase().includes(arg);
           });
 
           if (res) {

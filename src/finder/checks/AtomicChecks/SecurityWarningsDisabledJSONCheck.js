@@ -23,7 +23,7 @@ export default class SecurityWarningsDisabledJSONCheck {
       for (var script in npmScripts) {
         if (npmScripts.hasOwnProperty(script)) {
 
-          var res = npmScripts[script].includes(this.dangerousFlag);
+          var res = JSON.stringify(npmScripts[script]).includes(this.dangerousFlag);
 
           if (res) {
             let ln = linenumber(content.text, npmScripts[script]);
@@ -39,7 +39,7 @@ export default class SecurityWarningsDisabledJSONCheck {
       for (var config in npmConfig) {
         if (npmConfig.hasOwnProperty(config)) {
 
-          var res = npmConfig[config].includes(this.dangerousFlag);
+          var res = JSON.stringify(npmConfig[config]).includes(this.dangerousFlag);
 
           if (res) {
             let ln = linenumber(content.text, npmConfig[config]);
