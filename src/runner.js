@@ -60,7 +60,10 @@ export default async function run(options, forCli = false) {
 
   // Parser options initialization
   const parser = new Parser(false, true);
-  options.parserPlugins.forEach(plugin => parser.addPlugin(plugin)) 
+
+  if (options.parserPlugins.length > 0) {
+    options.parserPlugins.forEach(plugin => parser.addPlugin(plugin));
+  }
 
   // Global Checker initialization
   const globalChecker = new GlobalChecks(options.customScan, options.excludeFromScan, options.electronUpgrade);
