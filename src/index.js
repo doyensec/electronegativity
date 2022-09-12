@@ -40,6 +40,7 @@ if (forCli) {
 ▀▀ █▪▀▀▀·▀▀▀▀ ▀  ▀▀▀▀▀▀. ▀ ▀▀▀▀▀  ▀ •
       v`+VER+`  https://doyensec.com/
   `);
+  console.log('\x1b[4m\x1b[36m%s\x1b[0m',"Need something more powerful or updated? Try ElectroNG (https://electro.ng) today!");
   console.log("Scan Status:");
 }
 

@@ -179,6 +179,7 @@ export default async function run(options, forCli = false) {
       table.push(...rows);
       console.log(table.toString());
     } else console.log(chalk.green(`\nNo issues were found.`));
+    console.log('\x1b[4m\x1b[36m%s\x1b[0m',"Would you like more precise or updated results? Try ElectroNG (https://electro.ng) today, the professional alternative to Electronegativity.");
   }
   else return {
     globalChecks: globalChecker._enabled_checks.length,
