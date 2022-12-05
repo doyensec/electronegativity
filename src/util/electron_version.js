@@ -1,4 +1,4 @@
-import arb from "@npmcli/arborist";
+import arb from "read-package-tree";
 import { compare, minVersion } from 'semver';
 import * as lockfile from '@yarnpkg/lockfile';
 

@@ -39,7 +39,6 @@
     "@doyensec/csp-evaluator": "^1.0.3",
     "@electron/asar": "^3.0.3",
     "@mapbox/node-pre-gyp": "^1.0.5",
-    "@npmcli/arborist": "^6.1.4",
     "@typescript-eslint/typescript-estree": "^4.24.0",
     "@yarnpkg/lockfile": "^1.1.0",
     "chalk": "^4.1.1",
