@@ -1,4 +1,4 @@
-import rpt from "read-package-tree";
+import arb from "@npmcli/arborist";
 import { compare, minVersion } from 'semver';
 import * as lockfile from '@yarnpkg/lockfile';
 
@@ -23,7 +23,7 @@ export function findElectronVersionFromPackageJson(pjsonData) {
 }
 
 export async function findElectronVersionsFromInstalledPackages(rootPath) {
-  const packages = await rpt(rootPath);
+  const packages = await arb(rootPath);
   return packages.children.filter((c) => c.name === 'electron').map((e) => minMatchingVersion(e.package.version));
 }
 

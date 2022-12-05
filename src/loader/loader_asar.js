@@ -1,6 +1,6 @@
 import logger from 'winston';
 import path from 'path';
-import asar from 'asar';
+import asar from '@electron/asar';
 
 import { extension } from '../util';
 import { Loader } from './loader_interface';
