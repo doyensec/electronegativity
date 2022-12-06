@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class QuerySystemIdleState {
   constructor() {
-    this.id = 'QUERY_SYSTEM_IDLE_STATE_DEPRECATION';
-    this.description = '(ELECTRON 6) The powerMonitor.querySystemIdleState API has been deprecated.';
+    this.id = "QUERY_SYSTEM_IDLE_STATE_DEPRECATION";
+    this.description = __("QUERY_SYSTEM_IDLE_STATE_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jva8V';
   }

@@ -5,8 +5,8 @@ const DEPRECATED_REQUIRES = [ 'child_process', 'fs', 'os', 'path' ]
 
 export default class RequireSandboxedRenderers {
   constructor() {
-    this.id = 'REQUIRE_SANDBOXED_RENDERERS_DEPRECATION';
-    this.description = '(ELECTRON 6) Certain requires in sandboxed renderers are deprecated.';
+    this.id = "REQUIRE_SANDBOXED_RENDERERS_DEPRECATION";
+    this.description = __("REQUIRE_SANDBOXED_RENDERERS_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvalR';
   }

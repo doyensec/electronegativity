@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class IPCSend {
   constructor() {
-    this.id = 'IPC_SEND_STRUCTURED_CLONE_ALGORITHM';
-    this.description = '(ELECTRON 8) Values sent over IPC are now serialized with Structured Clone Algorithm.';
+    this.id = "IPC_SEND_STRUCTURED_CLONE_ALGORITHM";
+    this.description = __("IPC_SEND_STRUCTURED_CLONE_ALGORITHM");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvuxd';
   }

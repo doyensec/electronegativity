@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class PrivilegedSchemesRegistrationRemoval {
   constructor() {
-    this.id = 'PRIVILEGED_SCHEMES_REGISTRATION_REMOVAL';
-    this.description = '(ELECTRON 5) The APIs for Privileged Schemes Registration have been removed in favor of protocol.registerSchemesAsPrivileged.';
+    this.id = "PRIVILEGED_SCHEMES_REGISTRATION_REMOVAL";
+    this.description = __("PRIVILEGED_SCHEMES_REGISTRATION_REMOVAL");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvVew';
   }

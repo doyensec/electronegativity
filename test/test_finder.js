@@ -5,6 +5,9 @@ import { LoaderFile } from '../src/loader';
 import { Parser } from '../src/parser';
 import { Finder } from '../src/finder';
 import { GlobalChecks } from '../src/finder';
+import _i18n from '../src/locales/i18n.js';
+
+_i18n();
 
 let chai = require('chai');
 let should = chai.should();

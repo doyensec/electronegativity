@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class CertificateVerifyProcJSCheck {
   constructor() {
-    this.id = 'CERTIFICATE_VERIFY_PROC_JS_CHECK';
-    this.description = `Do not allow insecure connections, by explicitly opting-out from TLS validation or importing untrusted certificates`;
+    this.id = "CERTIFICATE_VERIFY_PROC_JS_CHECK";
+    this.description = __("CERTIFICATE_VERIFY_PROC_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeu1A";
   }

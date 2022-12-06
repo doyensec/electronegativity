@@ -4,8 +4,8 @@ import { parseWebPreferencesFeaturesString } from '../../../util';
 
 export default class WebSecurityHTMLCheck {
   constructor() {
-    this.id = 'WEB_SECURITY_HTML_CHECK';
-    this.description = `Do not use disablewebsecurity`;
+    this.id = "WEB_SECURITY_HTML_CHECK";
+    this.description = __("WEB_SECURITY_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JeuMr";
   }

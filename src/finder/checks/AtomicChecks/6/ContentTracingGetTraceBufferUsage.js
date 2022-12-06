@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class ContentTracingGetTraceBufferUsage {
   constructor() {
-    this.id = 'CONTENT_TRACING_GET_TRACE_BUFFER_USAGE_DEPRECATION';
-    this.description = '(ELECTRON 6) Calling contentTracing.getTraceBufferUsage() with a callback is deprecated.';
+    this.id = "CONTENT_TRACING_GET_TRACE_BUFFER_USAGE_DEPRECATION";
+    this.description = __("CONTENT_TRACING_GET_TRACE_BUFFER_USAGE_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvaWM';
   }

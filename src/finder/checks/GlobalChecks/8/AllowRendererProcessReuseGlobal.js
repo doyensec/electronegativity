@@ -4,7 +4,7 @@ export default class AllowRendererProcessReuseGlobal {
 
   constructor() {
     this.id = 'ALLOW_RENDERER_PROCESS_REUSE_GLOBAL_DEPRECATION';
-    this.description = '(ELECTRON 8) The default value of app.allowRendererProcessReuse is deprecated, it is currently "false".  It will changed to be "true" in Electron 9.';
+    this.description = __('ALLOW_RENDERER_PROCESS_REUSE_GLOBAL_DEPRECATION');
     this.depends = ["AllowRendererProcessReuse"];
     this.shortenedURL = 'https://git.io/JvuxX';
   }

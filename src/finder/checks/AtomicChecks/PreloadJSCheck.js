@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class PreloadJSCheck {
   constructor() {
-    this.id = 'PRELOAD_JS_CHECK';
-    this.description = `Review the use of preload scripts`;
+    this.id = "PRELOAD_JS_CHECK";
+    this.description = __("PRELOAD_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMu";
   }

@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class WebSecurityJSCheck {
   constructor() {
-    this.id = 'WEB_SECURITY_JS_CHECK';
-    this.description = `Do not use disablewebsecurity`;
+    this.id = "WEB_SECURITY_JS_CHECK";
+    this.description = __("WEB_SECURITY_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMo";
   }

@@ -4,8 +4,8 @@ import { parseWebPreferencesFeaturesString } from '../../../util';
 
 export default class InsecureContentHTMLCheck {
   constructor() {
-    this.id = 'INSECURE_CONTENT_HTML_CHECK';
-    this.description = `Do not allow insecure HTTP connections`;
+    this.id = "INSECURE_CONTENT_HTML_CHECK";
+    this.description = __("INSECURE_CONTENT_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JeuMq";
   }

@@ -4,8 +4,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class ElectronVersionJSONCheck {
   constructor() {
-    this.id = 'ELECTRON_VERSION_JSON_CHECK';
-    this.description = `Gets the electron version used by inspecting the package.json file.`;
+    this.id = "ELECTRON_VERSION_JSON_CHECK";
+    this.description = __("ELECTRON_VERSION_JSON_CHECK");
     this.type = sourceTypes.JSON;
     this.shortenedURL = "https://git.io/JeuMf";
   }

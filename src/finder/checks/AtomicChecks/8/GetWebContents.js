@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class GetWebContents {
   constructor() {
-    this.id = 'GET_WEB_CONTENTS_DEPRECATION';
-    this.description = '(ELECTRON 8) getWebContents is deprecated on the <webview> tag.';
+    this.id = "GET_WEB_CONTENTS_DEPRECATION";
+    this.description = __("GET_WEB_CONTENTS_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvux7';
   }

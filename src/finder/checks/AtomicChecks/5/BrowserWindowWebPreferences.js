@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class BrowserWindowWebPreferences {
   constructor() {
-    this.id = 'BROWSER_WINDOW_WEB_PREFERENCES_DEPRECATION';
-    this.description = '(ELECTRON 5) The BrowserWindow API\'s webPreferences option default values are deprecated in favor of the new defaults.';
+    this.id = "BROWSER_WINDOW_WEB_PREFERENCES_DEPRECATION";
+    this.description = __("BROWSER_WINDOW_WEB_PREFERENCES_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvahw';
   }

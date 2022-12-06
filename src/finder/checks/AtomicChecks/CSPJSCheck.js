@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class CSPJSCheck {
   constructor() {
-    this.id = 'CSP_JS_CHECK';
-    this.description = `Check for common responseHeaders CSP assignments`;
+    this.id = "CSP_JS_CHECK";
+    this.description = __("CSP_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMe";
   }

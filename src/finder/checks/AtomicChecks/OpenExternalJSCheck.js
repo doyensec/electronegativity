@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class OpenExternalJSCheck {
   constructor() {
-    this.id = 'OPEN_EXTERNAL_JS_CHECK';
-    this.description = `Review the use of openExternal`;
+    this.id = "OPEN_EXTERNAL_JS_CHECK";
+    this.description = __("OPEN_EXTERNAL_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMC";
   }

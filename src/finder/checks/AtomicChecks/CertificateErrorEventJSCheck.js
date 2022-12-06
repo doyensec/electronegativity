@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class CertificateErrorEventJSCheck {
   constructor() {
-    this.id = 'CERTIFICATE_ERROR_EVENT_JS_CHECK';
-    this.description = `Do not allow insecure connections, by explicitly opting-out from TLS validation`;
+    this.id = "CERTIFICATE_ERROR_EVENT_JS_CHECK";
+    this.description = __("CERTIFICATE_ERROR_EVENT_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeu1N";
   }

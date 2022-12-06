@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class VisibleOnFullScreen {
   constructor() {
-    this.id = 'VISIBLE_ON_FULLSCREEN_DEPRECATION';
-    this.description = `(ELECTRON 8) The option visibleOnFullScreen on BrowserWindow.setVisibleOnAllWorkspaces is deprecated`;
+    this.id = "VISIBLE_ON_FULLSCREEN_DEPRECATION";
+    this.description = __("VISIBLE_ON_FULLSCREEN_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvuxx';
   }

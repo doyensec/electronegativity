@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class LimitNavigationJSCheck {
   constructor() {
-    this.id = 'LIMIT_NAVIGATION_JS_CHECK';
-    this.description = 'Evaluate the implementation of the custom callback in the .on new-window and will-navigate events';
+    this.id = "LIMIT_NAVIGATION_JS_CHECK";
+    this.description = __("LIMIT_NAVIGATION_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuM3";
   }

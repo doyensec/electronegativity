@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class QuerySystemIdleState {
   constructor() {
-    this.id = 'QUERY_SYSTEM_IDLE_STATE_REMOVAL';
-    this.description = '(ELECTRON 7) The powerMonitor.querySystemIdleState API has been replaced with the synchronous API powerMonitor.getSystemIdleState.';
+    this.id = "QUERY_SYSTEM_IDLE_STATE_REMOVAL";
+    this.description = __("QUERY_SYSTEM_IDLE_STATE_REMOVAL");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvuxw';
   }

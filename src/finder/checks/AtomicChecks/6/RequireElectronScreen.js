@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class RequireElectronScreen {
   constructor() {
-    this.id = 'REQUIRE_ELECTRON_SCREEN_DEPRECATION';
-    this.description = '(ELECTRON 6) require(\'electron\').screen in the renderer process is deprecated.';
+    this.id = "REQUIRE_ELECTRON_SCREEN_DEPRECATION";
+    this.description = __("REQUIRE_ELECTRON_SCREEN_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvalC';
   }

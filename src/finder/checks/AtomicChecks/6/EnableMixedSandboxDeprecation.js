@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class EnableMixedSandboxDeprecation {
   constructor() {
-    this.id = 'ENABLE_MIXED_SANDBOX_DEPRECATION';
-    this.description = '(ELECTRON 6) The app.enableMixedSandbox API has been deprecated since mixed-sandbox mode is now enabled by default.';
+    this.id = "ENABLE_MIXED_SANDBOX_DEPRECATION";
+    this.description = __("ENABLE_MIXED_SANDBOX_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvapp';
   }

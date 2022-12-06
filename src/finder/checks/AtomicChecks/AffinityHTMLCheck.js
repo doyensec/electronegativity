@@ -4,8 +4,8 @@ import { parseWebPreferencesFeaturesString } from '../../../util';
 
 export default class AffinityHTMLCheck {
   constructor() {
-    this.id = 'AFFINITY_HTML_CHECK';
-    this.description = `Review the use of affinity property`;
+    this.id = "AFFINITY_HTML_CHECK";
+    this.description = __("AFFINITY_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/Jeu1z";
   }

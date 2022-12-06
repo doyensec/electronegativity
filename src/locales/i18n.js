@@ -2,6 +2,7 @@ import i18n from 'i18n';
 import got from 'got';
 
 export default function _i18n () {
+  return new Promise((resolve, reject) => {
 	var defaultLocale = "en-US";
 	i18n.configure({
 	  locales: ['en-US'], // widespread locales available locally
@@ -20,9 +21,12 @@ export default function _i18n () {
 	  if (r.statusCode === 200) {// Add JSON translations to i18n
 	  	i18n.addLocale(defaultLocale, JSON.parse(r.body));
 	  	i18n.setLocale(defaultLocale);
+	  	resolve(); // resolve the promise when the setLocale is set
 	  }
 	})
 	.catch(e => {
 	  // Could not retrieve updated translations for the current locale
+	  reject(e);
 	});
+  });
 };

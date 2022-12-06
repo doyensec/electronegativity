@@ -4,8 +4,8 @@ import { parseWebPreferencesFeaturesString } from '../../../util';
 
 export default class ExperimentalFeaturesHTMLCheck {
   constructor() {
-    this.id = 'EXPERIMENTAL_FEATURES_HTML_CHECK';
-    this.description = `Do not use Chromium's experimental features`;
+    this.id = "EXPERIMENTAL_FEATURES_HTML_CHECK";
+    this.description = __("EXPERIMENTAL_FEATURES_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JeuMJ";
   }

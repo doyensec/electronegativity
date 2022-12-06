@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class AffinityJSCheck {
   constructor() {
-    this.id = 'AFFINITY_JS_CHECK';
-    this.description = `Review the use of affinity property`;
+    this.id = "AFFINITY_JS_CHECK";
+    this.description = __("AFFINITY_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeu1z";
   }

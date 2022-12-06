@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class CSPHTMLCheck {
   constructor() {
-    this.id = 'CSP_HTML_CHECK';
-    this.description = `A CSP is set for this page using a meta tag`;
+    this.id = "CSP_HTML_CHECK";
+    this.description = __("CSP_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JeuMe";
   }

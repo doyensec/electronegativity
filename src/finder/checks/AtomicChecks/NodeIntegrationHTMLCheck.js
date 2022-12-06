@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class NodeIntegrationHTMLCheck {
   constructor() {
-    this.id = 'NODE_INTEGRATION_HTML_CHECK';
-    this.description = `Disable nodeIntegration for untrusted origins`;
+    this.id = "NODE_INTEGRATION_HTML_CHECK";
+    this.description = __("NODE_INTEGRATION_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JeuMG";
   }

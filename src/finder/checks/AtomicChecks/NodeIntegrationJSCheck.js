@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class NodeIntegrationJSCheck {
   constructor() {
-    this.id = 'NODE_INTEGRATION_JS_CHECK';
-    this.description = `Disable nodeIntegration for untrusted origins`;
+    this.id = "NODE_INTEGRATION_JS_CHECK";
+    this.description = __("NODE_INTEGRATION_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMn";
   }

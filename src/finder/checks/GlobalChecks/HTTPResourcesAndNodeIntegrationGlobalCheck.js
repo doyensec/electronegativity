@@ -4,7 +4,7 @@ export default class HTTPResourcesAndNodeIntegrationGlobalCheck {
 
   constructor() {
     this.id = "HTTP_RESOURCES_WITH_NODE_INTEGRATION_GLOBAL_CHECK";
-    this.description = { INSECURE_INTEGRATION: "The nodeIntegration flag is enabled for the application, but some resources are loaded over an unencrypted connection."};
+    this.description = { INSECURE_INTEGRATION: __('HTTP_RESOURCES_WITH_NODE_INTEGRATION_GLOBAL_CHECK')};
     this.depends = ["HTTPResourcesJavascriptCheck","HTTPResourcesHTMLCheck","NodeIntegrationHTMLCheck", "NodeIntegrationJSCheck"];
     this.shortenedURL = "https://git.io/JeuM6";
   }

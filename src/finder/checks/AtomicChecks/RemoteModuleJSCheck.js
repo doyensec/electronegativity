@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class RemoteModuleJSCheck {
   constructor() {
-    this.id = 'REMOTE_MODULE_JS_CHECK';
-    this.description = `Disable the remote module`;
+    this.id = "REMOTE_MODULE_JS_CHECK";
+    this.description = __("REMOTE_MODULE_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JvqrQ";
   }

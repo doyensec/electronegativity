@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class AllowRendererProcessReuse {
   constructor() {
-    this.id = 'ALLOW_RENDERER_PROCESS_REUSE_DEPRECATION';
-    this.description = '(ELECTRON 8) The default value of false for app.allowRendererProcessReuse is deprecated.'
+    this.id = "ALLOW_RENDERER_PROCESS_REUSE_DEPRECATION";
+    this.description = __("ALLOW_RENDERER_PROCESS_REUSE_DEPRECATION")
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvuxX';
   }

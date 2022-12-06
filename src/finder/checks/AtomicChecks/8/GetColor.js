@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class GetColor {
   constructor() {
-    this.id = 'GET_COLOR_DEPRECATION';
-    this.description = '(ELECTRON 8) The color alternate-selected-control-text on systemPreferences.getColor(color) is deprecated';
+    this.id = "GET_COLOR_DEPRECATION";
+    this.description = __("GET_COLOR_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvuxH';
   }

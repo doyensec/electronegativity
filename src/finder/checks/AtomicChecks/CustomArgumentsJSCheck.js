@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class CustomArgumentsJSCheck {
   constructor() {
-    this.id = 'CUSTOM_ARGUMENTS_JS_CHECK';
-    this.description = `Review the use of custom command line arguments`;
+    this.id = "CUSTOM_ARGUMENTS_JS_CHECK";
+    this.description = __("CUSTOM_ARGUMENTS_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeu1h";
     this.dangerousArguments = [

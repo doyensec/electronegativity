@@ -5,9 +5,9 @@ export default class LimitNavigationGlobalCheck {
   constructor() {
     this.id = "LIMIT_NAVIGATION_GLOBAL_CHECK";
     this.description = {
-      NONE_FOUND: "Missing navigation limits using .on new-window and will-navigate events",
-      NEW_WINDOW_MISSING: "Missing .on new-window navigation limit",
-      WILL_NAVIGATE_MISSING: "Missing .on will-navigate navigation limit",
+      NONE_FOUND: __('LIMIT_NAVIGATION_GLOBAL_CHECK_NONE_FOUND'),
+      NEW_WINDOW_MISSING: __('LIMIT_NAVIGATION_GLOBAL_CHECK_NEW_WINDOW_MISSING'),
+      WILL_NAVIGATE_MISSING: __('LIMIT_NAVIGATION_GLOBAL_CHECK_WILL_NAVIGATE_MISSING')
      };
     this.depends = ["LimitNavigationJSCheck"];
     this.shortenedURL = "https://git.io/JeuMs";

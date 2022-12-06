@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class DangerousFunctionsJSCheck {
   constructor() {
-    this.id = 'DANGEROUS_FUNCTIONS_JS_CHECK';
-    this.description = `Do not use insertCSS, executeJavaScript, eval, Function, setTimeout, setInterval, setImmediate with user-supplied content`;
+    this.id = "DANGEROUS_FUNCTIONS_JS_CHECK";
+    this.description = __("DANGEROUS_FUNCTIONS_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeug9";
   }

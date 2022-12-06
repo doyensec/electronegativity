@@ -4,7 +4,7 @@ export default class AffinityGlobalCheck {
 
   constructor() {
     this.id = "AFFINITY_GLOBAL_CHECK";
-    this.description = { AFFINITY_FOUND: "Two or more rendereres are running with the same affinity property. Manual review is required since we don't check for the webPreferences."};
+    this.description = { AFFINITY_FOUND: __("AFFINITY_GLOBAL_CHECK_AFFINITY_FOUND")};
     this.depends = ["AffinityJSCheck", "AffinityHTMLCheck"];
     this.shortenedURL = "https://git.io/Jeu1z";
   }

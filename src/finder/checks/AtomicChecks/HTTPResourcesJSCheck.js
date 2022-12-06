@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class HTTPResourcesJavascriptCheck {
   constructor() {
-    this.id = 'HTTP_RESOURCES_JS_CHECK';
-    this.description = `Do not allow insecure HTTP connections`;
+    this.id = "HTTP_RESOURCES_JS_CHECK";
+    this.description = __("HTTP_RESOURCES_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuML";
   }

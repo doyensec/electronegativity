@@ -10,8 +10,8 @@ export default class AvailableSecurityFixesGlobalCheck {
 
   constructor() {
     this.id = "AVAILABLE_SECURITY_FIXES_GLOBAL_CHECK";
-    this.description = { SECURITY_ISSUES : "Check if there are security patches applied in between the Electron version used and the latest",
-      OUTDATED_VERSION : "A new version of Electron is available" };
+    this.description = { SECURITY_ISSUES : __('AVAILABLE_SECURITY_FIXES_GLOBAL_CHECK_SECURITY_ISSUES'),
+      OUTDATED_VERSION :  __('AVAILABLE_SECURITY_FIXES_GLOBAL_CHECK_OUTDATED_VERSION')};
     this.depends = ["ElectronVersionJSONCheck"];
     this.shortenedURL = "https://git.io/Jeu1X";
     this.releaseNoteSecurityFixRegex = [ /# Security/i, /\[security\]/i ];

@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class SetHighlightModeRemoval {
   constructor() {
-    this.id = 'SET_HIGHLIGHT_MODE_REMOVAL';
-    this.description = '(ELECTRON 7) The tray.setHighlightMode API has been removed.';
+    this.id = "SET_HIGHLIGHT_MODE_REMOVAL";
+    this.description = __("SET_HIGHLIGHT_MODE_REMOVAL");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jva8j';
   }

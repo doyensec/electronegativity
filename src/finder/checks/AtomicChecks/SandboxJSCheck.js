@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class SandboxJSCheck {
   constructor() {
-    this.id = 'SANDBOX_JS_CHECK';
-    this.description = `Use sandbox for untrusted origins`;
+    this.id = "SANDBOX_JS_CHECK";
+    this.description = __("SANDBOX_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuM2";
   }

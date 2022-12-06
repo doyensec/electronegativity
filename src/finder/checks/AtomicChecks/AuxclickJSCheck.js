@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class AuxclickJSCheck {
   constructor() {
-    this.id = 'AUXCLICK_JS_CHECK';
-    this.description = `Limit navigation flows to untrusted origins. Middle-click may cause Electron to open a link within a new window`;
+    this.id = "AUXCLICK_JS_CHECK";
+    this.description = __("AUXCLICK_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeu1K";
   }

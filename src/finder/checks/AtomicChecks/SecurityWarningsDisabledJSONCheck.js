@@ -4,8 +4,8 @@ import { sourceTypes } from '../../../parser/types';
 
 export default class SecurityWarningsDisabledJSONCheck {
   constructor() {
-    this.id = 'SECURITY_WARNINGS_DISABLED_JSON_CHECK';
-    this.description = `Warns about flags disabling security warnings in the package.json file.`;
+    this.id = "SECURITY_WARNINGS_DISABLED_JSON_CHECK";
+    this.description = __("SECURITY_WARNINGS_DISABLED_JSON_CHECK");
     this.type = sourceTypes.JSON;
     this.shortenedURL = "https://git.io/JeuMw";
     this.dangerousFlag = "ELECTRON_DISABLE_SECURITY_WARNINGS";

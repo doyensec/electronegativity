@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class QuerySystemIdleTime {
   constructor() {
-    this.id = 'QUERY_SYSTEM_IDLE_TIME_DEPRECATION';
-    this.description = '(ELECTRON 6) The powerMonitor.querySystemIdleTime API has been deprecated.';
+    this.id = "QUERY_SYSTEM_IDLE_TIME_DEPRECATION";
+    this.description = __("QUERY_SYSTEM_IDLE_TIME_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jva8w';
   }

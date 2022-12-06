@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class ClearAuthCache {
   constructor() {
-    this.id = 'CLEAR_AUTH_CACHE_DEPRECATION';
-    this.description = '(ELECTRON 7) The session.clearAuthCache API no longer accepts options for what to clear, and instead unconditionally clears the whole cache.';
+    this.id = "CLEAR_AUTH_CACHE_DEPRECATION";
+    this.description = __("CLEAR_AUTH_CACHE_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvuxg';
   }

@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class WebKitDirectoryChange {
   constructor() {
-    this.id = 'WEBKITDIRECTORY_CHANGE';
-    this.description = `Fixed webkitdirectory to return list of files if a folder is selected.`;
+    this.id = "WEBKITDIRECTORY_CHANGE";
+    this.description = __("WEBKITDIRECTORY_CHANGE");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JvVIu";
   }

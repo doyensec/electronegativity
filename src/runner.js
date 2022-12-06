@@ -61,7 +61,7 @@ export default async function run(options, forCli = false) {
   // Parser options initialization
   const parser = new Parser(false, true);
 
-  if (options.parserPlugins.length > 0) {
+  if (options.parserPlugins && Array.isArray(options.parserPlugins) && options.parserPlugins.length > 0) {
     options.parserPlugins.forEach(plugin => parser.addPlugin(plugin));
   }
 
@@ -134,8 +134,8 @@ export default async function run(options, forCli = false) {
 
   if (forCli) {
     for (const error of errors) {
-      if (error.tolerable) console.log(chalk.yellow(`${__('tolerable_error_parsing', {file: error.file, message: error.message})}`));
-      else console.error(chalk.red(`${__('error_parsing', {file: error.file, message: error.message})}`));
+      if (error.tolerable) console.log(chalk.yellow(`${__('tolerableErrorParsing', {file: error.file, message: error.message})}`));
+      else console.error(chalk.red(`${__('errorParsing', {file: error.file, message: error.message})}`));
     }
   }
 
@@ -162,7 +162,7 @@ export default async function run(options, forCli = false) {
       )
         rows.push([
           `${issue.id}${
-            issue.manualReview ? chalk.bgRed(`\n*${__('review_required')}*`) : ``
+            issue.manualReview ? chalk.bgRed(`\n*${__('reviewRequired')}*`) : ``
           }\n${issue.severity.format()} | ${issue.confidence.format()}`,
           issue.file,
           `${issue.location.line}:${issue.location.column}`,
@@ -178,8 +178,8 @@ export default async function run(options, forCli = false) {
     if (rows.length > 0) {
       table.push(...rows);
       console.log(table.toString());
-    } else console.log(chalk.green(`\n${__('no_issues_found')}`));
-    console.log('\x1b[4m\x1b[36m%s\x1b[0m',`${__('try_electro_ng')}`);
+    } else console.log(chalk.green(`\n${__('noIssuesFound')}`));
+    console.log('\x1b[4m\x1b[36m%s\x1b[0m',`${__('tryElectroNg')}`);
   }
   else return {
     globalChecks: globalChecker._enabled_checks.length,

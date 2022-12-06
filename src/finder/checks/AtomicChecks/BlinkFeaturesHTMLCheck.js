@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class BlinkFeaturesHTMLCheck {
   constructor() {
-    this.id = 'BLINK_FEATURES_HTML_CHECK';
-    this.description = `Do not use Chromium's experimental features`;
+    this.id = "BLINK_FEATURES_HTML_CHECK";
+    this.description = __("BLINK_FEATURES_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/Jeu19";
   }

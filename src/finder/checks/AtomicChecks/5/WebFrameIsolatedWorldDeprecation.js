@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class WebFrameIsolatedWorldDeprecation {
   constructor() {
-    this.id = 'WEB_FRAME_ISOLATED_WORLD_DEPRECATION';
-    this.description = '(ELECTRON 5) The webFrame isolated world APIs have been deprecated in favor of webFrame.setIsolatedWorldInfo';
+    this.id = "WEB_FRAME_ISOLATED_WORLD_DEPRECATION";
+    this.description = __("WEB_FRAME_ISOLATED_WORLD_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvVe2';
   }

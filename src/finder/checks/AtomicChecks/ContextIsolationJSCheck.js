@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class ContextIsolationJSCheck {
   constructor() {
-    this.id = 'CONTEXT_ISOLATION_JS_CHECK';
-    this.description = `Review the use of the contextIsolation option`;
+    this.id = "CONTEXT_ISOLATION_JS_CHECK";
+    this.description = __("CONTEXT_ISOLATION_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/Jeu1p";
   }

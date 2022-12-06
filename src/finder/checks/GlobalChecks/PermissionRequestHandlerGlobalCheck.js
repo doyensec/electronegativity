@@ -4,7 +4,7 @@ export default class PermissionRequestHandlerGlobalCheck {
 
   constructor() {
     this.id = "PERMISSION_REQUEST_HANDLER_GLOBAL_CHECK";
-    this.description = { NONE_FOUND: "Missing PermissionRequestHandler to limit specific permissions (e.g. openExternal) in response to events from particular origins."};
+    this.description = { NONE_FOUND: __('PERMISSION_REQUEST_HANDLER_GLOBAL_CHECK')};
     this.depends = ["PermissionRequestHandlerJSCheck"];
     this.shortenedURL = "https://git.io/JeuM0";
   }

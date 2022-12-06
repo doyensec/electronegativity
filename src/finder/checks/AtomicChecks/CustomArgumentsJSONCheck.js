@@ -5,8 +5,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class CustomArgumentsJSONCheck {
   constructor() {
-    this.id = 'CUSTOM_ARGUMENTS_JSON_CHECK';
-    this.description = `Search for dangerous runtime flags in the package.json file.`;
+    this.id = "CUSTOM_ARGUMENTS_JSON_CHECK";
+    this.description = __("CUSTOM_ARGUMENTS_JSON_CHECK");
     this.type = sourceTypes.JSON;
     this.shortenedURL = "https://git.io/Jeu1j";
     this.dangerousArguments = [

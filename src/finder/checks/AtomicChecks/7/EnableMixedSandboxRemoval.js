@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class EnableMixedSandboxRemoval {
   constructor() {
-    this.id = 'ENABLE_MIXED_SANDBOX_REMOVAL';
-    this.description = '(ELECTRON 7) The app.enableMixedSandbox API has been removed since mixed-sandbox mode is now enabled by default.';
+    this.id = "ENABLE_MIXED_SANDBOX_REMOVAL";
+    this.description = __("ENABLE_MIXED_SANDBOX_REMOVAL");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/Jvapp';
   }

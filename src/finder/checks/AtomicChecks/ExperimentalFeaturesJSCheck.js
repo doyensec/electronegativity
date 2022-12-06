@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class ExperimentalFeaturesJSCheck {
   constructor() {
-    this.id = 'EXPERIMENTAL_FEATURES_JS_CHECK';
-    this.description = `Do not use Chromium's experimental features`;
+    this.id = "EXPERIMENTAL_FEATURES_JS_CHECK";
+    this.description = __("EXPERIMENTAL_FEATURES_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMI";
   }

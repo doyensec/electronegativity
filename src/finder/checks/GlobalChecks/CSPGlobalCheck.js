@@ -6,10 +6,10 @@ export default class CSPGlobalCheck {
 
   constructor() {
     this.id = "CSP_GLOBAL_CHECK";
-    this.description = {  NO_CSP: "No CSP has been detected in the target application",
-      MAYBE_WEAK_CSP: "One or more CSP directives detected seems to be vulnerable",
-      WEAK_CSP: "One or more CSP directives detected are vulnerable",
-      INVALID_CSP: "Failed to parse CSP, it may not be valid." };
+    this.description = {  NO_CSP: __("CSP_GLOBAL_CHECK_NO_CSP"),
+      MAYBE_WEAK_CSP: __("CSP_GLOBAL_CHECK_MAYBE_WEAK_CSP"),
+      WEAK_CSP: __("CSP_GLOBAL_CHECK_WEAK_CSP"),
+      INVALID_CSP: __("CSP_GLOBAL_CHECK_INVALID_CSP") };
     this.depends = ["CSPJSCheck", "CSPHTMLCheck"];
     this.shortenedURL = "https://git.io/JeuMe";
   }

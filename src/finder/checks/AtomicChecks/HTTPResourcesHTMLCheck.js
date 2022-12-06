@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class HTTPResourcesHTMLCheck {
   constructor() {
-    this.id = 'HTTP_RESOURCES_HTML_CHECK';
-    this.description = `Do not allow insecure HTTP connections`;
+    this.id = "HTTP_RESOURCES_HTML_CHECK";
+    this.description = __("HTTP_RESOURCES_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/JeuMt";
   }

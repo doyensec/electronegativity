@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class SetLayoutZoomLevelLimits {
   constructor() {
-    this.id = 'SET_ZOOM_LEVEL_LIMITS_DEPRECATION';
-    this.description = '(ELECTRON 8) setLayoutZoomLevelLimits is deprecated on webContents, webFrame, and the <webview> tag because Chromium removed this capability.';
+    this.id = "SET_ZOOM_LEVEL_LIMITS_DEPRECATION";
+    this.description = __("SET_ZOOM_LEVEL_LIMITS_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvuxN';
   }

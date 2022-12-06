@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class NativeWindowOpen {
   constructor() {
-    this.id = 'NATIVE_WINDOW_OPEN_CHANGE';
-    this.description = `(ELECTRON 5) Child windows opened with the nativeWindowOpen option will always have Node.js integration disabled.`;
+    this.id = "NATIVE_WINDOW_OPEN_CHANGE";
+    this.description = __("NATIVE_WINDOW_OPEN_CHANGE");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JvVeZ";
   }

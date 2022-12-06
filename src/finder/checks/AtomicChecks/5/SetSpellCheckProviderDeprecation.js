@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class SetSpellCheckProviderDeprecation {
   constructor() {
-    this.id = 'SET_SPELLCHECK_PROVIDER_DEPRECATION';
-    this.description = '(ELECTRON 5) The spellCheck callback on webFrame.setSpellCheckProvider is now asynchronous, and autoCorrectWord parameter has been removed.';
+    this.id = "SET_SPELLCHECK_PROVIDER_DEPRECATION";
+    this.description = __("SET_SPELLCHECK_PROVIDER_DEPRECATION");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvVv0';
   }

@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class InsecureContentJSCheck {
   constructor() {
-    this.id = 'INSECURE_CONTENT_JS_CHECK';
-    this.description = `Do not allow insecure HTTP connections`;
+    this.id = "INSECURE_CONTENT_JS_CHECK";
+    this.description = __("INSECURE_CONTENT_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMm";
   }

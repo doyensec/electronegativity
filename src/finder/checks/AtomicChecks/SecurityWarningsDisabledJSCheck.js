@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class SecurityWarningsDisabledJSCheck {
   constructor() {
-    this.id = 'SECURITY_WARNINGS_DISABLED_JS_CHECK';
-    this.description = 'Warns about flags disabling security warnings in the sources.';
+    this.id = "SECURITY_WARNINGS_DISABLED_JS_CHECK";
+    this.description = __("SECURITY_WARNINGS_DISABLED_JS_CHECK");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = "https://git.io/JeuMa";
   }

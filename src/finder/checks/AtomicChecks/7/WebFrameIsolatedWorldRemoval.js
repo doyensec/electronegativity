@@ -3,8 +3,8 @@ import { severity, confidence } from '../../../attributes';
 
 export default class WebFrameIsolatedWorldRemoval {
   constructor() {
-    this.id = 'WEB_FRAME_ISOLATED_WORLD_REMOVAL';
-    this.description = '(ELECTRON 7) The webFrame isolated world APIs have been removed in favor of webFrame.setIsolatedWorldInfo';
+    this.id = "WEB_FRAME_ISOLATED_WORLD_REMOVAL";
+    this.description = __("WEB_FRAME_ISOLATED_WORLD_REMOVAL");
     this.type = sourceTypes.JAVASCRIPT;
     this.shortenedURL = 'https://git.io/JvaCG';
   }

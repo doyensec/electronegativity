@@ -3,8 +3,8 @@ import { severity, confidence } from '../../attributes';
 
 export default class AllowPopupsHTMLCheck {
   constructor() {
-    this.id = 'ALLOWPOPUPS_HTML_CHECK';
-    this.description = `Do not allow popups in webview`;
+    this.id = "ALLOWPOPUPS_HTML_CHECK";
+    this.description = __("ALLOWPOPUPS_HTML_CHECK");
     this.type = sourceTypes.HTML;
     this.shortenedURL = "https://git.io/Jeu1V";
   }
