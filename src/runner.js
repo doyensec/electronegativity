@@ -61,7 +61,7 @@ export default async function run(options, forCli = false) {
   // Parser options initialization
   const parser = new Parser(false, true);
 
-  if (options.parserPlugins && Array.isArray(options.parserPlugins) && options.parserPlugins.length > 0) {
+  if (options.parserPlugins.length > 0) {
     options.parserPlugins.forEach(plugin => parser.addPlugin(plugin));
   }
 
