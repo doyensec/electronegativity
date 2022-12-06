@@ -31,11 +31,11 @@ export default async function run(options, forCli = false) {
   await loader.load(options.input);
   const electronVersion = options.electronVersionOverride || loader.electronVersion;
   if (!electronVersion)
-    logger.warn("Couldn't detect Electron version, assuming v0.1.0. Defaults have probably changed for your actual version, please check manually.");
+    logger.warn(__('electron_version_error'));
 
   if (options.severitySet) {
     if (!severity.hasOwnProperty(options.severitySet.toUpperCase())) {
-      const err = 'This severity level does not exist!';
+      const err = __('severityLevelError');
       if (forCli) {
         console.error(chalk.red(err));
         process.exit(1);
@@ -45,7 +45,7 @@ export default async function run(options, forCli = false) {
 
   if (options.confidenceSet) {
     if (!confidence.hasOwnProperty(options.confidenceSet.toUpperCase())) {
-      const err = 'This confidence level does not exist!';
+      const err = __('confidenceLevelError');
       if (forCli) {
         console.error(chalk.red(err));
         process.exit(1);
@@ -80,12 +80,12 @@ export default async function run(options, forCli = false) {
   let issues = [];
   let errors = [];
   let table = new Table({
-    head: ['Check ID', 'Affected File', 'Location', 'Issue Description'],
+    head: [__('tableCheckId'), __('tableAffectedFile'), __('tableLocation'), __('tableDescription')],
     colWidths:[undefined, undefined, undefined, 50], // necessary for wordWrap
     wordWrap: true
   });
 
-  if (forCli) console.log(chalk.green(`${globalChecker._enabled_checks.length+finder._enabled_checks.length} check(s) successfully loaded: ${globalChecker._enabled_checks.length} global, ${finder._enabled_checks.length} atomic`));
+  if (forCli) console.log(chalk.green(`${__('numberOfChecksLoaded', {total: globalChecker._enabled_checks.length+finder._enabled_checks.length, globalChecks: globalChecker._enabled_checks.length, atomicChecks: finder._enabled_checks.length})}`));
 
   let progress;
   let oldLog;
@@ -134,8 +134,8 @@ export default async function run(options, forCli = false) {
 
   if (forCli) {
     for (const error of errors) {
-      if (error.tolerable) console.log(chalk.yellow(`Tolerable error parsing ${error.file} - ${error.message}`));
-      else console.error(chalk.red(`Error parsing ${error.file} - ${error.message}`));
+      if (error.tolerable) console.log(chalk.yellow(`${__('tolerable_error_parsing', {file: error.file, message: error.message})}`));
+      else console.error(chalk.red(`${__('error_parsing', {file: error.file, message: error.message})}`));
     }
   }
 
@@ -162,7 +162,7 @@ export default async function run(options, forCli = false) {
       )
         rows.push([
           `${issue.id}${
-            issue.manualReview ? chalk.bgRed(`\n*Review Required*`) : ``
+            issue.manualReview ? chalk.bgRed(`\n*${__('review_required')}*`) : ``
           }\n${issue.severity.format()} | ${issue.confidence.format()}`,
           issue.file,
           `${issue.location.line}:${issue.location.column}`,
@@ -178,8 +178,8 @@ export default async function run(options, forCli = false) {
     if (rows.length > 0) {
       table.push(...rows);
       console.log(table.toString());
-    } else console.log(chalk.green(`\nNo issues were found.`));
-    console.log('\x1b[4m\x1b[36m%s\x1b[0m',"Would you like more precise or updated results? Try ElectroNG (https://electro.ng) today, the professional alternative to Electronegativity.");
+    } else console.log(chalk.green(`\n${__('no_issues_found')}`));
+    console.log('\x1b[4m\x1b[36m%s\x1b[0m',`${__('try_electro_ng')}`);
   }
   else return {
     globalChecks: globalChecker._enabled_checks.length,

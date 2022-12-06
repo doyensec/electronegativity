@@ -3,26 +3,29 @@
 import program from 'commander';
 import path from 'path';
 import chalk from 'chalk';
+import _i18n from './locales/i18n.js';
 import run from './runner.js';
+
+_i18n();
 
 const VER = require('../package.json').version;
 const falsyStrings = ["false", "FALSE", "off", "0", "no", "disable", "disabled"];
 
 program
   .version(VER)
-  .description('Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications.')
-  .option('-i, --input <path>', 'input [directory | .js | .html | .asar]')
-  .option('-l, --checks <checkNames>', 'only run the specified checks list, passed in csv format')
-  .option('-x, --exclude-checks <excludedCheckNames>', 'skip the specified checks list, passed in csv format')
-  .option('-s, --severity <severitySet>', 'only return findings with the specified level of severity or above')
-  .option('-c, --confidence <confidenceSet>', 'only return findings with the specified level of confidence or above')
-  .option('-o, --output <filename[.csv | .sarif]>', 'save the results to a file in csv or sarif format')
-  .option('-r, --relative', 'show relative path for files')
-  .option('-v, --verbose <bool>', 'show the description for the findings, defaults to true')
-  .option('-u, --upgrade <current version..target version>', 'run Electron upgrade checks, eg -u 7..8')
-  .option('-e, --electron-version <version>', 'assume the set Electron version, overriding the detected one, eg -e 7.0.0 to treat as using Electron 7')
-  .option('-p, --parser-plugins <plugins>', 'specify additional parser plugins to use separated by commas, e.g. -p optionalChaining')
-  .parse(process.argv);
+    .description(__('electronegativityDescription'))
+    .option(__('inputOption'), __('inputOptionDescription'))
+    .option(__('checksOption'), __('checksOptionDescription'))
+    .option(__('excludeChecksOption'), __('excludeChecksOptionDescription'))
+    .option(__('severityOption'), __('severityOptionDescription'))
+    .option(__('confidenceOption'), __('confidenceOptionDescription'))
+    .option(__('outputOption'), __('outputOptionDescription'))
+    .option(__('relativeOption'), __('relativeOptionDescription'))
+    .option(__('verboseOption'), __('verboseOptionDescription'))
+    .option(__('upgradeOption'), __('upgradeOptionDescription'))
+    .option(__('electronVersionOption'), __('electronVersionOptionDescription'))
+    .option(__('parserPluginsOption'), __('parserPluginsOptionDescription'))
+    .parse(process.argv);
 
 const forCli = !program.output;
 
@@ -40,8 +43,10 @@ if (forCli) {
 ▀▀ █▪▀▀▀·▀▀▀▀ ▀  ▀▀▀▀▀▀. ▀ ▀▀▀▀▀  ▀ •
       v`+VER+`  https://doyensec.com/
   `);
-  console.log('\x1b[4m\x1b[36m%s\x1b[0m',"Need something more powerful or updated? Try ElectroNG (https://electro.ng) today!");
-  console.log("Scan Status:");
+  console.log('\x1b[4m\x1b[36m%s\x1b[0m',__('tryElectroNg'));
+  console.log("\x1b[4m\x1b[33m%s\x1b[0m", __('contactUs'));
+  console.log("\x1b[4m\x1b[33m%s\x1b[0m", __('foundBug'));
+  console.log(__('startScan'));
 }
 
 if(!program.input){
@@ -52,7 +57,7 @@ if(!program.input){
 if(program.output){
   program.fileFormat = program.output.split('.').pop();
   if(program.fileFormat !== 'csv' && program.fileFormat !== 'sarif'){
-    console.error(chalk.red('Please specify file format extension.'));
+    console.error(chalk.red(__('fileFormatError')));
     program.outputHelp();
     process.exit(1);
   }
@@ -96,3 +101,4 @@ run({
   console.error(chalk.red(error.stack));
   process.exit(1);
 });
+
