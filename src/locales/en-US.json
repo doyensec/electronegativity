@@ -122,5 +122,5 @@
 	"LIMIT_NAVIGATION_GLOBAL_CHECK_NONE_FOUND":"Missing navigation limits using .on new-window and will-navigate events",
 	"LIMIT_NAVIGATION_GLOBAL_CHECK_NEW_WINDOW_MISSING":"Missing .on new-window navigation limit",
 	"LIMIT_NAVIGATION_GLOBAL_CHECK_WILL_NAVIGATE_MISSING":"Missing .on will-navigate navigation limit",
-	"PERMISSION_REQUEST_HANDLER_GLOBAL_CHECK":"Missing PermissionRequestHandler to limit specific permissions (e.g. openExternal) in response to events from particular origins.",
+	"PERMISSION_REQUEST_HANDLER_GLOBAL_CHECK":"Missing PermissionRequestHandler to limit specific permissions (e.g. openExternal) in response to events from particular origins."
 }
