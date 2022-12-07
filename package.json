@@ -1,6 +1,6 @@
 {
   "name": "@doyensec/electronegativity",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "description": "Electronegativity is a tool to identify misconfigurations and security anti-patterns in Electron applications",
   "main": "dist/runner.js",
   "scripts": {
