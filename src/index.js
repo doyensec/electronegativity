@@ -8,15 +8,6 @@ import run from './runner.js';
 
 async function main() {
 
-  var twirlTimer = (function() {
-    var P = ["\\", "|", "/", "-"];
-    var x = 0;
-    return setInterval(function() {
-      process.stdout.write("\r" + P[x++] + " Starting up Electronegativity...");
-      x &= 3;
-    }, 250);
-  })();
-
   await _i18n(); // wait for the _i18n function to complete
 
   const VER = require('../package.json').version;

@@ -31,7 +31,7 @@ export default async function run(options, forCli = false) {
   await loader.load(options.input);
   const electronVersion = options.electronVersionOverride || loader.electronVersion;
   if (!electronVersion)
-    logger.warn(__('electron_version_error'));
+    logger.warn(__('electronVersionError'));
 
   if (options.severitySet) {
     if (!severity.hasOwnProperty(options.severitySet.toUpperCase())) {

@@ -18,6 +18,7 @@ export default class LimitNavigationGlobalCheck {
     var willNavigateNavigations = issues.filter(e => e.properties.event === 'will-navigate');
     var newWindowNavigations = issues.filter(e => e.properties.event === 'new-window');
     var setWindowOpenHandlerCalls = issues.filter(e => e.properties.event === 'setWindowOpenHandler');
+    var findings = [];
 
     if (issues.length == 0) { // no navigation events, yikes!
       return [{ file: "N/A", location: {line: 0, column: 0}, title: this.title, id: this.id, description: this.description.NONE_FOUND, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: false }];
@@ -30,9 +31,9 @@ export default class LimitNavigationGlobalCheck {
     } else if (willNavigateNavigations.length == 0) {
       // no willnavigate, issue a finding
       return [{ file: "N/A", location: {line: 0, column: 0}, title: this.title, id: this.id, description: this.description.WILL_NAVIGATE_MISSING, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: false }];
-    } else if (newWindowNavigations.length == 0) {
+    } else if (newWindowNavigations.length == 0 && setWindowOpenHandlerCalls.length == 0) {
       // no newwindow, issue a finding
       return [{ file: "N/A", location: {line: 0, column: 0}, title: this.title, id: this.id, description: this.description.NEW_WINDOW_MISSING, shortenedURL: this.shortenedURL, severity: severity.HIGH, confidence: confidence.CERTAIN, manualReview: false }];
-    }
+    } else return [];
   }
 }
