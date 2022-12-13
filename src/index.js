@@ -45,7 +45,7 @@ async function main() {
   ▀▀ █▪▀▀▀·▀▀▀▀ ▀  ▀▀▀▀▀▀. ▀ ▀▀▀▀▀  ▀ •
         v`+VER+`  https://doyensec.com/
     `);
-    console.log('\x1b[4m\x1b[36m%s\x1b[0m',__('tryElectroNg'));
+    console.log('\x1b[4m\x1b[36m%s\x1b[0m',__('tryElectroNgShort'));
     console.log("\x1b[4m\x1b[33m%s\x1b[0m", __('contactUs'));
     console.log("\x1b[4m\x1b[33m%s\x1b[0m", __('foundBug'));
     console.log(__('startScan'));
