@@ -3,6 +3,7 @@ import Table from 'cli-table3';
 import chalk from 'chalk';
 import logger from 'winston';
 
+import _i18n from './locales/i18n';
 import { LoaderFile, LoaderAsar, LoaderDirectory } from './loader';
 import { Parser } from './parser';
 import { Finder } from './finder';
@@ -10,6 +11,9 @@ import { GlobalChecks, severity, confidence } from './finder';
 import { extension, input_exists, is_directory, writeIssues, getRelativePath } from './util';
 
 export default async function run(options, forCli = false) {
+
+  await _i18n(); // wait for the _i18n function to complete
+
   if (!input_exists(options.input)) {
     const err = 'Input does not exist!';
     if (forCli) {
