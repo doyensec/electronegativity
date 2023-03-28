@@ -31,8 +31,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "rimraf": "^3.0.2",
-    "mocha": "^10.1.0"
+    "mocha": "^10.1.0",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "@babel/parser": "^7.14.3",
@@ -42,6 +42,7 @@
     "@mapbox/node-pre-gyp": "^1.0.5",
     "@typescript-eslint/typescript-estree": "^4.24.0",
     "@yarnpkg/lockfile": "^1.1.0",
+    "asar": "^3.2.0",
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.9",
     "cli-progress": "^3.9.0",
