@@ -181,6 +181,6 @@ Electronegativity was made possible thanks to the work of many [contributors](ht
 
 This project has been sponsored by [Doyensec LLC](https://www.doyensec.com). 
 
-![alt text](https://doyensec.com/images/logo.svg "Doyensec Logo")
+![Doyensec Research](https://github.com/doyensec/inql/blob/master/docs/doyensec_logo.svg "Doyensec Logo")
 
 [Engage us to break](https://doyensec.com/auditing.html) your Electron.js application!
