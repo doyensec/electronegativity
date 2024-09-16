@@ -1,5 +1,9 @@
 # Electronegativity
 
+⚠️ **We're no longer actively maintaining this project** ⚠️
+
+Depending on the community contributions, we might still do maintenance releases until the end of 2024.   
+
 ## What's Electronegativity?
 
 **Electronegativity** is a tool to identify misconfigurations and security anti-patterns in [Electron](https://electronjs.org/)-based applications.
