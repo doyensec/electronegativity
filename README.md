@@ -1,8 +1,6 @@
 # Electronegativity
 
-⚠️ **We're no longer actively maintaining this project** ⚠️
-
-Depending on the community contributions, we might still do maintenance releases until the end of 2024.   
+⚠️ **We're no longer actively maintaining this project** ⚠️ 
 
 ## What's Electronegativity?
 
