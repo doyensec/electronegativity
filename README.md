@@ -1,6 +1,18 @@
 # Electronegativity
 
-⚠️ **We're no longer actively maintaining this project** ⚠️ 
+⚠️ **This project has been archived** ⚠️ 
+
+Use [ElectroNG](https://get-electrong.com) instead!
+
+<p align="center">
+  <img src="https://github.com/doyensec/ElectroNG/raw/main/.erb/img/erb-banner.png">
+</p>
+
+
+
+--------
+
+
 
 ## What's Electronegativity?
 
@@ -16,14 +28,6 @@ Software developers and security auditors can use this tool to detect and mitiga
 If you're interested in Electron Security, have a look at our *BlackHat 2017* research [Electronegativity - A Study of Electron Security](https://doyensec.com/resources/us-17-Carettoni-Electronegativity-A-Study-Of-Electron-Security.pdf) and keep an eye on the [Doyensec's blog](http://blog.doyensec.com).
 
 ![Electronegativity Demo](https://github.com/doyensec/electronegativity/raw/master/docs/resources/img/electrodemo.gif "Electronegativity Demo")
-
-
-## ElectroNG Improved Version
-If you need something more powerful or updated, an improved SAST tool based on Electronegativity is available as the result of many years of applied R&D from [Doyensec](https://doyensec.com/). At the end of 2020, we sat down to create a project roadmap and created a development team to work on what is now [ElectroNG](https://get-electrong.com). You can read more some of the major improvements over the OSS version in a recent [blog post](https://blog.doyensec.com/2022/09/06/electrong-launch.html). 
-
-<p align="center">
-  <img src="https://get-electrong.com/img/lead.png">
-</p>
 
 ## Installation
 
